@@ -1,0 +1,50 @@
+{
+  "generated_at": "2026-05-19T19:17:17.940138",
+  "best_model": "XGBoost",
+  "test_metrics": {
+    "mae": 90.67712678484061,
+    "rmse": 145.32713466791063,
+    "r2": 0.8706799017097857
+  },
+  "prediction_intervals": {
+    "coverage": 0.8708035222894882,
+    "interval_width": 373.6379106632803,
+    "std_residuals": 113.56775400099701
+  },
+  "dataset": {
+    "feature_names": [
+      "livingSpace",
+      "noRooms",
+      "floor",
+      "numberOfFloors",
+      "yearConstructed",
+      "serviceCharge",
+      "balcony",
+      "garden",
+      "cellar",
+      "lift",
+      "newlyConst",
+      "hasKitchen",
+      "noParkSpaces",
+      "picturecount",
+      "pricetrend",
+      "regio1",
+      "regio2",
+      "geo_plz",
+      "condition",
+      "heatingType",
+      "typeOfFlat",
+      "year",
+      "month",
+      "quarter",
+      "season"
+    ],
+    "n_features": 25,
+    "n_train": 26485,
+    "n_val": 7268,
+    "n_test": 7268,
+    "target_mean_train": 605.3916518784217,
+    "target_std_train": 388.1729183966543,
+    "created_at": "2026-05-19T19:16:48.774729"
+  }
+}

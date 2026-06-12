@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mietpreisvorhersage - Prediction Accuracy Map</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background: #f0f0f0;
+        }
+        
+        .info-box {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 320px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            font-size: 13px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .info-box h3 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 8px;
+        }
+        
+        .color-legend {
+            margin: 15px 0;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 1px solid #333;
+        }
+        
+        .popup-title {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .popup-content {
+            font-size: 12px;
+            line-height: 1.6;
+        }
+        
+        .popup-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+        
+        .popup-label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .accuracy-good {
+            color: green;
+            font-weight: bold;
+        }
+        
+        .accuracy-poor {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    
+    <div class="info-box">
+        <h3>🎯 Prediction Accuracy Map</h3>
+        <p style="margin-bottom: 10px; color: #666;">
+            Model prediction error by region. Click circles for details.
+        </p>
+        
+        <div class="color-legend">
+            <strong>Accuracy Levels:</strong>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #2ecc71;"></div>
+                <span>Very Accurate (&lt;€5)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #f1c40f;"></div>
+                <span>Accurate (&lt;€15)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #e67e22;"></div>
+                <span>Moderate (&lt;€30)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #e74c3c;"></div>
+                <span>Inaccurate (&lt;€50)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #c0392b;"></div>
+                <span>Poor (&gt;€50)</span>
+            </div>
+        </div>
+        
+        <hr style="margin: 10px 0; border: none; border-top: 1px solid #ddd;">
+        
+        <div style="font-size: 12px;">
+            <strong>How to use:</strong><br>
+            • Circle size = error magnitude<br>
+            • Click circles for details<br>
+            • Zoom in/out to explore<br><br>
+            
+            <strong>Statistics:</strong><br>
+            • Mean error: €27.69<br>
+            • Best accuracy: Green<br>
+            • Regions analyzed: 16
+        </div>
+    </div>
+    
+    <script>
+        // Initialize map
+        const map = L.map('map').setView([51.1657, 10.4515], 6);
+        
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 19,
+            minZoom: 3
+        }).addTo(map);
+        
+        // Add markers
+        const markers = [{"lat": 48.7758, "lon": 9.1829, "title": "Baden_W\u00fcrttemberg", "error": 24.389999999999986, "color": "#e67e22", "radius": 7.438999999999998, "actual": 928.05, "predicted": 903.66, "count": 503, "error_pct": 2.6280911588815243}, {"lat": 48.7758, "lon": 11.4328, "title": "Bayern", "error": 25.92999999999995, "color": "#e67e22", "radius": 7.592999999999995, "actual": 926.79, "predicted": 900.86, "count": 583, "error_pct": 2.7978290659156824}, {"lat": 52.52, "lon": 13.405, "title": "Berlin", "error": 53.549999999999955, "color": "#c0392b", "radius": 10.354999999999995, "actual": 1061.0, "predicted": 1007.45, "count": 244, "error_pct": 5.047125353440147}, {"lat": 52.1189, "lon": 12.6084, "title": "Brandenburg", "error": 13.629999999999995, "color": "#f1c40f", "radius": 6.3629999999999995, "actual": 525.76, "predicted": 512.13, "count": 173, "error_pct": 2.5924376141205108}, {"lat": 53.1045, "lon": 8.8017, "title": "Bremen", "error": 5.509999999999991, "color": "#f1c40f", "radius": 5.550999999999999, "actual": 547.63, "predicted": 542.12, "count": 69, "error_pct": 1.0061537899676773}, {"lat": 53.5511, "lon": 9.9937, "title": "Hamburg", "error": 115.52999999999997, "color": "#c0392b", "radius": 15, "actual": 1207.84, "predicted": 1092.31, "count": 89, "error_pct": 9.565008610411974}, {"lat": 50.1109, "lon": 8.6821, "title": "Hessen", "error": 22.170000000000073, "color": "#e67e22", "radius": 7.217000000000008, "actual": 923.34, "predicted": 901.17, "count": 469, "error_pct": 2.401065696276569}, {"lat": 53.6154, "lon": 12.9289, "title": "Mecklenburg_Vorpommern", "error": 10.21999999999997, "color": "#f1c40f", "radius": 6.021999999999997, "actual": 455.09, "predicted": 444.87, "count": 180, "error_pct": 2.2457096398514516}, {"lat": 52.6362, "lon": 9.7753, "title": "Niedersachsen", "error": 24.90000000000009, "color": "#e67e22", "radius": 7.490000000000009, "actual": 616.96, "predicted": 592.06, "count": 451, "error_pct": 4.035918049792546}, {"lat": 51.4556, "lon": 7.0116, "title": "Nordrhein_Westfalen", "error": 25.210000000000036, "color": "#e67e22", "radius": 7.5210000000000035, "actual": 597.87, "predicted": 572.66, "count": 1563, "error_pct": 4.2166357234850445}, {"lat": 49.9929, "lon": 6.9623, "title": "Rheinland_Pfalz", "error": 32.860000000000014, "color": "#e74c3c", "radius": 8.286000000000001, "actual": 676.13, "predicted": 643.27, "count": 200, "error_pct": 4.860012127845239}, {"lat": 49.2557, "lon": 6.9983, "title": "Saarland", "error": 33.059999999999945, "color": "#e74c3c", "radius": 8.305999999999994, "actual": 547.91, "predicted": 514.85, "count": 26, "error_pct": 6.03383767407055}, {"lat": 51.0834, "lon": 13.5325, "title": "Sachsen", "error": 11.060000000000002, "color": "#f1c40f", "radius": 6.106, "actual": 432.55, "predicted": 421.49, "count": 1695, "error_pct": 2.556929834701191}, {"lat": 51.6921, "lon": 11.8797, "title": "Sachsen_Anhalt", "error": 11.810000000000002, "color": "#f1c40f", "radius": 6.181, "actual": 375.98, "predicted": 364.17, "count": 600, "error_pct": 3.1411245279004207}, {"lat": 54.5973, "lon": 9.8773, "title": "Schleswig_Holstein", "error": 29.809999999999945, "color": "#e67e22", "radius": 7.9809999999999945, "actual": 623.16, "predicted": 593.35, "count": 158, "error_pct": 4.783683163232548}];
+        
+        markers.forEach(function(marker) {
+            const circle = L.circleMarker([marker.lat, marker.lon], {
+                radius: marker.radius,
+                fillColor: marker.color,
+                color: marker.color,
+                weight: 2,
+                opacity: 0.8,
+                fillOpacity: 0.7
+            }).addTo(map);
+            
+            // Popup content
+            const accuracyClass = marker.error < 20 ? 'accuracy-good' : 'accuracy-poor';
+            const popupHtml = `
+                <div class="popup-title">${marker.title}</div>
+                <div class="popup-content">
+                    <div class="popup-row">
+                        <span class="popup-label">Actual Avg:</span>
+                        <span>€${marker.actual.toFixed(2)}</span>
+                    </div>
+                    <div class="popup-row">
+                        <span class="popup-label">Predicted:</span>
+                        <span>€${marker.predicted.toFixed(2)}</span>
+                    </div>
+                    <div class="popup-row">
+                        <span class="popup-label">Error:</span>
+                        <span class="${accuracyClass}">€${marker.error.toFixed(2)} (${marker.error_pct.toFixed(1)}%)</span>
+                    </div>
+                    <div class="popup-row">
+                        <span class="popup-label">Listings:</span>
+                        <span>${marker.count}</span>
+                    </div>
+                </div>
+            `;
+            
+            circle.bindPopup(popupHtml);
+        });
+    </script>
+</body>
+</html>

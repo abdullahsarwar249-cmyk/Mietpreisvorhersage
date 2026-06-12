@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mietpreisvorhersage - Interactive Rental Price Map</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background: #f0f0f0;
+        }
+        
+        .info-box {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            font-size: 13px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .info-box h3 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 8px;
+        }
+        
+        .color-legend {
+            margin: 15px 0;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 1px solid #333;
+        }
+        
+        .popup-title {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .popup-content {
+            font-size: 12px;
+            line-height: 1.6;
+        }
+        
+        .popup-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+        
+        .popup-label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    
+    <div class="info-box">
+        <h3>🗺️ Rental Price Map</h3>
+        <p style="margin-bottom: 10px; color: #666;">
+            Average rental prices by German region. Click on circles for details.
+        </p>
+        
+        <div class="color-legend">
+            <strong>Price Categories:</strong>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #2ecc71;"></div>
+                <span>Very Affordable (€376-€550)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #f1c40f;"></div>
+                <span>Affordable (€550-€700)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #e67e22;"></div>
+                <span>Moderate (€700-€850)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #e74c3c;"></div>
+                <span>Expensive (€850-€1050)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #c0392b;"></div>
+                <span>Very Expensive (€1050+)</span>
+            </div>
+        </div>
+        
+        <hr style="margin: 10px 0; border: none; border-top: 1px solid #ddd;">
+        
+        <div style="font-size: 12px;">
+            <strong>How to use:</strong><br>
+            • Circle size = rent level<br>
+            • Click circles for details<br>
+            • Zoom in/out to explore<br><br>
+            
+            <strong>Statistics:</strong><br>
+            • Avg rent: €677/month<br>
+            • Range: €376 - €1208<br>
+            • Regions: 16
+        </div>
+    </div>
+    
+    <script>
+        // Initialize map
+        const map = L.map('map').setView([51.1657, 10.4515], 6);
+        
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 19,
+            minZoom: 3
+        }).addTo(map);
+        
+        // Add markers
+        const markers = [{"lat": 48.7758, "lon": 9.1829, "title": "Baden_W\u00fcrttemberg", "rent": 928.05, "color": "#e74c3c", "radius": 15.963888154256725, "count": 503, "std": 437.02, "min": 200.0, "max": 2450.0, "living_space": 79.8, "rooms": 2.77}, {"lat": 48.7758, "lon": 11.4328, "title": "Bayern", "rent": 926.79, "color": "#e74c3c", "radius": 15.945712018849326, "count": 583, "std": 454.6, "min": 200.0, "max": 2480.0, "living_space": 75.79, "rooms": 2.53}, {"lat": 52.52, "lon": 13.405, "title": "Berlin", "rent": 1061.0, "color": "#c0392b", "radius": 17.88175894982329, "count": 244, "std": 539.11, "min": 179.99, "max": 2338.6, "living_space": 74.99, "rooms": 2.41}, {"lat": 52.1189, "lon": 12.6084, "title": "Brandenburg", "rent": 525.76, "color": "#2ecc71", "radius": 10.16065203279398, "count": 173, "std": 321.37, "min": 180.0, "max": 1860.96, "living_space": 69.19, "rooms": 2.56}, {"lat": 53.1045, "lon": 8.8017, "title": "Bremen", "rent": 547.63, "color": "#f1c40f", "radius": 10.476137811650998, "count": 69, "std": 246.6, "min": 218.0, "max": 1190.0, "living_space": 68.74, "rooms": 2.68}, {"lat": 53.5511, "lon": 9.9937, "title": "Hamburg", "rent": 1207.84, "color": "#c0392b", "radius": 20.0, "count": 89, "std": 449.1, "min": 356.75, "max": 2390.0, "living_space": 82.62, "rooms": 2.7}, {"lat": 50.1109, "lon": 8.6821, "title": "Hessen", "rent": 923.34, "color": "#e74c3c", "radius": 15.89594402904335, "count": 469, "std": 438.53, "min": 184.14, "max": 2430.0, "living_space": 77.95, "rooms": 2.63}, {"lat": 53.6154, "lon": 12.9289, "title": "Mecklenburg_Vorpommern", "rent": 455.09, "color": "#2ecc71", "radius": 9.14120164450749, "count": 180, "std": 334.7, "min": 175.0, "max": 1980.0, "living_space": 65.03, "rooms": 2.57}, {"lat": 52.6362, "lon": 9.7753, "title": "Niedersachsen", "rent": 616.96, "color": "#f1c40f", "radius": 11.476258024186762, "count": 451, "std": 332.23, "min": 174.0, "max": 2400.0, "living_space": 77.49, "rooms": 2.71}, {"lat": 51.4556, "lon": 7.0116, "title": "Nordrhein_Westfalen", "rent": 597.87, "color": "#f1c40f", "radius": 11.200875147260357, "count": 1563, "std": 330.96, "min": 176.0, "max": 2290.0, "living_space": 73.79, "rooms": 2.67}, {"lat": 49.9929, "lon": 6.9623, "title": "Rheinland_Pfalz", "rent": 676.13, "color": "#f1c40f", "radius": 12.329815113119995, "count": 200, "std": 355.7, "min": 179.0, "max": 2285.0, "living_space": 78.82, "rooms": 2.6}, {"lat": 49.2557, "lon": 6.9983, "title": "Saarland", "rent": 547.91, "color": "#f1c40f", "radius": 10.480176952852643, "count": 26, "std": 226.37, "min": 240.0, "max": 1348.0, "living_space": 77.25, "rooms": 2.71}, {"lat": 51.0834, "lon": 13.5325, "title": "Sachsen", "rent": 432.55, "color": "#2ecc71", "radius": 8.816050777775107, "count": 1695, "std": 265.27, "min": 170.0, "max": 1920.36, "living_space": 65.79, "rooms": 2.49}, {"lat": 51.6921, "lon": 11.8797, "title": "Sachsen_Anhalt", "rent": 375.98, "color": "#2ecc71", "radius": 8.0, "count": 600, "std": 185.32, "min": 170.0, "max": 1657.5, "living_space": 64.04, "rooms": 2.59}, {"lat": 54.5973, "lon": 9.8773, "title": "Schleswig_Holstein", "rent": 623.16, "color": "#f1c40f", "radius": 11.565696150794604, "count": 158, "std": 265.0, "min": 250.0, "max": 1550.0, "living_space": 70.79, "rooms": 2.57}];
+        
+        markers.forEach(function(marker) {
+            const circle = L.circleMarker([marker.lat, marker.lon], {
+                radius: marker.radius,
+                fillColor: marker.color,
+                color: marker.color,
+                weight: 2,
+                opacity: 0.8,
+                fillOpacity: 0.7
+            }).addTo(map);
+            
+            // Popup content
+            const popupHtml = `
+                <div class="popup-title">${marker.title}</div>
+                <div class="popup-content">
+                    <div class="popup-row">
+                        <span class="popup-label">Average Rent:</span>
+                        <span>€${marker.rent.toFixed(2)}/month</span>
+                    </div>
+                    <div class="popup-row">
+                        <span class="popup-label">Price Range:</span>
+                        <span>€${marker.min.toFixed(0)} - €${marker.max.toFixed(0)}</span>
+                    </div>
+                    <div class="popup-row">
+                        <span class="popup-label">Std Dev:</span>
+                        <span>€${marker.std.toFixed(2)}</span>
+                    </div>
+                    <div class="popup-row">
+                        <span class="popup-label">Listings:</span>
+                        <span>${marker.count}</span>
+                    </div>
+                    <div class="popup-row">
+                        <span class="popup-label">Avg m²:</span>
+                        <span>${marker.living_space.toFixed(0)} m²</span>
+                    </div>
+                    <div class="popup-row">
+                        <span class="popup-label">Avg Rooms:</span>
+                        <span>${marker.rooms.toFixed(1)}</span>
+                    </div>
+                </div>
+            `;
+            
+            circle.bindPopup(popupHtml);
+        });
+    </script>
+</body>
+</html>
