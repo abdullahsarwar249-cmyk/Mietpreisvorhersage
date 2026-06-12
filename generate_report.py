@@ -12,10 +12,10 @@ import warnings
 warnings.filterwarnings('ignore')
 
 print("="*80)
-print("GENERATING COMPREHENSIVE EVALUATION REPORT")
+print("GENERATING UMFASSENDER BEWERTUNGSBERICHT")
 print("="*80)
 
-# Load all results
+# Alle Ergebnisse laden
 with open('pipeline_results.pkl', 'rb') as f:
     results = pickle.load(f)
 
@@ -44,44 +44,44 @@ feature_importance = pd.DataFrame(eval_results['feature_importance'])
 report = []
 
 report.append("="*100)
-report.append("RENTAL PRICE PREDICTION - COMPREHENSIVE EVALUATION REPORT")
+report.append("RENTAL PRICE PREDICTION - UMFASSENDER BEWERTUNGSBERICHT")
 report.append("="*100)
-report.append(f"\nReport Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+report.append(f"\nBericht erstellt: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 report.append(f"Dataset: immo_data.csv (German Real Estate Market)")
 
 # ============================================================================
-# 1. EXECUTIVE SUMMARY
+# 1. ZUSAMMENFASSUNG
 # ============================================================================
 report.append("\n" + "="*100)
-report.append("1. EXECUTIVE SUMMARY")
+report.append("1. ZUSAMMENFASSUNG")
 report.append("="*100)
 
-best_model = 'Gradient Boosting Regressor'
+best_model = 'Gradient-Boosting-Regressor'
 best_test_mae = xgb_metrics['Test']['MAE']
 best_test_rmse = xgb_metrics['Test']['RMSE']
 best_test_r2 = xgb_metrics['Test']['R²']
 
 report.append(f"""
-This project develops a machine learning pipeline to predict rental prices in Germany,
+Dieses Projekt entwickelt a machine learning pipeline to predict rental prices in Germany,
 incorporating spatial factors (regions, postal codes) and temporal trends.
 
-KEY FINDINGS:
-• Best Model: {best_model}
-• Test MAE: €{best_test_mae:.2f} (average prediction error)
-• Test RMSE: €{best_test_rmse:.2f} (penalizes larger errors)
+WESENTLICHE ERKENNTNISSE:
+• Bestes Modell: {best_model}
+• Test-MAE: €{best_test_mae:.2f} (average prediction error)
+• Test-RMSE: €{best_test_rmse:.2f} (penalizes larger errors)
 • Test R²: {best_test_r2:.4f} (explains {best_test_r2*100:.2f}% of variance)
-• Prediction Intervals: 90% confidence with {xgb_intervals['coverage']:.1%} empirical coverage
-• Top Features: livingSpace, yearConstructed, noRooms, floor, geo_plz
+• Vorhersageintervalle: 90% confidence with {xgb_intervals['coverage']:.1%} empirical coverage
+• Wichtigste Merkmale: livingSpace, yearConstructed, noRooms, floor, geo_plz
 
-The model demonstrates strong predictive power with excellent spatial and temporal coverage.
+Das Modell zeigt strong predictive power with excellent spatial and temporal coverage.
 Uncertainty estimates provide valuable confidence bounds for decision-making.
 """)
 
 # ============================================================================
-# 2. DATASET OVERVIEW
+# 2. DATENSATZÜBERSICHT
 # ============================================================================
 report.append("\n" + "="*100)
-report.append("2. DATASET OVERVIEW")
+report.append("2. DATENSATZÜBERSICHT")
 report.append("="*100)
 
 report.append(f"""
@@ -108,7 +108,7 @@ Spatial Coverage:
 • Number of Unique Regions: {test_df['regio1'].nunique()}
 • Number of Postal Codes: {test_df['geo_plz'].nunique() if 'geo_plz' in test_df.columns else 'N/A'}
 
-Features Used:
+Features Verwenden Sied:
 • Building Characteristics: livingSpace, noRooms, floor, yearConstructed, condition
 • Amenities: balcony, garden, cellar, lift, hasKitchen
 • Infrastructure: serviceCharge, noParkSpaces
@@ -118,17 +118,17 @@ Features Used:
 """)
 
 # ============================================================================
-# 3. MODEL COMPARISON
+# 3. MODELLVERGLEICH
 # ============================================================================
 report.append("\n" + "="*100)
-report.append("3. MODEL PERFORMANCE COMPARISON")
+report.append("3. MODELLLEISTUNGSVERGLEICH")
 report.append("="*100)
 
 # Create comparison table
 comparison_data = []
-for model_name, metrics in [('Ridge Regression', ridge_metrics), 
-                             ('Gradient Boosting Regressor', xgb_metrics), 
-                             ('Neural Network', nn_metrics)]:
+for model_name, metrics in [('Ridge-Regression', ridge_metrics), 
+                             ('Gradient-Boosting-Regressor', xgb_metrics), 
+                             ('Neuronales Netz', nn_metrics)]:
     for split in ['Train', 'Validation', 'Test']:
         comparison_data.append({
             'Model': model_name,
@@ -142,7 +142,7 @@ for model_name, metrics in [('Ridge Regression', ridge_metrics),
 comparison_df = pd.DataFrame(comparison_data)
 
 report.append("\nDetailed Metrics by Model and Data Split:\n")
-for model_name in ['Ridge Regression', 'Gradient Boosting Regressor', 'Neural Network']:
+for model_name in ['Ridge-Regression', 'Gradient-Boosting-Regressor', 'Neuronales Netz']:
     model_data = comparison_df[comparison_df['Model'] == model_name]
     report.append(f"\n{model_name}:")
     report.append("-" * 90)
@@ -154,59 +154,59 @@ for model_name in ['Ridge Regression', 'Gradient Boosting Regressor', 'Neural Ne
 report.append(f"""
 INTERPRETATION:
 • MAE (Mean Absolute Error): Average absolute prediction error in €
-  - Lower is better. Gradient Boosting Regressor achieves ±€{xgb_metrics['Test']['MAE']:.0f} typical error
+  - Lower is better. Gradient-Boosting-Regressor achieves ±€{xgb_metrics['Test']['MAE']:.0f} typical error
   
 • RMSE (Root Mean Squared Error): Penalizes larger errors more heavily
-  - Gradient Boosting Regressor: €{xgb_metrics['Test']['RMSE']:.0f} suggests occasional larger errors
+  - Gradient-Boosting-Regressor: €{xgb_metrics['Test']['RMSE']:.0f} suggests occasional larger errors
   
 • R² Score: Proportion of variance explained (0-1 scale)
-  - Gradient Boosting Regressor R²: {xgb_metrics['Test']['R²']:.4f} (excellent predictive power)
+  - Gradient-Boosting-Regressor R²: {xgb_metrics['Test']['R²']:.4f} (excellent predictive power)
   
 • MAPE (Mean Absolute Percentage Error): Error as percentage of actual value
-  - Gradient Boosting Regressor: {xgb_metrics['Test']['MAPE']:.2f}% relative error
+  - Gradient-Boosting-Regressor: {xgb_metrics['Test']['MAPE']:.2f}% relative error
 
-BEST OVERALL MODEL: {best_model}
+BESTES MODELL INSGESAMT: {best_model}
 Reasoning: Lowest MAE/RMSE on test set, strong R² score, robust across all splits
 """)
 
 # ============================================================================
-# 4. UNCERTAINTY ANALYSIS
+# 4. UNSICHERHEITSANALYSE
 # ============================================================================
 report.append("\n" + "="*100)
-report.append("4. UNCERTAINTY ANALYSIS & PREDICTION INTERVALS")
+report.append("4. UNSICHERHEITSANALYSE & VORHERSAGEINTERVALLE")
 report.append("="*100)
 
 report.append(f"""
-90% Prediction Intervals (Gradient Boosting Regressor):
+90% Vorhersageintervalle (Gradient-Boosting-Regressor):
 • Empirical Coverage: {xgb_intervals['coverage']:.1%}
-  ✓ Target: 90% - Model prediction intervals are well-calibrated
-• Average Interval Width: €{xgb_intervals['interval_width']:.2f}
+  ✓ Ziel: 90% - Model prediction intervals are well-calibrated
+• Mittlere Intervallbreite: €{xgb_intervals['interval_width']:.2f}
   - Provides meaningful but not overly-wide confidence bounds
-• Std of Residuals: €{xgb_intervals['std_residuals']:.2f}
+• Std.-Abweichung der Residuen: €{xgb_intervals['std_residuals']:.2f}
 
-90% Prediction Intervals (Neural Network):
+90% Vorhersageintervalle (Neuronales Netz):
 • Empirical Coverage: {nn_intervals['coverage']:.1%}
-• Average Interval Width: €{nn_intervals['interval_width']:.2f}
-• Std of Residuals: €{nn_intervals['std_residuals']:.2f}
+• Mittlere Intervallbreite: €{nn_intervals['interval_width']:.2f}
+• Std.-Abweichung der Residuen: €{nn_intervals['std_residuals']:.2f}
 
 INTERPRETATION:
-The prediction intervals are well-calibrated, meaning actual values fall within
-predicted intervals at approximately the expected 90% rate. This provides confidence
+Die Vorhersageintervalle sind gut kalibriert, meaning actual values fall within
+predicted intervals at approximately the expected 90% rate. Dies bietet Vertrauen
 in using the model for risk assessment and decision-making.
 
-Example: For a predicted rent of €800, the 90% interval is roughly:
+Beispiel: For a predicted rent of €800, the 90% interval is roughly:
 Lower: €{800 - xgb_intervals['std_residuals']:.0f} | Upper: €{800 + xgb_intervals['std_residuals']:.0f}
 """)
 
 # ============================================================================
-# 5. FEATURE IMPORTANCE
+# 5. MERKMALSWICHTIGKEIT
 # ============================================================================
 report.append("\n" + "="*100)
-report.append("5. FEATURE IMPORTANCE ANALYSIS")
+report.append("5. MERKMALSWICHTIGKEIT ANALYSIS")
 report.append("="*100)
 
 top_10_features = feature_importance.head(10)
-report.append("\nTop 10 Most Important Features (Gradient Boosting Regressor):\n")
+report.append("\nTop 10 wichtigste Merkmale (Gradient-Boosting-Regressor):\n")
 for idx, (_, row) in enumerate(top_10_features.iterrows(), 1):
     importance_pct = (row['importance'] / feature_importance['importance'].sum()) * 100
     report.append(f"  {idx:2d}. {row['feature']:25} | Importance: {importance_pct:6.2f}%")
@@ -218,24 +218,24 @@ INTERPRETATION:
 • Temporal features (year, month) capture market trends and seasonality
 • Building characteristics (floor, rooms, amenities) provide fine-grained prediction
 
-This aligns with real estate domain knowledge and validates model interpretability.
+Dies passt zur Domänenkenntnis im Immobilienbereich and validates model interpretability.
 """)
 
 # ============================================================================
-# 6. SPATIAL ANALYSIS FINDINGS
+# 6. RÄUMLICHE ANALYSE FINDINGS
 # ============================================================================
 report.append("\n" + "="*100)
-report.append("6. SPATIAL ANALYSIS - REGIONAL PRICE PATTERNS")
+report.append("6. RÄUMLICHE ANALYSE - REGIONAL PRICE PATTERNS")
 report.append("="*100)
 
 regional_stats = test_df.groupby('regio1')['baseRent'].agg(['mean', 'count', 'std']).round(2)
 regional_stats = regional_stats[regional_stats['count'] > 3].sort_values('mean', ascending=False)
 
-report.append("\nTop 10 Most Expensive Regions (by average rent):\n")
+report.append("\nTop 10 teuerste Regionen (nach durchschnittlicher Miete):\n")
 for idx, (region, row) in enumerate(regional_stats.head(10).iterrows(), 1):
     report.append(f"  {idx:2d}. {region:30} | Avg: €{row['mean']:8.2f} | Std: €{row['std']:7.2f} | n={int(row['count']):4d}")
 
-report.append("\nTop 10 Most Affordable Regions (by average rent):\n")
+report.append("\nTop 10 günstigste Regionen (nach durchschnittlicher Miete):\n")
 for idx, (region, row) in enumerate(regional_stats.tail(10).iloc[::-1].iterrows(), 1):
     report.append(f"  {idx:2d}. {region:30} | Avg: €{row['mean']:8.2f} | Std: €{row['std']:7.2f} | n={int(row['count']):4d}")
 
@@ -247,14 +247,14 @@ SPATIAL INSIGHTS:
 • Model can capture these regional variations effectively
 • Spatial features are essential for accurate price prediction
 
-RECOMMENDATION: Use regional price segmentation for market-specific strategies.
+EMPFEHLUNG: Verwenden Sie regional price segmentation for market-specific strategies.
 """)
 
 # ============================================================================
-# 7. TEMPORAL ANALYSIS FINDINGS
+# 7. ZEITLICHE ANALYSE FINDINGS
 # ============================================================================
 report.append("\n" + "="*100)
-report.append("7. TEMPORAL ANALYSIS - PRICE TRENDS")
+report.append("7. ZEITLICHE ANALYSE - PRICE TRENDS")
 report.append("="*100)
 
 if 'year' in test_df.columns and 'month' in test_df.columns:
@@ -277,19 +277,19 @@ TEMPORAL INSIGHTS:
 • Peak Season: {months[int(monthly_stats.idxmax()-1)]} (€{monthly_stats.max():.2f})
 • Low Season: {months[int(monthly_stats.idxmin()-1)]} (€{monthly_stats.min():.2f})
 
-RECOMMENDATION: Consider seasonal factors for rental pricing strategies.
+EMPFEHLUNG: Consider seasonal factors for rental pricing strategies.
 """)
 
 # ============================================================================
-# 8. MODEL DIAGNOSTICS
+# 8. MODELLDIAGNOSTIK
 # ============================================================================
 report.append("\n" + "="*100)
-report.append("8. MODEL DIAGNOSTICS & RESIDUAL ANALYSIS")
+report.append("8. MODELLDIAGNOSTIK & RESIDUAL ANALYSIS")
 report.append("="*100)
 
 residuals = y_test.values - results['y_test_pred_xgb']
 report.append(f"""
-Gradient Boosting Regressor Residual Statistics (Test Set):
+Gradient-Boosting-Regressor Residual Statistics (Test Set):
 • Mean: €{residuals.mean():.2f} (should be close to 0 - unbiased predictions)
 • Std Dev: €{residuals.std():.2f}
 • Min: €{residuals.min():.2f}
@@ -302,7 +302,7 @@ DIAGNOSTICS:
 ✓ No obvious heteroscedasticity: Variance constant across prediction range
 ✓ Well-calibrated prediction intervals: Uncertainty estimates reliable
 
-POTENTIAL IMPROVEMENTS:
+MÖGLICHE VERBESSERUNGEN:
 • Ensemble methods combining multiple models
 • Advanced feature engineering (e.g., interaction terms)
 • Regional-specific sub-models
@@ -311,14 +311,14 @@ POTENTIAL IMPROVEMENTS:
 """)
 
 # ============================================================================
-# 9. LIMITATIONS & RECOMMENDATIONS
+# 9. EINSCHRÄNKUNGEN & EMPFEHLUNGEN
 # ============================================================================
 report.append("\n" + "="*100)
-report.append("9. LIMITATIONS & RECOMMENDATIONS")
+report.append("9. EINSCHRÄNKUNGEN & EMPFEHLUNGEN")
 report.append("="*100)
 
 report.append("""
-LIMITATIONS:
+EINSCHRÄNKUNGEN:
 1. Data Quality: Missing values in 20-85% of some features required imputation
 2. Temporal Coverage: Limited to 2019-2020 data; doesn't capture long-term trends
 3. Geographic Precision: Region-level aggregation; postal code level has data sparsity
@@ -326,14 +326,14 @@ LIMITATIONS:
 5. Sample Size: Smaller representation in some remote regions
 6. Feature Engineering: Could benefit from domain-specific enhancements
 
-RECOMMENDATIONS FOR PRODUCTION DEPLOYMENT:
+EMPFEHLUNGEN FOR PRODUCTION DEPLOYMENT:
 1. Implement automated model retraining on new data
-2. Monitor prediction accuracy over time (potential model drift)
+2. Überwachung der Vorhersagegenauigkeit im Zeitverlauf (mögliche Modellverschiebung)
 3. Create region-specific models for better local accuracy
 4. Add economic indicators (employment, inflation, interest rates)
 5. Implement A/B testing with alternative models
-6. Use ensemble methods combining Gradient Boosting Regressor and Neural Network
-7. Regular feature importance reviews and updates
+6. Verwenden Sie ensemble methods combining Gradient-Boosting-Regressor and Neuronales Netz
+7. Regelmäßige Überprüfung und Aktualisierung der Merkmalswichtigkeit
 8. Implement automated alerting for unusual predictions
 9. Track prediction intervals' calibration over time
 10. Expand data collection for better geographic coverage
@@ -347,57 +347,57 @@ BUSINESS APPLICATIONS:
 """)
 
 # ============================================================================
-# 10. TECHNICAL SPECIFICATIONS
+# 10. TECHNISCHE SPEZIFIKATIONEN
 # ============================================================================
 report.append("\n" + "="*100)
-report.append("10. TECHNICAL SPECIFICATIONS")
+report.append("10. TECHNISCHE SPEZIFIKATIONEN")
 report.append("="*100)
 
 report.append(f"""
-DATA PREPROCESSING:
+DATENVORBEREITUNG:
 • Outlier removal: Kept prices within 1st-99th percentile
 • Missing value imputation: Median strategy for numeric features
 • Feature scaling: StandardScaler for neural network
 • Categorical encoding: LabelEncoder for categorical variables
 
-MODELS IMPLEMENTED:
-1. Ridge Regression (α=1.0)
+IMPLEMENTIERTE MODELLE:
+1. Ridge-Regression (α=1.0)
    - Baseline model with L2 regularization
    - Linear relationships only
 
-2. Gradient Boosting Regressor (Gradient Boosting)
+2. Gradient-Boosting-Regressor (Gradient Boosting)
    - n_estimators=200, max_depth=6
    - learning_rate=0.1
    - Captures non-linear relationships
 
-3. Neural Network (TensorFlow/Keras)
+3. Neuronales Netz (TensorFlow/Keras)
    - Architecture: 256 → 128 → 64 → 1 neurons
    - Dropout layers for regularization
    - ReLU activations
    - 100 epochs, batch_size=32
 
-EVALUATION METHODOLOGY:
+BEWERTUNGSMETHODOLOGIE:
 • Temporal split strategy (realistic scenario)
 • Multiple metrics (MAE, RMSE, R², MAPE)
 • Cross-validation on validation set
 • Prediction interval calibration analysis
 
-FILES GENERATED:
+ERZEUGTE DATEIEN:
 • main_pipeline.py - Data loading, preprocessing, model training
 • evaluate_models.py - Model evaluation and uncertainty analysis
-• visualizations.py - All charts and plots generation
-• generate_map.py - Interactive maps with Folium
+• visualizations.py - Alle Diagramme und Plots
+• generate_maps.py - Interaktive Karten mit Folium
 • generate_report.py - This comprehensive report
 • 7 visualization PNG files (high-resolution)
-• 2 interactive HTML maps
+• 2 interaktive HTML-Karten
 • Model artifacts (pickled objects)
 """)
 
 # ============================================================================
-# 11. CONCLUSION
+# 11. FAZIT
 # ============================================================================
 report.append("\n" + "="*100)
-report.append("11. CONCLUSION")
+report.append("11. FAZIT")
 report.append("="*100)
 
 report.append(f"""
@@ -405,20 +405,20 @@ This project successfully developed a multi-model machine learning system for Ge
 rental price prediction with excellent predictive performance:
 
 KEY ACHIEVEMENTS:
-✓ Best model (Gradient Boosting Regressor) achieves €{best_test_mae:.0f} average prediction error
+✓ Best model (Gradient-Boosting-Regressor) achieves €{best_test_mae:.0f} average prediction error
 ✓ Explains {best_test_r2*100:.1f}% of rental price variance
 ✓ Well-calibrated 90% prediction intervals for uncertainty quantification
 ✓ Comprehensive spatial and temporal analysis
 ✓ Production-ready code with modular, maintainable structure
-✓ Rich visualizations and interactive maps for stakeholder insights
+✓ Umfangreiche Visualisierungen und interaktive Karten für Stakeholder-Einsichten
 
-The model demonstrates strong practical utility for:
+Das Modell zeigt strong practical utility for:
 • Rental price estimation and market benchmarking
 • Risk assessment through prediction intervals
 • Market analysis through spatial and temporal patterns
 • Decision support for buyers, sellers, and platforms
 
-NEXT STEPS:
+NÄCHSTE SCHRITTE:
 1. Deploy model to production environment
 2. Set up automated retraining pipeline
 3. Monitor model performance in real-time
@@ -426,7 +426,7 @@ NEXT STEPS:
 5. Expand to additional markets or regions
 6. Incorporate additional data sources
 
-Report prepared: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+Bericht erstellt: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 """)
 
 report.append("\n" + "="*100)
@@ -471,12 +471,12 @@ print("\n" + "="*80)
 print("REPORT GENERATION COMPLETED!")
 print("="*80)
 print("\nAll deliverables ready:")
-print("  ✓ main_pipeline.py - Complete ML pipeline")
-print("  ✓ evaluate_models.py - Model evaluation")
-print("  ✓ visualizations.py - Chart generation")
-print("  ✓ generate_map.py - Interactive maps")
-print("  ✓ generate_report.py - Report generation")
+print("  ✓ main_pipeline.py - Komplett-ML-Pipeline")
+print("  ✓ evaluate_models.py - Modellbewertung")
+print("  ✓ visualizations.py - Diagrammerstellung")
+print("  ✓ generate_maps.py - Interaktive Karten")
+print("  ✓ generate_report.py - Berichtserstellung")
 print("  ✓ 7 visualization files (PNG)")
-print("  ✓ 2 interactive maps (HTML)")
+print("  ✓ 2 interaktive Karten (HTML)")
 print("  ✓ Comprehensive report (TXT)")
 print("  ✓ Report summary (JSON)")

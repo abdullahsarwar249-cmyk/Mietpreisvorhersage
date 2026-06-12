@@ -1,6 +1,6 @@
-# Mietpreisvorhersage mit Machine Learning
+# Mietpreisvorhersage mit Maschinelles Lernen
 
-## Projektarbeit im Modul Angewandtes Machine Learning (AML)
+## Projektarbeit im Modul Angewandtes Maschinelles Lernen (AML)
 
 **Studierende**
 
@@ -14,7 +14,7 @@ Sommersemester 2026
 
 # Projektziel
 
-Ziel dieser Projektarbeit ist die Entwicklung eines Machine-Learning-Systems zur Vorhersage von Mietpreisen in Deutschland.
+Ziel dieser Projektarbeit ist die Entwicklung eines Maschinenlernen-Systems zur Vorhersage von Mietpreisen in Deutschland.
 
 Im Fokus steht die Vorhersage der monatlichen Nettokaltmiete auf Basis verschiedener Wohnungsmerkmale. Neben klassischen Immobilienmerkmalen werden auch räumliche und zeitliche Faktoren berücksichtigt, um regionale Unterschiede sowie zeitliche Entwicklungen des Wohnungsmarktes abzubilden.
 
@@ -170,17 +170,17 @@ Für das neuronale Netz wurde eine Standardisierung der Eingabedaten mittels Sta
 
 Zur Lösung der Regressionsaufgabe wurden drei verschiedene Modellklassen implementiert und miteinander verglichen.
 
-## 1. Ridge Regression
+## 1. Ridge-Regression
 
-Die Ridge Regression dient als lineares Basismodell.
+Die Ridge-Regression dient als lineares Basismodell.
 
 Sie ermöglicht die Bewertung, wie gut lineare Zusammenhänge zwischen den Eingangsmerkmalen und den Mietpreisen modelliert werden können.
 
 ---
 
-## 2. Gradient Boosting Regressor
+## 2. Gradient-Boosting-Regressor
 
-Der Gradient Boosting Regressor bildet das leistungsstärkste Modell innerhalb des Projekts.
+Der Gradient-Boosting-Regressor bildet das leistungsstärkste Modell innerhalb des Projekts.
 
 Durch die Kombination mehrerer Entscheidungsbäume können komplexe nichtlineare Zusammenhänge zwischen Immobilienmerkmalen und Mietpreisen erfasst werden.
 
@@ -255,15 +255,15 @@ Mittlere prozentuale Abweichung zwischen Vorhersage und tatsächlichem Wert.
 
 | Modell                      |      MAE |     RMSE |     R² |
 | --------------------------- | -------: | -------: | -----: |
-| Ridge Regression            | 146,62 € | 221,92 € | 0,6984 |
-| Gradient Boosting Regressor |  90,68 € | 145,33 € | 0,8707 |
+| Ridge-Regression            | 146,62 € | 221,92 € | 0,6984 |
+| Gradient-Boosting-Regressor |  90,68 € | 145,33 € | 0,8707 |
 | Neuronales Netz             | 122,90 € | 199,22 € | 0,7570 |
 
 ---
 
 # Bestes Modell
 
-Der Gradient Boosting Regressor erzielte die beste Leistung auf dem Testdatensatz.
+Der Gradient-Boosting-Regressor erzielte die beste Leistung auf dem Testdatensatz.
 
 Testergebnisse:
 
@@ -279,7 +279,7 @@ Das Modell erklärt damit rund 87 % der Varianz der Mietpreise.
 
 Neben den klassischen Regressionsmetriken wurde eine Unsicherheitsanalyse durchgeführt.
 
-Hierzu wurden 90%-Prediction-Intervals auf Basis der Modellresiduen berechnet.
+Hierzu wurden 90%-Vorhersageintervalle auf Basis der Modellresiduen berechnet.
 
 Ergebnisse:
 
@@ -291,7 +291,7 @@ Die Analyse zeigt, dass die Vorhersageintervalle die tatsächlichen Mietpreise i
 
 ---
 
-# Feature Importance
+# Merkmalswichtigkeit
 
 Die wichtigsten Einflussgrößen des Gradient-Boosting-Modells sind:
 
@@ -347,7 +347,7 @@ evaluate_models.py
 │
 ├── Modellvergleich
 ├── Unsicherheitsanalyse
-├── Feature Importance
+├── Merkmalswichtigkeit
 ├── Räumliche Analyse
 └── Zeitliche Analyse
 
@@ -426,8 +426,8 @@ Trotz der guten Vorhersageleistung bestehen einige Einschränkungen:
 
 # Fazit
 
-Im Rahmen dieser Projektarbeit wurde ein vollständiges Machine-Learning-System zur Vorhersage deutscher Mietpreise entwickelt.
+Im Rahmen dieser Projektarbeit wurde ein vollständiges Maschinenlernen-System zur Vorhersage deutscher Mietpreise entwickelt.
 
 Durch den Vergleich verschiedener Modellklassen, die Integration räumlicher und zeitlicher Merkmale sowie die Durchführung einer Unsicherheitsanalyse konnte eine umfassende Untersuchung des Problems durchgeführt werden.
 
-Das beste Modell, ein Gradient Boosting Regressor, erreicht einen MAE von 90,68 € und erklärt rund 87 % der Varianz der Mietpreise. Die Ergebnisse zeigen, dass datengetriebene Verfahren eine zuverlässige Unterstützung bei der Analyse und Bewertung von Mietpreisen liefern können.
+Das beste Modell, ein Gradient-Boosting-Regressor, erreicht einen MAE von 90,68 € und erklärt rund 87 % der Varianz der Mietpreise. Die Ergebnisse zeigen, dass datengetriebene Verfahren eine zuverlässige Unterstützung bei der Analyse und Bewertung von Mietpreisen liefern können.

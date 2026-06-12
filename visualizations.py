@@ -1,5 +1,5 @@
 """
-Comprehensive Visualization Generation
+Umfassende Visualisierungserstellung
 """
 
 import pandas as pd
@@ -15,10 +15,10 @@ plt.style.use('seaborn-v0_8-darkgrid')
 sns.set_palette("husl")
 
 print("="*80)
-print("GENERATING VISUALIZATIONS")
+print("VISUALISIERUNGEN ERSTELLEN")
 print("="*80)
 
-# Load results
+# Ergebnisse laden
 with open('pipeline_results.pkl', 'rb') as f:
     results = pickle.load(f)
 
@@ -40,9 +40,9 @@ nn_intervals = eval_results['nn_intervals']
 feature_importance = pd.DataFrame(eval_results['feature_importance'])
 
 # ============================================================================
-# 1. DATA EXPLORATION VISUALIZATIONS
+# 1. DATENERKUNDUNGSVISUALISIERUNGEN
 # ============================================================================
-print("\n[1] Creating data exploration visualizations...")
+print("\n[1] Erstelle Visualisierungen zur Datenerkundung...")
 
 fig = plt.figure(figsize=(16, 12))
 gs = GridSpec(3, 3, figure=fig)
@@ -72,14 +72,14 @@ if 'livingSpace' in test_df.columns:
     ax3.set_title('Living Space vs Rent (Test Data)')
     ax3.grid(True, alpha=0.3)
 
-# 1.4 Feature Correlations (top features)
+# 1.4 Merkmalskorrelationen (top features)
 ax4 = fig.add_subplot(gs[1, 0])
 if 'livingSpace' in results['X_train'].columns:
     sample_features = results['X_train'].iloc[:500, :15]
     corr_with_target = pd.concat([sample_features, y_train.iloc[:500]], axis=1).corr().iloc[:-1, -1].sort_values(ascending=False)
     corr_with_target.head(10).plot(kind='barh', ax=ax4, color='coral')
     ax4.set_xlabel('Correlation with Base Rent')
-    ax4.set_title('Top 10 Feature Correlations')
+    ax4.set_title('Top 10 Merkmalskorrelationen')
 
 # 1.5 Rooms vs Rent
 ax5 = fig.add_subplot(gs[1, 1])
@@ -132,39 +132,39 @@ ax9.barh(range(len(avg_rent_regions)), avg_rent_regions.values, color='salmon', 
 ax9.set_yticks(range(len(avg_rent_regions)))
 ax9.set_yticklabels(avg_rent_regions.index, fontsize=9)
 ax9.set_xlabel('Average Rent (€)')
-ax9.set_title('Top 10 Most Expensive Regions')
+ax9.set_title('Top 10 teuerste Regionen')
 ax9.grid(True, alpha=0.3, axis='x')
 
 plt.tight_layout()
 plt.savefig('01_data_exploration.png', dpi=300, bbox_inches='tight')
-print("   ✓ Saved: 01_data_exploration.png")
+print("   ✓ Gespeichert: 01_data_exploration.png")
 plt.close()
 
 # ============================================================================
-# 2. MODEL PERFORMANCE COMPARISON
+# 2. MODELLLEISTUNGSVERGLEICH
 # ============================================================================
-print("\n[2] Creating model performance visualizations...")
+print("\n[2] Erstelle Visualisierungen zur Modellleistung...")
 
 fig = plt.figure(figsize=(16, 10))
 gs = GridSpec(2, 3, figure=fig)
 
-models = ['Ridge', 'Gradient Boosting Regressor', 'Neural Network']
+models = ['Ridge', 'Gradient-Boosting-Regressor', 'Neuronales Netz']
 predictions = [y_test_pred_ridge, y_test_pred_xgb, y_test_pred_nn]
 colors = ['#3498db', '#e74c3c', '#2ecc71']
 
-# 2.1-2.3 Predictions vs Actual for each model
+# 2.1-2.3 Vorhersagen vs. Tatsächlich for each model
 for idx, (model, pred, color) in enumerate(zip(models, predictions, colors)):
     ax = fig.add_subplot(gs[0, idx])
     ax.scatter(y_test, pred, alpha=0.5, s=20, color=color, edgecolors='black', linewidth=0.5)
     
-    # Perfect prediction line
+    # Perfekte Vorhersagegerade
     min_val = min(y_test.min(), pred.min())
     max_val = max(y_test.max(), pred.max())
     ax.plot([min_val, max_val], [min_val, max_val], 'k--', alpha=0.3, linewidth=2)
     
     ax.set_xlabel('Actual Rent (€)')
     ax.set_ylabel('Predicted Rent (€)')
-    ax.set_title(f'{model}: Predictions vs Actual')
+    ax.set_title(f'{model}: Vorhersagen vs. Tatsächlich')
     ax.grid(True, alpha=0.3)
     
     # Add R² score
@@ -173,7 +173,7 @@ for idx, (model, pred, color) in enumerate(zip(models, predictions, colors)):
     ax.text(0.05, 0.95, f'R² = {r2:.4f}', transform=ax.transAxes, 
             verticalalignment='top', bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.8))
 
-# 2.4 Residuals comparison
+# 2.4 Residuen comparison
 ax4 = fig.add_subplot(gs[1, 0])
 residuals_ridge = y_test - y_test_pred_ridge
 residuals_xgb = y_test - y_test_pred_xgb
@@ -181,9 +181,9 @@ residuals_nn = y_test - y_test_pred_nn
 
 ax4.violinplot([residuals_ridge, residuals_xgb, residuals_nn], positions=[1, 2, 3], showmeans=True)
 ax4.set_xticks([1, 2, 3])
-ax4.set_xticklabels(['Ridge', 'Gradient Boosting Regressor', 'NN'])
-ax4.set_ylabel('Residuals (€)')
-ax4.set_title('Residual Distribution by Model')
+ax4.set_xticklabels(['Ridge', 'Gradient-Boosting-Regressor', 'NN'])
+ax4.set_ylabel('Residuen (€)')
+ax4.set_title('Residuenverteilung nach Modell')
 ax4.axhline(y=0, color='red', linestyle='--', alpha=0.5)
 ax4.grid(True, alpha=0.3, axis='y')
 
@@ -206,49 +206,49 @@ width = 0.35
 ax5.bar(x_pos - width/2, mae_vals, width, label='MAE', color='skyblue', edgecolor='black')
 ax5.bar(x_pos + width/2, rmse_vals, width, label='RMSE', color='coral', edgecolor='black')
 ax5.set_ylabel('Error (€)')
-ax5.set_title('MAE vs RMSE by Model')
+ax5.set_title('MAE vs. RMSE nach Modell')
 ax5.set_xticks(x_pos)
 ax5.set_xticklabels(models)
 ax5.legend()
 ax5.grid(True, alpha=0.3, axis='y')
 
-# 2.6 Neural Network Training History
+# 2.6 Neuronales Netz Training History
 ax6 = fig.add_subplot(gs[1, 2])
 ax6.plot(history.history['loss'], label='Training Loss', color='#3498db', linewidth=2)
 ax6.plot(history.history['val_loss'], label='Validation Loss', color='#e74c3c', linewidth=2)
 ax6.set_xlabel('Epoch')
 ax6.set_ylabel('Loss (MSE)')
-ax6.set_title('Neural Network Training History')
+ax6.set_title('Neuronales Netz Training History')
 ax6.legend()
 ax6.grid(True, alpha=0.3)
 
 plt.tight_layout()
 plt.savefig('02_model_performance.png', dpi=300, bbox_inches='tight')
-print("   ✓ Saved: 02_model_performance.png")
+print("   ✓ Gespeichert: 02_model_performance.png")
 plt.close()
 
 # ============================================================================
 # 3. PREDICTION INTERVALS & UNCERTAINTY
 # ============================================================================
-print("\n[3] Creating uncertainty analysis visualizations...")
+print("\n[3] Erstelle Visualisierungen zur Unsicherheitsanalyse...")
 
 fig = plt.figure(figsize=(16, 6))
 gs = GridSpec(1, 2, figure=fig)
 
-# 3.1 Gradient Boosting Regressor prediction intervals
+# 3.1 Gradient-Boosting-Regressor prediction intervals
 ax1 = fig.add_subplot(gs[0, 0])
 sorted_idx = np.argsort(y_test.values)
 x_axis = np.arange(len(sorted_idx))[:500]  # First 500 for clarity
 
 ax1.scatter(x_axis, y_test.values[sorted_idx[:500]], alpha=0.6, s=20, color='black', label='Actual', zorder=3)
-ax1.plot(x_axis, y_test_pred_xgb[sorted_idx[:500]], color='#e74c3c', linewidth=2, label='Gradient Boosting Regressor Prediction', zorder=2)
+ax1.plot(x_axis, y_test_pred_xgb[sorted_idx[:500]], color='#e74c3c', linewidth=2, label='Gradient-Boosting-Regressor Prediction', zorder=2)
 ax1.fill_between(x_axis, 
                 xgb_intervals['lower'][sorted_idx[:500]],
                 xgb_intervals['upper'][sorted_idx[:500]],
                 alpha=0.3, color='#e74c3c', label='90% Prediction Interval', zorder=1)
 ax1.set_xlabel('Sample Index (sorted by actual rent)')
 ax1.set_ylabel('Rent (€)')
-ax1.set_title(f"Gradient Boosting Regressor: Predictions with 90% Intervals\n(Coverage: {xgb_intervals['coverage']:.1%})")
+ax1.set_title(f"Gradient-Boosting-Regressor: Predictions with 90% Intervals\n(Coverage: {xgb_intervals['coverage']:.1%})")
 ax1.legend()
 ax1.grid(True, alpha=0.3)
 
@@ -262,19 +262,19 @@ ax2.fill_between(x_axis,
                 alpha=0.3, color='#2ecc71', label='90% Prediction Interval', zorder=1)
 ax2.set_xlabel('Sample Index (sorted by actual rent)')
 ax2.set_ylabel('Rent (€)')
-ax2.set_title(f"Neural Network: Predictions with 90% Intervals\n(Coverage: {nn_intervals['coverage']:.1%})")
+ax2.set_title(f"Neuronales Netz: Predictions with 90% Intervals\n(Coverage: {nn_intervals['coverage']:.1%})")
 ax2.legend()
 ax2.grid(True, alpha=0.3)
 
 plt.tight_layout()
 plt.savefig('03_uncertainty_analysis.png', dpi=300, bbox_inches='tight')
-print("   ✓ Saved: 03_uncertainty_analysis.png")
+print("   ✓ Gespeichert: 03_uncertainty_analysis.png")
 plt.close()
 
 # ============================================================================
-# 4. FEATURE IMPORTANCE
+# 4. MERKMALSWICHTIGKEIT
 # ============================================================================
-print("\n[4] Creating feature importance visualizations...")
+print("\n[4] Erstelle Visualisierungen zur Merkmalswichtigkeit...")
 
 fig, axes = plt.subplots(1, 1, figsize=(12, 8))
 
@@ -284,18 +284,18 @@ axes.barh(range(len(top_features)), top_features['importance'].values, color=col
 axes.set_yticks(range(len(top_features)))
 axes.set_yticklabels(top_features['feature'].values)
 axes.set_xlabel('Importance Score')
-axes.set_title('Gradient Boosting Regressor: Top 20 Feature Importance')
+axes.set_title('Gradient-Boosting-Regressor: Top 20 Merkmalswichtigkeit')
 axes.grid(True, alpha=0.3, axis='x')
 
 plt.tight_layout()
 plt.savefig('04_feature_importance.png', dpi=300, bbox_inches='tight')
-print("   ✓ Saved: 04_feature_importance.png")
+print("   ✓ Gespeichert: 04_feature_importance.png")
 plt.close()
 
 # ============================================================================
-# 5. SPATIAL ANALYSIS
+# 5. RÄUMLICHE ANALYSE
 # ============================================================================
-print("\n[5] Creating spatial analysis visualizations...")
+print("\n[5] Erstelle Visualisierungen zur räumlichen Analyse...")
 
 fig = plt.figure(figsize=(16, 10))
 gs = GridSpec(2, 2, figure=fig)
@@ -309,7 +309,7 @@ bars = ax1.barh(range(len(region_avg)), region_avg['mean'].values, color=colors_
 ax1.set_yticks(range(len(region_avg)))
 ax1.set_yticklabels(region_avg.index, fontsize=9)
 ax1.set_xlabel('Average Base Rent (€)')
-ax1.set_title('Average Rental Price by Region')
+ax1.set_title('Durchschnittliche Mietpreise nach Region')
 ax1.grid(True, alpha=0.3, axis='x')
 
 # 5.2 Price distribution by top regions
@@ -320,7 +320,7 @@ bp = ax2.boxplot(region_data, labels=top_5_regions, patch_artist=True)
 for patch, color in zip(bp['boxes'], plt.cm.Set3(range(len(top_5_regions)))):
     patch.set_facecolor(color)
 ax2.set_ylabel('Base Rent (€)')
-ax2.set_title('Price Distribution in Top 5 Most Expensive Regions')
+ax2.set_title('Price Distribution in Top 5 Most Teuer Regions')
 ax2.tick_params(axis='x', rotation=45)
 ax2.grid(True, alpha=0.3, axis='y')
 
@@ -332,19 +332,19 @@ bp2 = ax3.boxplot(region_data_cheap, labels=bottom_5_regions, patch_artist=True)
 for patch, color in zip(bp2['boxes'], plt.cm.Set2(range(len(bottom_5_regions)))):
     patch.set_facecolor(color)
 ax3.set_ylabel('Base Rent (€)')
-ax3.set_title('Price Distribution in Top 5 Cheapest Regions')
+ax3.set_title('Preisspannen in den 5 günstigsten Regionen')
 ax3.tick_params(axis='x', rotation=45)
 ax3.grid(True, alpha=0.3, axis='y')
 
 plt.tight_layout()
 plt.savefig('05_spatial_analysis.png', dpi=300, bbox_inches='tight')
-print("   ✓ Saved: 05_spatial_analysis.png")
+print("   ✓ Gespeichert: 05_spatial_analysis.png")
 plt.close()
 
 # ============================================================================
-# 6. TEMPORAL ANALYSIS
+# 6. ZEITLICHE ANALYSE
 # ============================================================================
-print("\n[6] Creating temporal analysis visualizations...")
+print("\n[6] Erstelle Visualisierungen zur zeitlichen Analyse...")
 
 fig = plt.figure(figsize=(16, 8))
 gs = GridSpec(2, 2, figure=fig)
@@ -360,7 +360,7 @@ if 'year' in test_df.columns and 'month' in test_df.columns:
                     alpha=0.3, color='#3498db')
     ax1.set_xlabel('Month')
     ax1.set_ylabel('Average Base Rent (€)')
-    ax1.set_title('Seasonal Price Trends (Monthly Average)')
+    ax1.set_title('Saisonale Preisentwicklung (Monatsdurchschnitt)')
     ax1.set_xticks(range(1, 13))
     ax1.grid(True, alpha=0.3)
     
@@ -371,7 +371,7 @@ if 'year' in test_df.columns and 'month' in test_df.columns:
     ax2.bar(quarter_avg.index, quarter_avg.values, color=colors_quarter, edgecolor='black', width=0.6)
     ax2.set_xlabel('Quarter')
     ax2.set_ylabel('Average Base Rent (€)')
-    ax2.set_title('Average Rent by Quarter')
+    ax2.set_title('Durchschnittliche Miete nach Quartal')
     ax2.set_xticks([1, 2, 3, 4])
     ax2.grid(True, alpha=0.3, axis='y')
     
@@ -384,7 +384,7 @@ if 'year' in test_df.columns and 'month' in test_df.columns:
     
     ax3.set_xlabel('Year')
     ax3.set_ylabel('Average Base Rent (€)')
-    ax3.set_title('Price Trends by Year (Top 5 Regions)')
+    ax3.set_title('Preisentwicklung nach Jahr (Top 5 Regionen)')
     ax3.legend(loc='best')
     ax3.grid(True, alpha=0.3)
 else:
@@ -394,35 +394,35 @@ else:
 
 plt.tight_layout()
 plt.savefig('06_temporal_analysis.png', dpi=300, bbox_inches='tight')
-print("   ✓ Saved: 06_temporal_analysis.png")
+print("   ✓ Gespeichert: 06_temporal_analysis.png")
 plt.close()
 
 # ============================================================================
 # 7. RESIDUAL ANALYSIS
 # ============================================================================
-print("\n[7] Creating residual analysis visualizations...")
+print("\n[7] Erstelle Visualisierungen zur Residuenanalyse...")
 
 fig = plt.figure(figsize=(16, 6))
 gs = GridSpec(1, 3, figure=fig)
 
 residuals_xgb = y_test.values - y_test_pred_xgb
 
-# 7.1 Residuals vs Predicted
+# 7.1 Residuen vs Predicted
 ax1 = fig.add_subplot(gs[0, 0])
 ax1.scatter(y_test_pred_xgb, residuals_xgb, alpha=0.5, s=20, color='#e74c3c', edgecolors='black', linewidth=0.5)
 ax1.axhline(y=0, color='black', linestyle='--', linewidth=2)
 ax1.set_xlabel('Predicted Rent (€)')
-ax1.set_ylabel('Residuals (€)')
-ax1.set_title('Residuals vs Predicted Values (Gradient Boosting Regressor)')
+ax1.set_ylabel('Residuen (€)')
+ax1.set_title('Residuen vs Predicted Values (Gradient-Boosting-Regressor)')
 ax1.grid(True, alpha=0.3)
 
-# 7.2 Residuals distribution
+# 7.2 Residuen distribution
 ax2 = fig.add_subplot(gs[0, 1])
 ax2.hist(residuals_xgb, bins=50, color='#e74c3c', alpha=0.7, edgecolor='black')
 ax2.axvline(residuals_xgb.mean(), color='black', linestyle='--', linewidth=2, label=f'Mean: €{residuals_xgb.mean():.0f}')
-ax2.set_xlabel('Residuals (€)')
+ax2.set_xlabel('Residuen (€)')
 ax2.set_ylabel('Frequency')
-ax2.set_title('Distribution of Residuals (Gradient Boosting Regressor)')
+ax2.set_title('Distribution of Residuen (Gradient-Boosting-Regressor)')
 ax2.legend()
 ax2.grid(True, alpha=0.3, axis='y')
 
@@ -430,18 +430,18 @@ ax2.grid(True, alpha=0.3, axis='y')
 from scipy import stats
 ax3 = fig.add_subplot(gs[0, 2])
 stats.probplot(residuals_xgb, dist="norm", plot=ax3)
-ax3.set_title('Q-Q Plot (Gradient Boosting Regressor Residuals)')
+ax3.set_title('Q-Q Plot (Gradient-Boosting-Regressor Residuen)')
 ax3.grid(True, alpha=0.3)
 
 plt.tight_layout()
 plt.savefig('07_residual_analysis.png', dpi=300, bbox_inches='tight')
-print("   ✓ Saved: 07_residual_analysis.png")
+print("   ✓ Gespeichert: 07_residual_analysis.png")
 plt.close()
 
 print("\n" + "="*80)
-print("ALL VISUALIZATIONS COMPLETED!")
+print("ALLE VISUALISIERUNGEN ABGESCHLOSSEN!")
 print("="*80)
-print("\nGenerated files:")
+print("\nErzeugte Dateien:")
 print("  - 01_data_exploration.png")
 print("  - 02_model_performance.png")
 print("  - 03_uncertainty_analysis.png")
@@ -449,6 +449,6 @@ print("  - 04_feature_importance.png")
 print("  - 05_spatial_analysis.png")
 print("  - 06_temporal_analysis.png")
 print("  - 07_residual_analysis.png")
-print("\nNext steps:")
-print("  1. Run: python3 generate_map.py")
-print("  2. Run: python3 generate_report.py")
+print("\nNächste Schritte:")
+print("  1. Ausführen: python3 generate_maps.py")
+print("  2. Ausführen: python3 generate_report.py")

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Mietpreisvorhersage - Interactive Rental Price Map</title>
+    <title>Mietpreisvorhersage - Interaktive Mietpreiskarte</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
@@ -95,47 +95,47 @@
     <div id="map"></div>
     
     <div class="info-box">
-        <h3>🗺️ Rental Price Map</h3>
+        <h3>🗺️ Mietpreiskarte</h3>
         <p style="margin-bottom: 10px; color: #666;">
-            Average rental prices by German region. Click on circles for details.
+            Durchschnittliche Mietpreise nach deutscher Region. Klicken Sie auf die Kreise für Details.
         </p>
         
         <div class="color-legend">
-            <strong>Price Categories:</strong>
+            <strong>Preiskategorien:</strong>
             <div class="legend-item">
                 <div class="legend-color" style="background: #2ecc71;"></div>
-                <span>Very Affordable (€376-€550)</span>
+                <span>Sehr erschwinglich (€376-€550)</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background: #f1c40f;"></div>
-                <span>Affordable (€550-€700)</span>
+                <span>Erschwinglich (€550-€700)</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background: #e67e22;"></div>
-                <span>Moderate (€700-€850)</span>
+                <span>Mittel (€700-€850)</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background: #e74c3c;"></div>
-                <span>Expensive (€850-€1050)</span>
+                <span>Teuer (€850-€1050)</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background: #c0392b;"></div>
-                <span>Very Expensive (€1050+)</span>
+                <span>Very Teuer (€1050+)</span>
             </div>
         </div>
         
         <hr style="margin: 10px 0; border: none; border-top: 1px solid #ddd;">
         
         <div style="font-size: 12px;">
-            <strong>How to use:</strong><br>
-            • Circle size = rent level<br>
-            • Click circles for details<br>
-            • Zoom in/out to explore<br><br>
+            <strong>So verwenden Sie die Karte:</strong><br>
+            • Kreisdurchmesser = Mietniveau<br>
+            • Klicken Sie auf Kreise für Details<br>
+            • Hinein-/Herauszoomen zum Erkunden<br><br>
             
-            <strong>Statistics:</strong><br>
-            • Avg rent: €677/month<br>
-            • Range: €376 - €1208<br>
-            • Regions: 16
+            <strong>Statistiken:</strong><br>
+            • Durchschnittliche Miete: €677/month<br>
+            • Spanne: €376 - €1208<br>
+            • Regionen: 16
         </div>
     </div>
     
@@ -168,27 +168,27 @@
                 <div class="popup-title">${marker.title}</div>
                 <div class="popup-content">
                     <div class="popup-row">
-                        <span class="popup-label">Average Rent:</span>
+                        <span class="popup-label">Durchschnittliche Miete:</span>
                         <span>€${marker.rent.toFixed(2)}/month</span>
                     </div>
                     <div class="popup-row">
-                        <span class="popup-label">Price Range:</span>
+                        <span class="popup-label">Preisspanne:</span>
                         <span>€${marker.min.toFixed(0)} - €${marker.max.toFixed(0)}</span>
                     </div>
                     <div class="popup-row">
-                        <span class="popup-label">Std Dev:</span>
+                        <span class="popup-label">Std.-Abw.:</span>
                         <span>€${marker.std.toFixed(2)}</span>
                     </div>
                     <div class="popup-row">
-                        <span class="popup-label">Listings:</span>
+                        <span class="popup-label">Angebote:</span>
                         <span>${marker.count}</span>
                     </div>
                     <div class="popup-row">
-                        <span class="popup-label">Avg m²:</span>
+                        <span class="popup-label">Durchschnittliche m²:</span>
                         <span>${marker.living_space.toFixed(0)} m²</span>
                     </div>
                     <div class="popup-row">
-                        <span class="popup-label">Avg Rooms:</span>
+                        <span class="popup-label">Durchschnittliche Zimmer:</span>
                         <span>${marker.rooms.toFixed(1)}</span>
                     </div>
                 </div>

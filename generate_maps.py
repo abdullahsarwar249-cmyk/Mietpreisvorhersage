@@ -1,6 +1,6 @@
 """
-Simplified Interactive Map Generation - WORKING VERSION
-Creates standalone HTML with markers and heatmaps
+Vereinfachte interaktive Kartenerstellung - FUNKTIONIERENDE VERSION
+Erstellt eigenständiges HTML mit Markern und Heatmaps
 """
 
 import pandas as pd
@@ -9,10 +9,10 @@ import pickle
 import json
 
 print("="*80)
-print("CREATING INTERACTIVE MAPS - FIXED VERSION")
+print("INTERAKTIVE KARTEN ERSTELLEN - FESTE VERSION")
 print("="*80)
 
-# Load results
+# Ergebnisse laden
 with open('pipeline_results.pkl', 'rb') as f:
     results = pickle.load(f)
 
@@ -41,7 +41,7 @@ region_coords = {
 }
 
 # Aggregate data by region
-print("[1] Preparing regional data...")
+print("[1] Bereite regionale Daten vor...")
 regional_stats = test_df.groupby('regio1').agg({
     'baseRent': ['mean', 'std', 'min', 'max', 'count'],
     'prediction_xgb': 'mean',
@@ -85,15 +85,15 @@ regional_stats['region_name'] = regional_stats['regio1'].map(region_name_map)
 print(f"   Found {len(regional_stats)} regions")
 
 # ============================================================================
-# CREATE RENTAL PRICE MAP
+# MIETPREISKARTE ERSTELLEN
 # ============================================================================
-print("\n[2] Generating rental price map HTML...")
+print("\n[2] Erstelle interaktive Mietpreiskarte als HTML...")
 
 min_rent = regional_stats['baseRent_mean'].min()
 max_rent = regional_stats['baseRent_mean'].max()
 
 def get_color(rent):
-    """Return color based on rent value"""
+    """Farbe basierend auf Mietwert zurückgeben"""
     normalized = (rent - min_rent) / (max_rent - min_rent)
     if normalized < 0.2:
         return '#2ecc71'  # Green
@@ -106,7 +106,7 @@ def get_color(rent):
     else:
         return '#c0392b'  # Dark Red
 
-# Build marker data
+# Markerdaten erstellen
 markers_data = []
 for idx, row in regional_stats.iterrows():
     region_name = row['region_name']
@@ -129,11 +129,11 @@ for idx, row in regional_stats.iterrows():
             'rooms': row['noRooms_mean']
         })
 
-# HTML Template
+# HTML-Vorlage
 html_content = '''<!DOCTYPE html>
 <html>
 <head>
-    <title>Mietpreisvorhersage - Interactive Rental Price Map</title>
+    <title>Mietpreisvorhersage - Interaktive Mietpreiskarte</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
@@ -227,47 +227,47 @@ html_content = '''<!DOCTYPE html>
     <div id="map"></div>
     
     <div class="info-box">
-        <h3>🗺️ Rental Price Map</h3>
+        <h3>🗺️ Mietpreiskarte</h3>
         <p style="margin-bottom: 10px; color: #666;">
-            Average rental prices by German region. Click on circles for details.
+            Durchschnittliche Mietpreise nach deutscher Region. Klicken Sie auf die Kreise für Details.
         </p>
         
         <div class="color-legend">
-            <strong>Price Categories:</strong>
+            <strong>Preiskategorien:</strong>
             <div class="legend-item">
                 <div class="legend-color" style="background: #2ecc71;"></div>
-                <span>Very Affordable (€{{MIN_RENT}}-€550)</span>
+                <span>Sehr erschwinglich (€{{MIN_RENT}}-€550)</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background: #f1c40f;"></div>
-                <span>Affordable (€550-€700)</span>
+                <span>Erschwinglich (€550-€700)</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background: #e67e22;"></div>
-                <span>Moderate (€700-€850)</span>
+                <span>Mittel (€700-€850)</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background: #e74c3c;"></div>
-                <span>Expensive (€850-€1050)</span>
+                <span>Teuer (€850-€1050)</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background: #c0392b;"></div>
-                <span>Very Expensive (€1050+)</span>
+                <span>Very Teuer (€1050+)</span>
             </div>
         </div>
         
         <hr style="margin: 10px 0; border: none; border-top: 1px solid #ddd;">
         
         <div style="font-size: 12px;">
-            <strong>How to use:</strong><br>
-            • Circle size = rent level<br>
-            • Click circles for details<br>
-            • Zoom in/out to explore<br><br>
+            <strong>So verwenden Sie die Karte:</strong><br>
+            • Kreisdurchmesser = Mietniveau<br>
+            • Klicken Sie auf Kreise für Details<br>
+            • Hinein-/Herauszoomen zum Erkunden<br><br>
             
-            <strong>Statistics:</strong><br>
-            • Avg rent: €{{AVG_RENT}}/month<br>
-            • Range: €{{MIN_RENT}} - €{{MAX_RENT}}<br>
-            • Regions: {{NUM_REGIONS}}
+            <strong>Statistiken:</strong><br>
+            • Durchschnittliche Miete: €{{AVG_RENT}}/month<br>
+            • Spanne: €{{MIN_RENT}} - €{{MAX_RENT}}<br>
+            • Regionen: {{NUM_REGIONS}}
         </div>
     </div>
     
@@ -300,27 +300,27 @@ html_content = '''<!DOCTYPE html>
                 <div class="popup-title">${marker.title}</div>
                 <div class="popup-content">
                     <div class="popup-row">
-                        <span class="popup-label">Average Rent:</span>
+                        <span class="popup-label">Durchschnittliche Miete:</span>
                         <span>€${marker.rent.toFixed(2)}/month</span>
                     </div>
                     <div class="popup-row">
-                        <span class="popup-label">Price Range:</span>
+                        <span class="popup-label">Preisspanne:</span>
                         <span>€${marker.min.toFixed(0)} - €${marker.max.toFixed(0)}</span>
                     </div>
                     <div class="popup-row">
-                        <span class="popup-label">Std Dev:</span>
+                        <span class="popup-label">Std.-Abw.:</span>
                         <span>€${marker.std.toFixed(2)}</span>
                     </div>
                     <div class="popup-row">
-                        <span class="popup-label">Listings:</span>
+                        <span class="popup-label">Angebote:</span>
                         <span>${marker.count}</span>
                     </div>
                     <div class="popup-row">
-                        <span class="popup-label">Avg m²:</span>
+                        <span class="popup-label">Durchschnittliche m²:</span>
                         <span>${marker.living_space.toFixed(0)} m²</span>
                     </div>
                     <div class="popup-row">
-                        <span class="popup-label">Avg Rooms:</span>
+                        <span class="popup-label">Durchschnittliche Zimmer:</span>
                         <span>${marker.rooms.toFixed(1)}</span>
                     </div>
                 </div>
@@ -340,16 +340,16 @@ html_output = html_output.replace('{{MAX_RENT}}', f'{max_rent:.0f}')
 html_output = html_output.replace('{{AVG_RENT}}', f'{regional_stats["baseRent_mean"].mean():.0f}')
 html_output = html_output.replace('{{NUM_REGIONS}}', str(len(regional_stats)))
 
-# Save map
+# Karte speichern
 with open('interactive_rental_map.html', 'w', encoding='utf-8') as f:
     f.write(html_output)
 
-print("   ✓ Saved: interactive_rental_map.html")
+print("   ✓ Gespeichert: interactive_rental_map.html")
 
 # ============================================================================
-# CREATE ACCURACY MAP
+# GENAUIGKEITSKARTE ERSTELLEN
 # ============================================================================
-print("\n[3] Generating prediction accuracy map HTML...")
+print("\n[3] Erstelle Genauigkeitskarte als HTML...")
 
 # Calculate errors
 regional_stats['prediction_error'] = abs(
@@ -357,7 +357,7 @@ regional_stats['prediction_error'] = abs(
 )
 
 def get_error_color(error):
-    """Color based on prediction error"""
+    """Farbe basierend auf dem Vorhersagefehler"""
     if error < 5:
         return '#2ecc71'
     elif error < 15:
@@ -369,7 +369,7 @@ def get_error_color(error):
     else:
         return '#c0392b'
 
-# Build marker data for accuracy
+# Markerdaten erstellen for accuracy
 accuracy_markers = []
 for idx, row in regional_stats.iterrows():
     region_name = row['region_name']
@@ -390,11 +390,11 @@ for idx, row in regional_stats.iterrows():
             'error_pct': (error / row['baseRent_mean'] * 100)
         })
 
-# HTML Template for accuracy map
+# HTML-Vorlage for accuracy map
 accuracy_html = '''<!DOCTYPE html>
 <html>
 <head>
-    <title>Mietpreisvorhersage - Prediction Accuracy Map</title>
+    <title>Mietpreisvorhersage - Genauigkeitskarte</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
@@ -498,9 +498,9 @@ accuracy_html = '''<!DOCTYPE html>
     <div id="map"></div>
     
     <div class="info-box">
-        <h3>🎯 Prediction Accuracy Map</h3>
+        <h3>🎯 Genauigkeitskarte</h3>
         <p style="margin-bottom: 10px; color: #666;">
-            Model prediction error by region. Click circles for details.
+            Modellvorhersagefehler nach Region. Klicken Sie auf Kreise für Details.
         </p>
         
         <div class="color-legend">
@@ -515,7 +515,7 @@ accuracy_html = '''<!DOCTYPE html>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background: #e67e22;"></div>
-                <span>Moderate (&lt;€30)</span>
+                <span>Mittel (&lt;€30)</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background: #e74c3c;"></div>
@@ -530,12 +530,12 @@ accuracy_html = '''<!DOCTYPE html>
         <hr style="margin: 10px 0; border: none; border-top: 1px solid #ddd;">
         
         <div style="font-size: 12px;">
-            <strong>How to use:</strong><br>
+            <strong>So verwenden Sie die Karte:</strong><br>
             • Circle size = error magnitude<br>
-            • Click circles for details<br>
-            • Zoom in/out to explore<br><br>
+            • Klicken Sie auf Kreise für Details<br>
+            • Hinein-/Herauszoomen zum Erkunden<br><br>
             
-            <strong>Statistics:</strong><br>
+            <strong>Statistiken:</strong><br>
             • Mean error: €{{MEAN_ERROR}}<br>
             • Best accuracy: Green<br>
             • Regions analyzed: {{NUM_REGIONS_ACC}}
@@ -584,7 +584,7 @@ accuracy_html = '''<!DOCTYPE html>
                         <span class="${accuracyClass}">€${marker.error.toFixed(2)} (${marker.error_pct.toFixed(1)}%)</span>
                     </div>
                     <div class="popup-row">
-                        <span class="popup-label">Listings:</span>
+                        <span class="popup-label">Angebote:</span>
                         <span>${marker.count}</span>
                     </div>
                 </div>
@@ -602,23 +602,23 @@ accuracy_output = accuracy_output.replace('{{ACCURACY_JSON}}', json.dumps(accura
 accuracy_output = accuracy_output.replace('{{MEAN_ERROR}}', f'{regional_stats["prediction_error"].mean():.2f}')
 accuracy_output = accuracy_output.replace('{{NUM_REGIONS_ACC}}', str(len(regional_stats)))
 
-# Save accuracy map
+# Genauigkeitskarte speichern
 with open('prediction_accuracy_map.html', 'w', encoding='utf-8') as f:
     f.write(accuracy_output)
 
-print("   ✓ Saved: prediction_accuracy_map.html")
+print("   ✓ Gespeichert: prediction_accuracy_map.html")
 
 print("\n" + "="*80)
-print("✅ MAPS CREATED SUCCESSFULLY!")
+print("✅ KARTEN ERFOLGREICH ERSTELLT!")
 print("="*80)
-print("\n📍 Generated files:")
-print("  ✓ interactive_rental_map.html - Rental prices by region")
-print("  ✓ prediction_accuracy_map.html - Model accuracy by region")
+print("\n📍 Erzeugte Dateien:")
+print("  ✓ interactive_rental_map.html - Mietpreise nach Region")
+print("  ✓ prediction_accuracy_map.html - Modellgenauigkeit nach Region")
 print("\n🌐 To view:")
 print("  1. Double-click HTML file to open in browser")
-print("  2. OR right-click → Open with → Web Browser")
+print("  2. OR right-click → Öffnen Sie with → Web Browser")
 print("  3. OR use 'Live Server' VS Code extension")
-print("\n✨ Features:")
+print("\n✨ Funktionen:")
 print("  • Color-coded circles showing prices/accuracy")
 print("  • Click circles to see detailed information")
 print("  • Zoom and pan to explore regions")

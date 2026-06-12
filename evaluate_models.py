@@ -1,5 +1,5 @@
 """
-Model Evaluation and Uncertainty Analysis
+Modellbewertung and Uncertainty Analysis
 """
 
 import pandas as pd
@@ -11,10 +11,10 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score, m
 warnings.filterwarnings('ignore')
 
 print("="*80)
-print("MODEL EVALUATION & UNCERTAINTY ANALYSIS")
+print("MODELLBEWERTUNG & UNSICHERHEITSANALYSE")
 print("="*80)
 
-# Load results
+# Ergebnisse laden
 with open('pipeline_results.pkl', 'rb') as f:
     results = pickle.load(f)
 
@@ -82,9 +82,9 @@ for split, metrics in nn_metrics.items():
     print(f"{split:12} | MAE: {metrics['MAE']:8.2f} | RMSE: {metrics['RMSE']:8.2f} | R²: {metrics['R²']:6.4f} | MAPE: {metrics['MAPE']:7.4f}%")
 
 # ============================================================================
-# UNCERTAINTY ANALYSIS - PREDICTION INTERVALS
+# UNSICHERHEITSANALYSE - PREDICTION INTERVALS
 # ============================================================================
-print("\n[4] UNCERTAINTY ANALYSIS - PREDICTION INTERVALS")
+print("\n[4] UNSICHERHEITSANALYSE - PREDICTION INTERVALS")
 print("-" * 80)
 
 def calculate_prediction_intervals(y_true, y_pred, confidence=0.9):
@@ -108,20 +108,20 @@ def calculate_prediction_intervals(y_true, y_pred, confidence=0.9):
 xgb_intervals = calculate_prediction_intervals(y_test, y_test_pred_xgb)
 nn_intervals = calculate_prediction_intervals(y_test, y_test_pred_nn)
 
-print(f"\nGradient Boosting Regressor Test Set:")
+print(f"\nGradient-Boosting-Regressor Test Set:")
 print(f"  Prediction interval coverage: {xgb_intervals['coverage']:.2%} (target: 90%)")
 print(f"  Average interval width: €{xgb_intervals['interval_width']:.2f}")
 print(f"  Std of residuals: €{xgb_intervals['std_residuals']:.2f}")
 
-print(f"\nNeural Network Test Set:")
+print(f"\nNeuronales Netz Test Set:")
 print(f"  Prediction interval coverage: {nn_intervals['coverage']:.2%} (target: 90%)")
 print(f"  Average interval width: €{nn_intervals['interval_width']:.2f}")
 print(f"  Std of residuals: €{nn_intervals['std_residuals']:.2f}")
 
 # ============================================================================
-# FEATURE IMPORTANCE (Gradient Boosting)
+# MERKMALSWICHTIGKEIT (Gradient Boosting)
 # ============================================================================
-print("\n[5] FEATURE IMPORTANCE (Gradient Boosting)")
+print("\n[5] MERKMALSWICHTIGKEIT (Gradient Boosting)")
 print("-" * 80)
 feature_importance = pd.DataFrame({
     'feature': X_train.columns,
@@ -132,9 +132,9 @@ for idx, row in feature_importance.iterrows():
     print(f"  {row['feature']:20} | {row['importance']:8.4f}")
 
 # ============================================================================
-# SPATIAL ANALYSIS
+# RÄUMLICHE ANALYSE
 # ============================================================================
-print("\n[6] SPATIAL ANALYSIS - AVERAGE RENT BY REGION")
+print("\n[6] RÄUMLICHE ANALYSE - AVERAGE RENT BY REGION")
 print("-" * 80)
 
 # Reconstruct original regions from test set
@@ -150,22 +150,22 @@ regional_stats = test_data.groupby('regio1').agg({
     'prediction_nn': 'mean'
 }).round(2)
 
-print("\nTop 10 most expensive regions (by average rent):")
+print("\nTop 10 teuerste Regionen (nach durchschnittlicher Miete):")
 regio_avg = test_data.groupby('regio1')['baseRent'].mean().sort_values(ascending=False).head(10)
 for region, rent in regio_avg.items():
     count = len(test_data[test_data['regio1'] == region])
     print(f"  {region:30} | €{rent:8.2f} | n={count:4d}")
 
-print("\nCheapest regions (by average rent):")
+print("\nGünstigste Regionen (nach Durchschnittsmiete):")
 regio_min = test_data.groupby('regio1')['baseRent'].mean().sort_values(ascending=True).head(10)
 for region, rent in regio_min.items():
     count = len(test_data[test_data['regio1'] == region])
     print(f"  {region:30} | €{rent:8.2f} | n={count:4d}")
 
 # ============================================================================
-# TEMPORAL ANALYSIS
+# ZEITLICHE ANALYSE
 # ============================================================================
-print("\n[7] TEMPORAL ANALYSIS - PRICE TRENDS")
+print("\n[7] ZEITLICHE ANALYSE - PRICE TRENDS")
 print("-" * 80)
 
 if 'year' in test_data.columns and 'month' in test_data.columns:
@@ -195,7 +195,7 @@ print("\n" + "="*80)
 print("EVALUATION COMPLETED!")
 print("="*80)
 print("\nResults saved to: evaluation_results.pkl")
-print("\nNext steps:")
-print("  1. Run: python3 visualizations.py")
-print("  2. Run: python3 generate_map.py")
+print("\nNächste Schritte:")
+print("  1. Ausführen: python3 visualizations.py")
+print("  2. Ausführen: python3 generate_maps.py")
 print("  3. Run: python3 generate_report.py")

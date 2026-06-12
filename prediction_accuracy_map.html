@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Mietpreisvorhersage - Prediction Accuracy Map</title>
+    <title>Mietpreisvorhersage - Genauigkeitskarte</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
@@ -105,9 +105,9 @@
     <div id="map"></div>
     
     <div class="info-box">
-        <h3>🎯 Prediction Accuracy Map</h3>
+        <h3>🎯 Genauigkeitskarte</h3>
         <p style="margin-bottom: 10px; color: #666;">
-            Model prediction error by region. Click circles for details.
+            Modellvorhersagefehler nach Region. Klicken Sie auf Kreise für Details.
         </p>
         
         <div class="color-legend">
@@ -122,7 +122,7 @@
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background: #e67e22;"></div>
-                <span>Moderate (&lt;€30)</span>
+                <span>Mittel (&lt;€30)</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background: #e74c3c;"></div>
@@ -137,12 +137,12 @@
         <hr style="margin: 10px 0; border: none; border-top: 1px solid #ddd;">
         
         <div style="font-size: 12px;">
-            <strong>How to use:</strong><br>
+            <strong>So verwenden Sie die Karte:</strong><br>
             • Circle size = error magnitude<br>
-            • Click circles for details<br>
-            • Zoom in/out to explore<br><br>
+            • Klicken Sie auf Kreise für Details<br>
+            • Hinein-/Herauszoomen zum Erkunden<br><br>
             
-            <strong>Statistics:</strong><br>
+            <strong>Statistiken:</strong><br>
             • Mean error: €27.69<br>
             • Best accuracy: Green<br>
             • Regions analyzed: 16
@@ -191,7 +191,7 @@
                         <span class="${accuracyClass}">€${marker.error.toFixed(2)} (${marker.error_pct.toFixed(1)}%)</span>
                     </div>
                     <div class="popup-row">
-                        <span class="popup-label">Listings:</span>
+                        <span class="popup-label">Angebote:</span>
                         <span>${marker.count}</span>
                     </div>
                 </div>
