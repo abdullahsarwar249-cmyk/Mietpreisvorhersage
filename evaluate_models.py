@@ -61,7 +61,7 @@ ridge_metrics = {
 for split, metrics in ridge_metrics.items():
     print(f"{split:12} | MAE: {metrics['MAE']:8.2f} | RMSE: {metrics['RMSE']:8.2f} | R²: {metrics['R²']:6.4f} | MAPE: {metrics['MAPE']:7.4f}%")
 
-print("\n[2] LIGHTGBM METRICS")
+print("\n[2] Gradient Boosting METRICS")
 print("-" * 80)
 xgb_metrics = {
     'Train': calculate_metrics(y_train, y_train_pred_xgb),
@@ -108,7 +108,7 @@ def calculate_prediction_intervals(y_true, y_pred, confidence=0.9):
 xgb_intervals = calculate_prediction_intervals(y_test, y_test_pred_xgb)
 nn_intervals = calculate_prediction_intervals(y_test, y_test_pred_nn)
 
-print(f"\nXGBoost Test Set:")
+print(f"\nGradient Boosting Regressor Test Set:")
 print(f"  Prediction interval coverage: {xgb_intervals['coverage']:.2%} (target: 90%)")
 print(f"  Average interval width: €{xgb_intervals['interval_width']:.2f}")
 print(f"  Std of residuals: €{xgb_intervals['std_residuals']:.2f}")

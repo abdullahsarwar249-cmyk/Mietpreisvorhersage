@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+
+# Datensatz
+immo_data.csv
+
+# Python
+__pycache__/
+*.pyc
+
+# VS Code
+.vscode/

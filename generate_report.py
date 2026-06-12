@@ -56,7 +56,7 @@ report.append("\n" + "="*100)
 report.append("1. EXECUTIVE SUMMARY")
 report.append("="*100)
 
-best_model = 'XGBoost'
+best_model = 'Gradient Boosting Regressor'
 best_test_mae = xgb_metrics['Test']['MAE']
 best_test_rmse = xgb_metrics['Test']['RMSE']
 best_test_r2 = xgb_metrics['Test']['R²']
@@ -127,7 +127,7 @@ report.append("="*100)
 # Create comparison table
 comparison_data = []
 for model_name, metrics in [('Ridge Regression', ridge_metrics), 
-                             ('XGBoost', xgb_metrics), 
+                             ('Gradient Boosting Regressor', xgb_metrics), 
                              ('Neural Network', nn_metrics)]:
     for split in ['Train', 'Validation', 'Test']:
         comparison_data.append({
@@ -142,7 +142,7 @@ for model_name, metrics in [('Ridge Regression', ridge_metrics),
 comparison_df = pd.DataFrame(comparison_data)
 
 report.append("\nDetailed Metrics by Model and Data Split:\n")
-for model_name in ['Ridge Regression', 'XGBoost', 'Neural Network']:
+for model_name in ['Ridge Regression', 'Gradient Boosting Regressor', 'Neural Network']:
     model_data = comparison_df[comparison_df['Model'] == model_name]
     report.append(f"\n{model_name}:")
     report.append("-" * 90)
@@ -154,16 +154,16 @@ for model_name in ['Ridge Regression', 'XGBoost', 'Neural Network']:
 report.append(f"""
 INTERPRETATION:
 • MAE (Mean Absolute Error): Average absolute prediction error in €
-  - Lower is better. XGBoost achieves ±€{xgb_metrics['Test']['MAE']:.0f} typical error
+  - Lower is better. Gradient Boosting Regressor achieves ±€{xgb_metrics['Test']['MAE']:.0f} typical error
   
 • RMSE (Root Mean Squared Error): Penalizes larger errors more heavily
-  - XGBoost: €{xgb_metrics['Test']['RMSE']:.0f} suggests occasional larger errors
+  - Gradient Boosting Regressor: €{xgb_metrics['Test']['RMSE']:.0f} suggests occasional larger errors
   
 • R² Score: Proportion of variance explained (0-1 scale)
-  - XGBoost R²: {xgb_metrics['Test']['R²']:.4f} (excellent predictive power)
+  - Gradient Boosting Regressor R²: {xgb_metrics['Test']['R²']:.4f} (excellent predictive power)
   
 • MAPE (Mean Absolute Percentage Error): Error as percentage of actual value
-  - XGBoost: {xgb_metrics['Test']['MAPE']:.2f}% relative error
+  - Gradient Boosting Regressor: {xgb_metrics['Test']['MAPE']:.2f}% relative error
 
 BEST OVERALL MODEL: {best_model}
 Reasoning: Lowest MAE/RMSE on test set, strong R² score, robust across all splits
@@ -177,7 +177,7 @@ report.append("4. UNCERTAINTY ANALYSIS & PREDICTION INTERVALS")
 report.append("="*100)
 
 report.append(f"""
-90% Prediction Intervals (XGBoost):
+90% Prediction Intervals (Gradient Boosting Regressor):
 • Empirical Coverage: {xgb_intervals['coverage']:.1%}
   ✓ Target: 90% - Model prediction intervals are well-calibrated
 • Average Interval Width: €{xgb_intervals['interval_width']:.2f}
@@ -206,7 +206,7 @@ report.append("5. FEATURE IMPORTANCE ANALYSIS")
 report.append("="*100)
 
 top_10_features = feature_importance.head(10)
-report.append("\nTop 10 Most Important Features (XGBoost):\n")
+report.append("\nTop 10 Most Important Features (Gradient Boosting Regressor):\n")
 for idx, (_, row) in enumerate(top_10_features.iterrows(), 1):
     importance_pct = (row['importance'] / feature_importance['importance'].sum()) * 100
     report.append(f"  {idx:2d}. {row['feature']:25} | Importance: {importance_pct:6.2f}%")
@@ -289,7 +289,7 @@ report.append("="*100)
 
 residuals = y_test.values - results['y_test_pred_xgb']
 report.append(f"""
-XGBoost Residual Statistics (Test Set):
+Gradient Boosting Regressor Residual Statistics (Test Set):
 • Mean: €{residuals.mean():.2f} (should be close to 0 - unbiased predictions)
 • Std Dev: €{residuals.std():.2f}
 • Min: €{residuals.min():.2f}
@@ -332,7 +332,7 @@ RECOMMENDATIONS FOR PRODUCTION DEPLOYMENT:
 3. Create region-specific models for better local accuracy
 4. Add economic indicators (employment, inflation, interest rates)
 5. Implement A/B testing with alternative models
-6. Use ensemble methods combining XGBoost and Neural Network
+6. Use ensemble methods combining Gradient Boosting Regressor and Neural Network
 7. Regular feature importance reviews and updates
 8. Implement automated alerting for unusual predictions
 9. Track prediction intervals' calibration over time
@@ -365,7 +365,7 @@ MODELS IMPLEMENTED:
    - Baseline model with L2 regularization
    - Linear relationships only
 
-2. XGBoost (Gradient Boosting)
+2. Gradient Boosting Regressor (Gradient Boosting)
    - n_estimators=200, max_depth=6
    - learning_rate=0.1
    - Captures non-linear relationships
@@ -405,7 +405,7 @@ This project successfully developed a multi-model machine learning system for Ge
 rental price prediction with excellent predictive performance:
 
 KEY ACHIEVEMENTS:
-✓ Best model (XGBoost) achieves €{best_test_mae:.0f} average prediction error
+✓ Best model (Gradient Boosting Regressor) achieves €{best_test_mae:.0f} average prediction error
 ✓ Explains {best_test_r2*100:.1f}% of rental price variance
 ✓ Well-calibrated 90% prediction intervals for uncertainty quantification
 ✓ Comprehensive spatial and temporal analysis

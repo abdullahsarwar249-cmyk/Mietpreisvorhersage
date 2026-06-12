@@ -148,7 +148,7 @@ print("\n[2] Creating model performance visualizations...")
 fig = plt.figure(figsize=(16, 10))
 gs = GridSpec(2, 3, figure=fig)
 
-models = ['Ridge', 'XGBoost', 'Neural Network']
+models = ['Ridge', 'Gradient Boosting Regressor', 'Neural Network']
 predictions = [y_test_pred_ridge, y_test_pred_xgb, y_test_pred_nn]
 colors = ['#3498db', '#e74c3c', '#2ecc71']
 
@@ -181,7 +181,7 @@ residuals_nn = y_test - y_test_pred_nn
 
 ax4.violinplot([residuals_ridge, residuals_xgb, residuals_nn], positions=[1, 2, 3], showmeans=True)
 ax4.set_xticks([1, 2, 3])
-ax4.set_xticklabels(['Ridge', 'XGBoost', 'NN'])
+ax4.set_xticklabels(['Ridge', 'Gradient Boosting Regressor', 'NN'])
 ax4.set_ylabel('Residuals (€)')
 ax4.set_title('Residual Distribution by Model')
 ax4.axhline(y=0, color='red', linestyle='--', alpha=0.5)
@@ -235,20 +235,20 @@ print("\n[3] Creating uncertainty analysis visualizations...")
 fig = plt.figure(figsize=(16, 6))
 gs = GridSpec(1, 2, figure=fig)
 
-# 3.1 XGBoost prediction intervals
+# 3.1 Gradient Boosting Regressor prediction intervals
 ax1 = fig.add_subplot(gs[0, 0])
 sorted_idx = np.argsort(y_test.values)
 x_axis = np.arange(len(sorted_idx))[:500]  # First 500 for clarity
 
 ax1.scatter(x_axis, y_test.values[sorted_idx[:500]], alpha=0.6, s=20, color='black', label='Actual', zorder=3)
-ax1.plot(x_axis, y_test_pred_xgb[sorted_idx[:500]], color='#e74c3c', linewidth=2, label='XGBoost Prediction', zorder=2)
+ax1.plot(x_axis, y_test_pred_xgb[sorted_idx[:500]], color='#e74c3c', linewidth=2, label='Gradient Boosting Regressor Prediction', zorder=2)
 ax1.fill_between(x_axis, 
                 xgb_intervals['lower'][sorted_idx[:500]],
                 xgb_intervals['upper'][sorted_idx[:500]],
                 alpha=0.3, color='#e74c3c', label='90% Prediction Interval', zorder=1)
 ax1.set_xlabel('Sample Index (sorted by actual rent)')
 ax1.set_ylabel('Rent (€)')
-ax1.set_title(f"XGBoost: Predictions with 90% Intervals\n(Coverage: {xgb_intervals['coverage']:.1%})")
+ax1.set_title(f"Gradient Boosting Regressor: Predictions with 90% Intervals\n(Coverage: {xgb_intervals['coverage']:.1%})")
 ax1.legend()
 ax1.grid(True, alpha=0.3)
 
@@ -284,7 +284,7 @@ axes.barh(range(len(top_features)), top_features['importance'].values, color=col
 axes.set_yticks(range(len(top_features)))
 axes.set_yticklabels(top_features['feature'].values)
 axes.set_xlabel('Importance Score')
-axes.set_title('XGBoost: Top 20 Feature Importance')
+axes.set_title('Gradient Boosting Regressor: Top 20 Feature Importance')
 axes.grid(True, alpha=0.3, axis='x')
 
 plt.tight_layout()
@@ -413,7 +413,7 @@ ax1.scatter(y_test_pred_xgb, residuals_xgb, alpha=0.5, s=20, color='#e74c3c', ed
 ax1.axhline(y=0, color='black', linestyle='--', linewidth=2)
 ax1.set_xlabel('Predicted Rent (€)')
 ax1.set_ylabel('Residuals (€)')
-ax1.set_title('Residuals vs Predicted Values (XGBoost)')
+ax1.set_title('Residuals vs Predicted Values (Gradient Boosting Regressor)')
 ax1.grid(True, alpha=0.3)
 
 # 7.2 Residuals distribution
@@ -422,7 +422,7 @@ ax2.hist(residuals_xgb, bins=50, color='#e74c3c', alpha=0.7, edgecolor='black')
 ax2.axvline(residuals_xgb.mean(), color='black', linestyle='--', linewidth=2, label=f'Mean: €{residuals_xgb.mean():.0f}')
 ax2.set_xlabel('Residuals (€)')
 ax2.set_ylabel('Frequency')
-ax2.set_title('Distribution of Residuals (XGBoost)')
+ax2.set_title('Distribution of Residuals (Gradient Boosting Regressor)')
 ax2.legend()
 ax2.grid(True, alpha=0.3, axis='y')
 
@@ -430,7 +430,7 @@ ax2.grid(True, alpha=0.3, axis='y')
 from scipy import stats
 ax3 = fig.add_subplot(gs[0, 2])
 stats.probplot(residuals_xgb, dist="norm", plot=ax3)
-ax3.set_title('Q-Q Plot (XGBoost Residuals)')
+ax3.set_title('Q-Q Plot (Gradient Boosting Regressor Residuals)')
 ax3.grid(True, alpha=0.3)
 
 plt.tight_layout()

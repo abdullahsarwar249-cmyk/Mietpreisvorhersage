@@ -2,7 +2,7 @@
 RENTAL PRICE PREDICTION - COMPREHENSIVE EVALUATION REPORT
 ====================================================================================================
 
-Report Generated: 2026-05-19 19:17:17
+Report Generated: 2026-06-12 18:38:14
 Dataset: immo_data.csv (German Real Estate Market)
 
 ====================================================================================================
@@ -13,7 +13,7 @@ This project develops a machine learning pipeline to predict rental prices in Ge
 incorporating spatial factors (regions, postal codes) and temporal trends.
 
 KEY FINDINGS:
-• Best Model: XGBoost
+• Best Model: Gradient Boosting Regressor
 • Test MAE: €90.68 (average prediction error)
 • Test RMSE: €145.33 (penalizes larger errors)
 • Test R²: 0.8707 (explains 87.07% of variance)
@@ -73,7 +73,7 @@ Ridge Regression:
   Validation   | MAE: €  143.85 | RMSE: €  219.69 | R²:   0.6902 | MAPE:    0.25%
   Test         | MAE: €  146.62 | RMSE: €  221.92 | R²:   0.6984 | MAPE:    0.24%
 
-XGBoost:
+Gradient Boosting Regressor:
 ------------------------------------------------------------------------------------------
   Train        | MAE: €   64.60 | RMSE: €   94.15 | R²:   0.9412 | MAPE:    0.12%
   Validation   | MAE: €   90.09 | RMSE: €  141.82 | R²:   0.8709 | MAPE:    0.14%
@@ -81,24 +81,24 @@ XGBoost:
 
 Neural Network:
 ------------------------------------------------------------------------------------------
-  Train        | MAE: €  106.54 | RMSE: €  164.82 | R²:   0.8197 | MAPE:    0.17%
-  Validation   | MAE: €  120.65 | RMSE: €  193.01 | R²:   0.7609 | MAPE:    0.19%
-  Test         | MAE: €  122.90 | RMSE: €  199.22 | R²:   0.7570 | MAPE:    0.18%
+  Train        | MAE: €  107.17 | RMSE: €  167.16 | R²:   0.8145 | MAPE:    0.17%
+  Validation   | MAE: €  122.63 | RMSE: €  196.96 | R²:   0.7510 | MAPE:    0.19%
+  Test         | MAE: €  124.79 | RMSE: €  201.93 | R²:   0.7503 | MAPE:    0.18%
 
 INTERPRETATION:
 • MAE (Mean Absolute Error): Average absolute prediction error in €
-  - Lower is better. XGBoost achieves ±€91 typical error
+  - Lower is better. Gradient Boosting Regressor achieves ±€91 typical error
   
 • RMSE (Root Mean Squared Error): Penalizes larger errors more heavily
-  - XGBoost: €145 suggests occasional larger errors
+  - Gradient Boosting Regressor: €145 suggests occasional larger errors
   
 • R² Score: Proportion of variance explained (0-1 scale)
-  - XGBoost R²: 0.8707 (excellent predictive power)
+  - Gradient Boosting Regressor R²: 0.8707 (excellent predictive power)
   
 • MAPE (Mean Absolute Percentage Error): Error as percentage of actual value
-  - XGBoost: 0.14% relative error
+  - Gradient Boosting Regressor: 0.14% relative error
 
-BEST OVERALL MODEL: XGBoost
+BEST OVERALL MODEL: Gradient Boosting Regressor
 Reasoning: Lowest MAE/RMSE on test set, strong R² score, robust across all splits
 
 
@@ -106,7 +106,7 @@ Reasoning: Lowest MAE/RMSE on test set, strong R² score, robust across all spli
 4. UNCERTAINTY ANALYSIS & PREDICTION INTERVALS
 ====================================================================================================
 
-90% Prediction Intervals (XGBoost):
+90% Prediction Intervals (Gradient Boosting Regressor):
 • Empirical Coverage: 87.1%
   ✓ Target: 90% - Model prediction intervals are well-calibrated
 • Average Interval Width: €373.64
@@ -114,9 +114,9 @@ Reasoning: Lowest MAE/RMSE on test set, strong R² score, robust across all spli
 • Std of Residuals: €113.57
 
 90% Prediction Intervals (Neural Network):
-• Empirical Coverage: 87.7%
-• Average Interval Width: €515.84
-• Std of Residuals: €156.79
+• Empirical Coverage: 87.3%
+• Average Interval Width: €522.32
+• Std of Residuals: €158.76
 
 INTERPRETATION:
 The prediction intervals are well-calibrated, meaning actual values fall within
@@ -131,7 +131,7 @@ Lower: €686 | Upper: €914
 5. FEATURE IMPORTANCE ANALYSIS
 ====================================================================================================
 
-Top 10 Most Important Features (XGBoost):
+Top 10 Most Important Features (Gradient Boosting Regressor):
 
    1. livingSpace               | Importance:  49.63%
    2. serviceCharge             | Importance:   9.86%
@@ -216,7 +216,7 @@ RECOMMENDATION: Consider seasonal factors for rental pricing strategies.
 8. MODEL DIAGNOSTICS & RESIDUAL ANALYSIS
 ====================================================================================================
 
-XGBoost Residual Statistics (Test Set):
+Gradient Boosting Regressor Residual Statistics (Test Set):
 • Mean: €21.36 (should be close to 0 - unbiased predictions)
 • Std Dev: €143.75
 • Min: €-1076.61
@@ -255,7 +255,7 @@ RECOMMENDATIONS FOR PRODUCTION DEPLOYMENT:
 3. Create region-specific models for better local accuracy
 4. Add economic indicators (employment, inflation, interest rates)
 5. Implement A/B testing with alternative models
-6. Use ensemble methods combining XGBoost and Neural Network
+6. Use ensemble methods combining Gradient Boosting Regressor and Neural Network
 7. Regular feature importance reviews and updates
 8. Implement automated alerting for unusual predictions
 9. Track prediction intervals' calibration over time
@@ -284,7 +284,7 @@ MODELS IMPLEMENTED:
    - Baseline model with L2 regularization
    - Linear relationships only
 
-2. XGBoost (Gradient Boosting)
+2. Gradient Boosting Regressor (Gradient Boosting)
    - n_estimators=200, max_depth=6
    - learning_rate=0.1
    - Captures non-linear relationships
@@ -320,7 +320,7 @@ This project successfully developed a multi-model machine learning system for Ge
 rental price prediction with excellent predictive performance:
 
 KEY ACHIEVEMENTS:
-✓ Best model (XGBoost) achieves €91 average prediction error
+✓ Best model (Gradient Boosting Regressor) achieves €91 average prediction error
 ✓ Explains 87.1% of rental price variance
 ✓ Well-calibrated 90% prediction intervals for uncertainty quantification
 ✓ Comprehensive spatial and temporal analysis
@@ -341,7 +341,7 @@ NEXT STEPS:
 5. Expand to additional markets or regions
 6. Incorporate additional data sources
 
-Report prepared: 2026-05-19 19:17:17
+Report prepared: 2026-06-12 18:38:14
 
 
 ====================================================================================================
