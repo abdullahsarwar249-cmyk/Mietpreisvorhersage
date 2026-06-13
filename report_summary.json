@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-06-12T19:22:13.049235",
+  "generated_at": "2026-06-13T10:31:18.998480",
   "best_model": "Gradient-Boosting-Regressor",
   "test_metrics": {
-    "mae": 90.67712678484061,
-    "rmse": 145.32713466791063,
-    "r2": 0.8706799017097857
+    "mae": 90.22497160946787,
+    "rmse": 144.78725108760628,
+    "r2": 0.8716389533402429
   },
   "prediction_intervals": {
-    "coverage": 0.8708035222894882,
-    "interval_width": 373.6379106632803,
-    "std_residuals": 113.56775400099701
+    "coverage": 0.8688772702256466,
+    "interval_width": 372.55240887463754,
+    "std_residuals": 113.23781424761019
   },
   "dataset": {
     "feature_names": [
@@ -45,6 +45,6 @@
     "n_test": 7268,
     "target_mean_train": 605.3916518784217,
     "target_std_train": 388.1729183966543,
-    "created_at": "2026-06-12T19:21:37.431789"
+    "created_at": "2026-06-13T10:30:42.409114"
   }
 }

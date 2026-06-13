@@ -385,12 +385,26 @@ Das Projekt erzeugt unter anderem:
 * interactive_rental_map.html
 * prediction_accuracy_map.html
 
+### Hinweis zur Anzeige der Karten
+
+Die interaktiven Karten können in den meisten Fällen direkt im Browser geöffnet werden.
+
+Sollten die Karten jedoch nicht korrekt dargestellt werden oder Funktionen fehlen, empfiehlt sich die Ausführung über einen lokalen Webserver.
+
+Für Visual Studio Code wird hierfür die Erweiterung **Live Server** empfohlen:
+
+1. Projektordner in Visual Studio Code öffnen
+2. Erweiterung „Live Server“ installieren
+3. Rechtsklick auf die gewünschte HTML-Datei
+4. „Open with Live Server“ auswählen
+
+
+
 ## Modelle
 
 * gb_model.pkl
 * ridge_model.pkl
 * nn_model.h5
-
 ---
 
 # Reproduzierbarkeit

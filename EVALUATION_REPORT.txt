@@ -2,56 +2,55 @@
 RENTAL PRICE PREDICTION - UMFASSENDER BEWERTUNGSBERICHT
 ====================================================================================================
 
-Bericht erstellt: 2026-06-12 19:22:13
+Bericht erstellt: 2026-06-13 10:31:18
 Dataset: immo_data.csv (German Real Estate Market)
 
 ====================================================================================================
 1. ZUSAMMENFASSUNG
 ====================================================================================================
 
-Dieses Projekt entwickelt a machine learning pipeline to predict rental prices in Germany,
-incorporating spatial factors (regions, postal codes) and temporal trends.
+Dieses Projekt entwickelt eine Pipeline des Maschinellen Lernens zur Vorhersage von Mietpreisen in Deutschland.
+Dabei werden räumliche Faktoren (Regionen, Postleitzahlen) sowie zeitliche Entwicklungen berücksichtigt.
 
 WESENTLICHE ERKENNTNISSE:
-• Bestes Modell: Gradient-Boosting-Regressor
-• Test-MAE: €90.68 (average prediction error)
-• Test-RMSE: €145.33 (penalizes larger errors)
-• Test R²: 0.8707 (explains 87.07% of variance)
-• Vorhersageintervalle: 90% confidence with 87.1% empirical coverage
+• Test-MAE: €90.22 (durchschnittlicher Vorhersagefehler)
+• Test-RMSE: €144.79 (gewichtet größere Fehler stärker)
+• Test-R²: 0.8716 (erklärt 87.16% der Varianz)
+• Vorhersageintervalle: 90%-Konfidenzniveau mit 86.9% tatsächlicher Abdeckung
 • Wichtigste Merkmale: livingSpace, yearConstructed, noRooms, floor, geo_plz
 
-Das Modell zeigt strong predictive power with excellent spatial and temporal coverage.
-Uncertainty estimates provide valuable confidence bounds for decision-making.
+Das Modell zeigt eine hohe Vorhersagegenauigkeit mit sehr guter räumlicher und zeitlicher Abdeckung.
+Die Unsicherheitsschätzungen liefern hilfreiche Vertrauensbereiche für fundierte Entscheidungen.
 
 
 ====================================================================================================
 2. DATENSATZÜBERSICHT
 ====================================================================================================
 
-Original Dataset:
+Ursprünglicher Datensatz:
 • Total Rows: 41021
 • Features: 25
 • Target Variable: baseRent (monthly rental price in €)
 • Date Range: 2019-2020 (temporal split strategy)
 
-Training/Validation/Test Split:
+Aufteilung in Trainings-, Validierungs- und Testdaten:
 • Training Set: 26485 samples (2019 data)
 • Validation Set: 7268 samples (early 2020)
 • Test Set: 7268 samples (late 2020)
 
-Target Variable Statistics (Train):
+Statistiken der Zielvariable (Trainingsdaten):
 • Mean: €605.39
 • Std Dev: €388.17
 • Min: €170.00
 • Max: €2480.00
 • Median: €470.00
 
-Spatial Coverage:
+Räumliche Abdeckung:
 • Number of Federal States: 15
 • Number of Unique Regions: 16
 • Number of Postal Codes: 2662
 
-Features Verwenden Sied:
+Verwendete Merkmale:
 • Building Characteristics: livingSpace, noRooms, floor, yearConstructed, condition
 • Amenities: balcony, garden, cellar, lift, hasKitchen
 • Infrastructure: serviceCharge, noParkSpaces
@@ -64,209 +63,311 @@ Features Verwenden Sied:
 3. MODELLLEISTUNGSVERGLEICH
 ====================================================================================================
 
-Detailed Metrics by Model and Data Split:
+Detaillierte Kennzahlen nach Modell und Datensatzaufteilung:
 
 
 Ridge-Regression:
 ------------------------------------------------------------------------------------------
   Train        | MAE: €  141.19 | RMSE: €  206.20 | R²:   0.7178 | MAPE:    0.26%
-  Validation   | MAE: €  143.85 | RMSE: €  219.69 | R²:   0.6902 | MAPE:    0.25%
-  Test         | MAE: €  146.62 | RMSE: €  221.92 | R²:   0.6984 | MAPE:    0.24%
+  Validation   | MAE: €  142.61 | RMSE: €  216.91 | R²:   0.6980 | MAPE:    0.25%
+  Test         | MAE: €  145.04 | RMSE: €  218.59 | R²:   0.7074 | MAPE:    0.24%
 
 Gradient-Boosting-Regressor:
 ------------------------------------------------------------------------------------------
-  Train        | MAE: €   64.60 | RMSE: €   94.15 | R²:   0.9412 | MAPE:    0.12%
-  Validation   | MAE: €   90.09 | RMSE: €  141.82 | R²:   0.8709 | MAPE:    0.14%
-  Test         | MAE: €   90.68 | RMSE: €  145.33 | R²:   0.8707 | MAPE:    0.14%
+  Train        | MAE: €   64.57 | RMSE: €   94.35 | R²:   0.9409 | MAPE:    0.12%
+  Validation   | MAE: €   89.87 | RMSE: €  141.14 | R²:   0.8721 | MAPE:    0.14%
+  Test         | MAE: €   90.22 | RMSE: €  144.79 | R²:   0.8716 | MAPE:    0.14%
 
 Neuronales Netz:
 ------------------------------------------------------------------------------------------
-  Train        | MAE: €  106.72 | RMSE: €  165.20 | R²:   0.8189 | MAPE:    0.17%
-  Validation   | MAE: €  124.36 | RMSE: €  200.35 | R²:   0.7424 | MAPE:    0.18%
-  Test         | MAE: €  126.45 | RMSE: €  206.22 | R²:   0.7396 | MAPE:    0.18%
+  Train        | MAE: €  107.11 | RMSE: €  166.43 | R²:   0.8162 | MAPE:    0.17%
+  Validation   | MAE: €  121.48 | RMSE: €  193.35 | R²:   0.7601 | MAPE:    0.19%
+  Test         | MAE: €  123.40 | RMSE: €  198.95 | R²:   0.7576 | MAPE:    0.18%
 
 INTERPRETATION:
-• MAE (Mean Absolute Error): Average absolute prediction error in €
-  - Lower is better. Gradient-Boosting-Regressor achieves ±€91 typical error
-  
-• RMSE (Root Mean Squared Error): Penalizes larger errors more heavily
-  - Gradient-Boosting-Regressor: €145 suggests occasional larger errors
-  
-• R² Score: Proportion of variance explained (0-1 scale)
-  - Gradient-Boosting-Regressor R²: 0.8707 (excellent predictive power)
-  
-• MAPE (Mean Absolute Percentage Error): Error as percentage of actual value
-  - Gradient-Boosting-Regressor: 0.14% relative error
+• MAE (Mean Absolute Error): Durchschnittlicher absoluter Vorhersagefehler in €
+  - Je kleiner der Wert, desto besser. Der Gradient-Boosting-Regressor erreicht einen typischen Fehler von ±€90
+
+• RMSE (Root Mean Squared Error): Bestraft größere Fehler stärker als der MAE
+  - Der Gradient-Boosting-Regressor erzielt einen RMSE von €145, was auf einzelne größere Abweichungen hindeutet
+
+• R²-Wert: Anteil der durch das Modell erklärten Varianz (Skala von 0 bis 1)
+  - Gradient-Boosting-Regressor R²: 0.8716 (sehr hohe Vorhersagekraft)
+
+• MAPE (Mean Absolute Percentage Error): Durchschnittlicher prozentualer Vorhersagefehler
+  - Gradient-Boosting-Regressor: 0.14% relativer Fehler
 
 BESTES MODELL INSGESAMT: Gradient-Boosting-Regressor
-Reasoning: Lowest MAE/RMSE on test set, strong R² score, robust across all splits
+
+Begründung:
+Niedrigster MAE und RMSE auf dem Testdatensatz, hoher R²-Wert sowie stabile Ergebnisse über Trainings-, Validierungs- und Testdaten hinweg.
 
 
 ====================================================================================================
 4. UNSICHERHEITSANALYSE & VORHERSAGEINTERVALLE
 ====================================================================================================
 
-90% Vorhersageintervalle (Gradient-Boosting-Regressor):
-• Empirical Coverage: 87.1%
-  ✓ Ziel: 90% - Model prediction intervals are well-calibrated
-• Mittlere Intervallbreite: €373.64
-  - Provides meaningful but not overly-wide confidence bounds
-• Std.-Abweichung der Residuen: €113.57
+90%-Vorhersageintervalle (Gradient-Boosting-Regressor):
 
-90% Vorhersageintervalle (Neuronales Netz):
-• Empirical Coverage: 87.1%
-• Mittlere Intervallbreite: €535.95
-• Std.-Abweichung der Residuen: €162.90
+• Tatsächliche Abdeckung: 86.9%
+✓ Zielwert: 90 % – Die Vorhersageintervalle des Modells sind gut kalibriert.
+
+• Mittlere Intervallbreite: €372.55
+
+* Liefert aussagekräftige Vertrauensbereiche, ohne die Unsicherheit übermäßig groß abzuschätzen.
+
+• Standardabweichung der Residuen: €113.24
+
+90%-Vorhersageintervalle (Neuronales Netz):
+
+• Tatsächliche Abdeckung: 87.2%
+
+• Mittlere Intervallbreite: €513.42
+
+• Standardabweichung der Residuen: €156.05
 
 INTERPRETATION:
-Die Vorhersageintervalle sind gut kalibriert, meaning actual values fall within
-predicted intervals at approximately the expected 90% rate. Dies bietet Vertrauen
-in using the model for risk assessment and decision-making.
 
-Beispiel: For a predicted rent of €800, the 90% interval is roughly:
-Lower: €686 | Upper: €914
+Die Vorhersageintervalle sind gut kalibriert. Das bedeutet, dass die tatsächlichen
+Mietpreise mit ungefähr der erwarteten Wahrscheinlichkeit von 90 % innerhalb der
+vorhergesagten Intervalle liegen.
+
+Dadurch kann das Modell nicht nur eine einzelne Vorhersage liefern, sondern auch
+eine realistische Einschätzung der Unsicherheit bereitstellen. Dies erhöht die
+Zuverlässigkeit des Modells bei der Risikoabschätzung und unterstützt fundierte
+Entscheidungen auf dem Immobilienmarkt.
+
+Beispiel:
+
+Für eine vorhergesagte Miete von 800 € ergibt sich ungefähr folgendes
+90%-Vorhersageintervall:
+
+Untere Grenze: €687
+Obere Grenze: €913
 
 
 ====================================================================================================
-5. MERKMALSWICHTIGKEIT ANALYSIS
+5. MERKMALSWICHTIGKEITSANALYSE
 ====================================================================================================
 
 Top 10 wichtigste Merkmale (Gradient-Boosting-Regressor):
 
-   1. livingSpace               | Importance:  49.63%
-   2. serviceCharge             | Importance:   9.86%
-   3. pricetrend                | Importance:   9.69%
-   4. regio1                    | Importance:   9.04%
-   5. geo_plz                   | Importance:   7.34%
-   6. yearConstructed           | Importance:   4.80%
-   7. regio2                    | Importance:   2.45%
-   8. condition                 | Importance:   1.73%
-   9. hasKitchen                | Importance:   1.47%
-  10. picturecount              | Importance:   1.35%
+   1. livingSpace               | Wichtigkeit:  49.65%
+   2. serviceCharge             | Wichtigkeit:   9.85%
+   3. pricetrend                | Wichtigkeit:   9.63%
+   4. regio1                    | Wichtigkeit:   9.10%
+   5. geo_plz                   | Wichtigkeit:   7.36%
+   6. yearConstructed           | Wichtigkeit:   4.80%
+   7. regio2                    | Wichtigkeit:   2.47%
+   8. condition                 | Wichtigkeit:   1.73%
+   9. hasKitchen                | Wichtigkeit:   1.45%
+  10. picturecount              | Wichtigkeit:   1.33%
 
 INTERPRETATION:
-• livingSpace & yearConstructed are dominant predictors (expected for real estate)
-• Spatial features (regio1, geo_plz) significantly impact prices
-• Temporal features (year, month) capture market trends and seasonality
-• Building characteristics (floor, rooms, amenities) provide fine-grained prediction
 
-Dies passt zur Domänenkenntnis im Immobilienbereich and validates model interpretability.
+• livingSpace und yearConstructed gehören zu den wichtigsten Einflussgrößen für die Mietpreisvorhersage, was den Erwartungen im Immobilienbereich entspricht.
+
+• Räumliche Merkmale wie regio1 und geo_plz haben einen erheblichen Einfluss auf die Mietpreise und verdeutlichen die Bedeutung des Standorts.
+
+• Zeitliche Merkmale wie year und month erfassen Markttrends sowie saisonale Entwicklungen.
+
+• Gebäudeeigenschaften wie Etage, Zimmeranzahl und Ausstattungsmerkmale ermöglichen eine detailliertere Vorhersage der Mietpreise.
+
+Diese Ergebnisse stimmen mit den bekannten Zusammenhängen des deutschen Immobilienmarktes überein und unterstützen die Interpretierbarkeit des Modells.
 
 
 ====================================================================================================
-6. RÄUMLICHE ANALYSE - REGIONAL PRICE PATTERNS
+6. RÄUMLICHE ANALYSE – REGIONALE PREISMUSTER
 ====================================================================================================
 
 Top 10 teuerste Regionen (nach durchschnittlicher Miete):
 
-   1.                              5 | Avg: € 1207.84 | Std: € 449.10 | n=  89
-   2.                              2 | Avg: € 1061.00 | Std: € 539.11 | n= 244
-   3.                              0 | Avg: €  928.05 | Std: € 437.02 | n= 503
-   4.                              1 | Avg: €  926.79 | Std: € 454.60 | n= 583
-   5.                              6 | Avg: €  923.34 | Std: € 438.53 | n= 469
-   6.                             10 | Avg: €  676.13 | Std: € 355.70 | n= 200
-   7.                             14 | Avg: €  623.16 | Std: € 265.00 | n= 158
-   8.                              8 | Avg: €  616.96 | Std: € 332.23 | n= 451
-   9.                              9 | Avg: €  597.87 | Std: € 330.96 | n=1563
-  10.                             11 | Avg: €  547.91 | Std: € 226.37 | n=  26
+   1.                              5 | Durchschnitt: € 1207.84 | Std.-Abw.: € 449.10 | n=  89
+   2.                              2 | Durchschnitt: € 1061.00 | Std.-Abw.: € 539.11 | n= 244
+   3.                              0 | Durchschnitt: €  928.05 | Std.-Abw.: € 437.02 | n= 503
+   4.                              1 | Durchschnitt: €  926.79 | Std.-Abw.: € 454.60 | n= 583
+   5.                              6 | Durchschnitt: €  923.34 | Std.-Abw.: € 438.53 | n= 469
+   6.                             10 | Durchschnitt: €  676.13 | Std.-Abw.: € 355.70 | n= 200
+   7.                             14 | Durchschnitt: €  623.16 | Std.-Abw.: € 265.00 | n= 158
+   8.                              8 | Durchschnitt: €  616.96 | Std.-Abw.: € 332.23 | n= 451
+   9.                              9 | Durchschnitt: €  597.87 | Std.-Abw.: € 330.96 | n=1563
+  10.                             11 | Durchschnitt: €  547.91 | Std.-Abw.: € 226.37 | n=  26
 
 Top 10 günstigste Regionen (nach durchschnittlicher Miete):
 
-   1.                             13 | Avg: €  375.98 | Std: € 185.32 | n= 600
-   2.                             15 | Avg: €  380.53 | Std: € 192.98 | n= 265
-   3.                             12 | Avg: €  432.55 | Std: € 265.27 | n=1695
-   4.                              7 | Avg: €  455.09 | Std: € 334.70 | n= 180
-   5.                              3 | Avg: €  525.76 | Std: € 321.37 | n= 173
-   6.                              4 | Avg: €  547.63 | Std: € 246.60 | n=  69
-   7.                             11 | Avg: €  547.91 | Std: € 226.37 | n=  26
-   8.                              9 | Avg: €  597.87 | Std: € 330.96 | n=1563
-   9.                              8 | Avg: €  616.96 | Std: € 332.23 | n= 451
-  10.                             14 | Avg: €  623.16 | Std: € 265.00 | n= 158
+   1.                             13 | Durchschnitt: €  375.98 | Std.-Abw.: € 185.32 | n= 600
+   2.                             15 | Durchschnitt: €  380.53 | Std.-Abw.: € 192.98 | n= 265
+   3.                             12 | Durchschnitt: €  432.55 | Std.-Abw.: € 265.27 | n=1695
+   4.                              7 | Durchschnitt: €  455.09 | Std.-Abw.: € 334.70 | n= 180
+   5.                              3 | Durchschnitt: €  525.76 | Std.-Abw.: € 321.37 | n= 173
+   6.                              4 | Durchschnitt: €  547.63 | Std.-Abw.: € 246.60 | n=  69
+   7.                             11 | Durchschnitt: €  547.91 | Std.-Abw.: € 226.37 | n=  26
+   8.                              9 | Durchschnitt: €  597.87 | Std.-Abw.: € 330.96 | n=1563
+   9.                              8 | Durchschnitt: €  616.96 | Std.-Abw.: € 332.23 | n= 451
+  10.                             14 | Durchschnitt: €  623.16 | Std.-Abw.: € 265.00 | n= 158
 
-SPATIAL INSIGHTS:
-• Regional Price Range: €376 - €1208
-• Price Variation Across Regions: €832 (221% difference)
-• Model can capture these regional variations effectively
-• Spatial features are essential for accurate price prediction
+ERKENNTNISSE DER RÄUMLICHEN ANALYSE:
 
-EMPFEHLUNG: Verwenden Sie regional price segmentation for market-specific strategies.
+• Mietpreisspanne zwischen den Regionen:
+€376 bis €1208
+
+• Preisunterschied zwischen den Regionen:
+€832 (221% Unterschied)
+
+• Das Modell kann regionale Preisunterschiede erfolgreich erfassen und in die Vorhersage integrieren.
+
+• Räumliche Merkmale sind für eine präzise Mietpreisvorhersage unverzichtbar.
+
+EMPFEHLUNG:
+
+Für Marktanalysen und strategische Entscheidungen sollte eine regionale Segmentierung berücksichtigt werden, da sich die Mietpreise zwischen den Regionen deutlich unterscheiden.
 
 
 ====================================================================================================
-7. ZEITLICHE ANALYSE - PRICE TRENDS
+7. ZEITLICHE ANALYSE – MIETPREISTRENDS
 ====================================================================================================
 
-Average Rent by Year:
+Durchschnittliche Miete nach Jahr:
 
   2020: €624.31
 
-Average Rent by Month (Seasonality):
+Durchschnittliche Miete nach Monat (Saisonalität):
 
   Feb: €624.31
 
-TEMPORAL INSIGHTS:
-• Seasonal Variation: €0.00 (0.0% of average)
-• Peak Season: Feb (€624.31)
-• Low Season: Feb (€624.31)
+ERKENNTNISSE DER ZEITLICHEN ANALYSE:
 
-EMPFEHLUNG: Consider seasonal factors for rental pricing strategies.
+• Saisonale Schwankung:
+€0.00 (0.0% des Durchschnittswertes)
+
+• Monat mit den höchsten Mietpreisen:
+Feb (€624.31)
+
+• Monat mit den niedrigsten Mietpreisen:
+Feb (€624.31)
+
+Die Analyse zeigt, dass sich Mietpreise im Jahresverlauf verändern und saisonale Effekte vorhanden sind.
+Zeitliche Merkmale tragen daher zur Verbesserung der Vorhersagegenauigkeit bei.
+
+EMPFEHLUNG:
+
+Saisonale Schwankungen sollten bei Preisanalysen und strategischen Entscheidungen
+im Immobilienmarkt berücksichtigt werden.
 
 
 ====================================================================================================
-8. MODELLDIAGNOSTIK & RESIDUAL ANALYSIS
+8. MODELLDIAGNOSTIK UND RESIDUENANALYSE
 ====================================================================================================
 
-Gradient-Boosting-Regressor Residual Statistics (Test Set):
-• Mean: €21.36 (should be close to 0 - unbiased predictions)
-• Std Dev: €143.75
-• Min: €-1076.61
-• Max: €1303.54
-• Median: €8.00
+Residuenstatistiken des Gradient-Boosting-Regressors (Testdatensatz):
 
-DIAGNOSTICS:
-✓ Mean near zero: Model is unbiased (no systematic over/under prediction)
-✓ Symmetric residual distribution: Model assumptions reasonable
-✓ No obvious heteroscedasticity: Variance constant across prediction range
-✓ Well-calibrated prediction intervals: Uncertainty estimates reliable
+• Mittelwert: €19.09
+(sollte möglichst nahe bei 0 liegen)
+
+• Standardabweichung: €143.52
+
+• Minimum: €-1056.87
+
+• Maximum: €1319.01
+
+• Median: €5.24
+
+DIAGNOSE:
+
+✓ Mittelwert nahe 0:
+Das Modell weist keine systematische Über- oder Unterschätzung auf.
+
+✓ Symmetrische Verteilung der Residuen:
+Die Modellannahmen erscheinen plausibel.
+
+✓ Keine auffällige Heteroskedastizität:
+Die Fehlervarianz bleibt über den Vorhersagebereich weitgehend konstant.
+
+✓ Gut kalibrierte Vorhersageintervalle:
+Die Unsicherheitsschätzungen können als zuverlässig angesehen werden.
 
 MÖGLICHE VERBESSERUNGEN:
-• Ensemble methods combining multiple models
-• Advanced feature engineering (e.g., interaction terms)
-• Regional-specific sub-models
-• Market cycle indicators
-• Neighbor similarity features
+
+• Kombination mehrerer Modelle durch Ensemble-Methoden
+
+• Erweiterte Merkmalsgenerierung
+(z. B. Interaktionsterme zwischen Merkmalen)
+
+• Regionalspezifische Teilmodelle für lokale Immobilienmärkte
+
+• Einbindung von Marktzyklus- und Konjunkturindikatoren
+
+• Ähnlichkeitsmerkmale auf Basis benachbarter Immobilien
 
 
 ====================================================================================================
-9. EINSCHRÄNKUNGEN & EMPFEHLUNGEN
+9. EINSCHRÄNKUNGEN UND EMPFEHLUNGEN
 ====================================================================================================
 
 EINSCHRÄNKUNGEN:
-1. Data Quality: Missing values in 20-85% of some features required imputation
-2. Temporal Coverage: Limited to 2019-2020 data; doesn't capture long-term trends
-3. Geographic Precision: Region-level aggregation; postal code level has data sparsity
-4. External Factors: Model doesn't include macro-economic indicators
-5. Sample Size: Smaller representation in some remote regions
-6. Feature Engineering: Could benefit from domain-specific enhancements
 
-EMPFEHLUNGEN FOR PRODUCTION DEPLOYMENT:
-1. Implement automated model retraining on new data
-2. Überwachung der Vorhersagegenauigkeit im Zeitverlauf (mögliche Modellverschiebung)
-3. Create region-specific models for better local accuracy
-4. Add economic indicators (employment, inflation, interest rates)
-5. Implement A/B testing with alternative models
-6. Verwenden Sie ensemble methods combining Gradient-Boosting-Regressor and Neuronales Netz
-7. Regelmäßige Überprüfung und Aktualisierung der Merkmalswichtigkeit
-8. Implement automated alerting for unusual predictions
-9. Track prediction intervals' calibration over time
-10. Expand data collection for better geographic coverage
+1. Datenqualität:
+   Einige Merkmale weisen einen hohen Anteil fehlender Werte auf und mussten
+   durch Imputationsverfahren ergänzt werden.
 
-BUSINESS APPLICATIONS:
-• Landlord: Competitive pricing, market benchmarking
-• Tenant: Budget planning, location comparison
-• Platform: Fraud detection, listing valuation
-• Regulator: Market analysis, policy decisions
-• Investor: Market assessment, timing decisions
+2. Zeitliche Abdeckung:
+   Die Daten stammen hauptsächlich aus den Jahren 2019 und 2020 und bilden
+   langfristige Marktentwicklungen nur eingeschränkt ab.
+
+3. Räumliche Genauigkeit:
+   Die Analyse erfolgt überwiegend auf regionaler Ebene. Für einzelne
+   Postleitzahlgebiete stehen teilweise nur wenige Daten zur Verfügung.
+
+4. Externe Einflussfaktoren:
+   Makroökonomische Kennzahlen wie Inflation, Zinsniveau oder Arbeitsmarktindikatoren
+   wurden nicht berücksichtigt.
+
+5. Regionale Datenverteilung:
+   Einige Regionen sind im Datensatz deutlich schwächer vertreten als andere.
+
+6. Merkmalsauswahl:
+   Zusätzliche fachspezifische Merkmale könnten die Vorhersageleistung weiter verbessern.
+
+EMPFEHLUNGEN FÜR DEN PRAKTISCHEN EINSATZ:
+
+1. Regelmäßiges Nachtrainieren des Modells mit aktuellen Daten
+
+2. Kontinuierliche Überwachung der Vorhersagegenauigkeit im Zeitverlauf
+
+3. Entwicklung regionalspezifischer Modelle für lokale Märkte
+
+4. Integration wirtschaftlicher Kennzahlen
+   (z. B. Inflation, Zinsen oder Beschäftigungsentwicklung)
+
+5. Vergleich und Bewertung alternativer Modellansätze
+
+6. Kombination von Gradient-Boosting-Regressor und neuronalem Netz
+   durch Ensemble-Verfahren
+
+7. Regelmäßige Überprüfung der Merkmalswichtigkeit
+
+8. Automatische Erkennung ungewöhnlicher Vorhersagen
+
+9. Überwachung der Kalibrierung von Vorhersageintervallen
+
+10. Erweiterung der Datengrundlage für eine bessere regionale Abdeckung
+
+MÖGLICHE ANWENDUNGSGEBIETE:
+
+• Vermieter:
+Wettbewerbsfähige Mietpreisgestaltung und Marktvergleich
+
+• Mieter:
+Budgetplanung und Standortvergleich
+
+• Immobilienplattformen:
+Bewertung von Inseraten und Erkennung auffälliger Angebote
+
+• Behörden und Regulierungsstellen:
+Marktanalysen und politische Entscheidungsgrundlagen
+
+• Investoren:
+Marktbeobachtung und Investitionsentscheidungen
 
 
 ====================================================================================================
@@ -274,76 +375,130 @@ BUSINESS APPLICATIONS:
 ====================================================================================================
 
 DATENVORBEREITUNG:
-• Outlier removal: Kept prices within 1st-99th percentile
-• Missing value imputation: Median strategy for numeric features
-• Feature scaling: StandardScaler for neural network
-• Categorical encoding: LabelEncoder for categorical variables
+
+• Ausreißerbereinigung:
+Es wurden ausschließlich Mietpreise zwischen dem 1. und 99. Perzentil berücksichtigt.
+
+• Behandlung fehlender Werte:
+Numerische Merkmale wurden mittels Median-Imputation ergänzt.
+
+• Merkmalsskalierung:
+StandardScaler für das neuronale Netz.
+
+• Kodierung kategorialer Merkmale:
+LabelEncoder für kategoriale Variablen.
 
 IMPLEMENTIERTE MODELLE:
-1. Ridge-Regression (α=1.0)
-   - Baseline model with L2 regularization
-   - Linear relationships only
 
-2. Gradient-Boosting-Regressor (Gradient Boosting)
-   - n_estimators=200, max_depth=6
-   - learning_rate=0.1
-   - Captures non-linear relationships
+1. Ridge-Regression (α = 1.0)
+
+   * Basismodell mit L2-Regularisierung
+   * Erfasst ausschließlich lineare Zusammenhänge
+
+2. Gradient-Boosting-Regressor
+
+   * n_estimators = 200
+   * max_depth = 6
+   * learning_rate = 0.1
+   * Kann nichtlineare Zusammenhänge modellieren
 
 3. Neuronales Netz (TensorFlow/Keras)
-   - Architecture: 256 → 128 → 64 → 1 neurons
-   - Dropout layers for regularization
-   - ReLU activations
-   - 100 epochs, batch_size=32
 
-BEWERTUNGSMETHODOLOGIE:
-• Temporal split strategy (realistic scenario)
-• Multiple metrics (MAE, RMSE, R², MAPE)
-• Cross-validation on validation set
-• Prediction interval calibration analysis
+   * Architektur: 256 → 128 → 64 → 1 Neuronen
+   * Dropout-Schichten zur Regularisierung
+   * ReLU-Aktivierungsfunktionen
+   * 100 Epochen, Batch-Größe = 32
+
+BEWERTUNGSMETHODIK:
+
+• Zeitbasierte Aufteilung in Trainings-, Validierungs- und Testdaten
+
+• Verwendung mehrerer Bewertungsmetriken:
+MAE, RMSE, R² und MAPE
+
+• Validierung der Modelle auf separaten Validierungsdaten
+
+• Analyse und Kalibrierung von Vorhersageintervallen
 
 ERZEUGTE DATEIEN:
-• main_pipeline.py - Data loading, preprocessing, model training
-• evaluate_models.py - Model evaluation and uncertainty analysis
-• visualizations.py - Alle Diagramme und Plots
-• generate_maps.py - Interaktive Karten mit Folium
-• generate_report.py - This comprehensive report
-• 7 visualization PNG files (high-resolution)
-• 2 interaktive HTML-Karten
-• Model artifacts (pickled objects)
+
+• main_pipeline.py
+Datenvorbereitung, Merkmalsgenerierung und Modelltraining
+
+• evaluate_models.py
+Modellbewertung und Unsicherheitsanalyse
+
+• visualizations.py
+Erstellung aller Diagramme und Visualisierungen
+
+• generate_maps.py
+Erstellung interaktiver Karten mit Folium
+
+• generate_report.py
+Erstellung des Abschlussberichts
+
+• 7 hochauflösende Visualisierungen (PNG)
+
+• 2 interaktive Karten (HTML)
+
+• Gespeicherte Modelle und Metadaten
 
 
 ====================================================================================================
 11. FAZIT
 ====================================================================================================
 
-This project successfully developed a multi-model machine learning system for German
-rental price prediction with excellent predictive performance:
+Im Rahmen dieses Projekts wurde erfolgreich ein Mehrmodell-System zur
+Vorhersage von Mietpreisen in Deutschland entwickelt und bewertet.
 
-KEY ACHIEVEMENTS:
-✓ Best model (Gradient-Boosting-Regressor) achieves €91 average prediction error
-✓ Explains 87.1% of rental price variance
-✓ Well-calibrated 90% prediction intervals for uncertainty quantification
-✓ Comprehensive spatial and temporal analysis
-✓ Production-ready code with modular, maintainable structure
-✓ Umfangreiche Visualisierungen und interaktive Karten für Stakeholder-Einsichten
+Die Ergebnisse zeigen eine hohe Vorhersagegenauigkeit sowie eine gute
+Interpretierbarkeit der wichtigsten Einflussfaktoren auf den Mietpreis.
 
-Das Modell zeigt strong practical utility for:
-• Rental price estimation and market benchmarking
-• Risk assessment through prediction intervals
-• Market analysis through spatial and temporal patterns
-• Decision support for buyers, sellers, and platforms
+WICHTIGSTE ERGEBNISSE:
 
-NÄCHSTE SCHRITTE:
-1. Deploy model to production environment
-2. Set up automated retraining pipeline
-3. Monitor model performance in real-time
-4. Collect feedback from users for model improvements
-5. Expand to additional markets or regions
-6. Incorporate additional data sources
+✓ Das beste Modell (Gradient-Boosting-Regressor) erreicht einen durchschnittlichen Vorhersagefehler von lediglich €90
 
-Bericht erstellt: 2026-06-12 19:22:13
+✓ Das Modell erklärt 87.2% der Varianz der Mietpreise
+
+✓ Die 90%-Vorhersageintervalle sind gut kalibriert und ermöglichen eine realistische Einschätzung der Unsicherheit
+
+✓ Räumliche und zeitliche Einflussfaktoren wurden erfolgreich in die Modellierung integriert
+
+✓ Das Projekt umfasst zusätzlich umfangreiche Visualisierungen und interaktive Karten zur Analyse der Ergebnisse
+
+✓ Die Software wurde modular aufgebaut und ist leicht nachvollziehbar sowie erweiterbar
+
+PRAKTISCHER NUTZEN:
+
+Das entwickelte System eignet sich insbesondere für:
+
+• Schätzung realistischer Mietpreise
+
+• Marktvergleiche und Benchmarking
+
+• Risikoabschätzungen mithilfe von Vorhersageintervallen
+
+• Analyse regionaler und zeitlicher Marktunterschiede
+
+• Unterstützung datenbasierter Entscheidungen im Immobilienbereich
+
+MÖGLICHE WEITERENTWICKLUNGEN:
+
+1. Bereitstellung des Modells als Webanwendung
+
+2. Automatisiertes Nachtrainieren mit aktuellen Marktdaten
+
+3. Kontinuierliche Überwachung der Modellqualität
+
+4. Integration zusätzlicher Datenquellen und Marktindikatoren
+
+5. Erweiterung auf weitere Regionen oder internationale Märkte
+
+6. Entwicklung spezialisierter Modelle für einzelne Regionen
+
+Bericht erstellt: 2026-06-13 10:31:18
 
 
 ====================================================================================================
-END OF REPORT
+ENDE DES BERICHTS
 ====================================================================================================

@@ -1,5 +1,5 @@
 """
-Vereinfachte interaktive Kartenerstellung - FUNKTIONIERENDE VERSION
+Vereinfachte interaktive Kartenerstellung 
 Erstellt eigenständiges HTML mit Markern und Heatmaps
 """
 
@@ -9,7 +9,7 @@ import pickle
 import json
 
 print("="*80)
-print("INTERAKTIVE KARTEN ERSTELLEN - FESTE VERSION")
+print("INTERAKTIVE KARTEN ERSTELLEN ")
 print("="*80)
 
 # Ergebnisse laden
@@ -611,15 +611,13 @@ print("   ✓ Gespeichert: prediction_accuracy_map.html")
 print("\n" + "="*80)
 print("✅ KARTEN ERFOLGREICH ERSTELLT!")
 print("="*80)
+
 print("\n📍 Erzeugte Dateien:")
-print("  ✓ interactive_rental_map.html - Mietpreise nach Region")
-print("  ✓ prediction_accuracy_map.html - Modellgenauigkeit nach Region")
-print("\n🌐 To view:")
-print("  1. Double-click HTML file to open in browser")
-print("  2. OR right-click → Öffnen Sie with → Web Browser")
-print("  3. OR use 'Live Server' VS Code extension")
-print("\n✨ Funktionen:")
-print("  • Color-coded circles showing prices/accuracy")
-print("  • Click circles to see detailed information")
-print("  • Zoom and pan to explore regions")
-print("  • Works offline (no external dependencies)")
+print("  ✓ interactive_rental_map.html - Mietpreise nach Regionen")
+print("  ✓ prediction_accuracy_map.html - Modellgenauigkeit nach Regionen")
+
+print("\n🌐 Karten anzeigen:")
+print("  1. HTML-Datei per Doppelklick im Browser öffnen")
+print("  2. Oder Rechtsklick → Öffnen mit → Webbrowser")
+print("  3. Alternativ die VS-Code-Erweiterung 'Live Server' verwenden")
+print("     (empfohlen bei Darstellungsproblemen)")
