@@ -255,9 +255,9 @@ Mittlere prozentuale Abweichung zwischen Vorhersage und tatsächlichem Wert.
 
 | Modell                      |      MAE |     RMSE |     R² |
 | --------------------------- | -------: | -------: | -----: |
-| Ridge-Regression            | 146,62 € | 221,92 € | 0,6984 |
-| Gradient-Boosting-Regressor |  90,68 € | 145,33 € | 0,8707 |
-| Neuronales Netz             | 122,90 € | 199,22 € | 0,7570 |
+| Ridge-Regression            | 145,04 € | 218,59 € | 0,7074 |
+| Gradient-Boosting-Regressor |  90,22 € | 144,79 € | 0,8716 |
+| Neuronales Netz             | 135,74 € | 220,16 € | 0,7032 |
 
 ---
 
@@ -267,11 +267,11 @@ Der Gradient-Boosting-Regressor erzielte die beste Leistung auf dem Testdatensat
 
 Testergebnisse:
 
-* MAE: 90,68 €
-* RMSE: 145,33 €
-* R²: 0,8707
+* MAE: 90,22 €
+* RMSE: 144,79 €
+* R²: 0,8716
 
-Das Modell erklärt damit rund 87 % der Varianz der Mietpreise.
+Das Modell erklärt damit rund 87,2 % der Varianz der Mietpreise.
 
 ---
 
@@ -283,9 +283,9 @@ Hierzu wurden 90%-Vorhersageintervalle auf Basis der Modellresiduen berechnet.
 
 Ergebnisse:
 
-* Coverage: 87,1 %
-* Durchschnittliche Intervallbreite: 373,64 €
-* Standardabweichung der Residuen: 113,57 €
+* Coverage: 86,9 %
+* Durchschnittliche Intervallbreite: 372,55 €
+* Standardabweichung der Residuen: 113,24 €
 
 Die Analyse zeigt, dass die Vorhersageintervalle die tatsächlichen Mietpreise in einem Großteil der Fälle zuverlässig einschließen.
 

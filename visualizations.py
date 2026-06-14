@@ -33,7 +33,6 @@ y_test_pred_nn = results['y_test_pred_nn']
 test_df = results['test_df']
 df = results['df']
 history = results['history']
-gb_model = results['gb_model']
 
 xgb_intervals = eval_results['xgb_intervals']
 nn_intervals = eval_results['nn_intervals']

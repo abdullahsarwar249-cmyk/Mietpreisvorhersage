@@ -2,7 +2,7 @@
 RENTAL PRICE PREDICTION - UMFASSENDER BEWERTUNGSBERICHT
 ====================================================================================================
 
-Bericht erstellt: 2026-06-13 10:31:18
+Bericht erstellt: 2026-06-14 22:52:54
 Dataset: immo_data.csv (German Real Estate Market)
 
 ====================================================================================================
@@ -17,7 +17,7 @@ WESENTLICHE ERKENNTNISSE:
 • Test-RMSE: €144.79 (gewichtet größere Fehler stärker)
 • Test-R²: 0.8716 (erklärt 87.16% der Varianz)
 • Vorhersageintervalle: 90%-Konfidenzniveau mit 86.9% tatsächlicher Abdeckung
-• Wichtigste Merkmale: livingSpace, yearConstructed, noRooms, floor, geo_plz
+• Wichtigste Merkmale: livingSpace, serviceCharge, pricetrend, regio1, geo_plz
 
 Das Modell zeigt eine hohe Vorhersagegenauigkeit mit sehr guter räumlicher und zeitlicher Abdeckung.
 Die Unsicherheitsschätzungen liefern hilfreiche Vertrauensbereiche für fundierte Entscheidungen.
@@ -46,7 +46,7 @@ Statistiken der Zielvariable (Trainingsdaten):
 • Median: €470.00
 
 Räumliche Abdeckung:
-• Number of Federal States: 15
+• Number of Federal States: 16
 • Number of Unique Regions: 16
 • Number of Postal Codes: 2662
 
@@ -80,9 +80,9 @@ Gradient-Boosting-Regressor:
 
 Neuronales Netz:
 ------------------------------------------------------------------------------------------
-  Train        | MAE: €  107.11 | RMSE: €  166.43 | R²:   0.8162 | MAPE:    0.17%
-  Validation   | MAE: €  121.48 | RMSE: €  193.35 | R²:   0.7601 | MAPE:    0.19%
-  Test         | MAE: €  123.40 | RMSE: €  198.95 | R²:   0.7576 | MAPE:    0.18%
+  Train        | MAE: €  108.37 | RMSE: €  169.46 | R²:   0.8094 | MAPE:    0.17%
+  Validation   | MAE: €  130.53 | RMSE: €  205.53 | R²:   0.7289 | MAPE:    0.19%
+  Test         | MAE: €  133.38 | RMSE: €  212.02 | R²:   0.7248 | MAPE:    0.19%
 
 INTERPRETATION:
 • MAE (Mean Absolute Error): Durchschnittlicher absoluter Vorhersagefehler in €
@@ -120,11 +120,11 @@ Niedrigster MAE und RMSE auf dem Testdatensatz, hoher R²-Wert sowie stabile Erg
 
 90%-Vorhersageintervalle (Neuronales Netz):
 
-• Tatsächliche Abdeckung: 87.2%
+• Tatsächliche Abdeckung: 86.7%
 
-• Mittlere Intervallbreite: €513.42
+• Mittlere Intervallbreite: €542.22
 
-• Standardabweichung der Residuen: €156.05
+• Standardabweichung der Residuen: €164.81
 
 INTERPRETATION:
 
@@ -432,7 +432,7 @@ Modellbewertung und Unsicherheitsanalyse
 Erstellung aller Diagramme und Visualisierungen
 
 • generate_maps.py
-Erstellung interaktiver Karten mit Folium
+Erstellung interaktiver Karten mit Leaflet/HTML
 
 • generate_report.py
 Erstellung des Abschlussberichts
@@ -456,7 +456,7 @@ Interpretierbarkeit der wichtigsten Einflussfaktoren auf den Mietpreis.
 
 WICHTIGSTE ERGEBNISSE:
 
-✓ Das beste Modell (Gradient-Boosting-Regressor) erreicht einen durchschnittlichen Vorhersagefehler von lediglich €90
+✓ Das beste Modell (Gradient-Boosting-Regressor) erreicht einen durchschnittlichen Vorhersagefehler von lediglich €90.22
 
 ✓ Das Modell erklärt 87.2% der Varianz der Mietpreise
 
@@ -496,7 +496,7 @@ MÖGLICHE WEITERENTWICKLUNGEN:
 
 6. Entwicklung spezialisierter Modelle für einzelne Regionen
 
-Bericht erstellt: 2026-06-13 10:31:18
+Bericht erstellt: 2026-06-14 22:52:54
 
 
 ====================================================================================================

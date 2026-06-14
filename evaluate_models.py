@@ -38,13 +38,12 @@ y_val_pred_nn = results['y_val_pred_nn']
 y_test_pred_nn = results['y_test_pred_nn']
 
 gb_model = results['gb_model']
-train_df = results['train_df']
 test_df = results['test_df']
 
 # ============================================================================
 # CALCULATE METRICS
 # ============================================================================
-def calculate_metrics(y_true, y_pred, set_name=""):
+def calculate_metrics(y_true, y_pred):
     mae = mean_absolute_error(y_true, y_pred)
     rmse = np.sqrt(mean_squared_error(y_true, y_pred))
     r2 = r2_score(y_true, y_pred)

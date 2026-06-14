@@ -29,7 +29,6 @@ y_test = results['y_test']
 y_train = results['y_train']
 y_val = results['y_val']
 test_df = results['test_df']
-gb_model = results['gb_model']
 
 ridge_metrics = eval_results['ridge_metrics']
 xgb_metrics = eval_results['xgb_metrics']
@@ -70,7 +69,7 @@ WESENTLICHE ERKENNTNISSE:
 • Test-RMSE: €{best_test_rmse:.2f} (gewichtet größere Fehler stärker)
 • Test-R²: {best_test_r2:.4f} (erklärt {best_test_r2*100:.2f}% der Varianz)
 • Vorhersageintervalle: 90%-Konfidenzniveau mit {xgb_intervals['coverage']:.1%} tatsächlicher Abdeckung
-• Wichtigste Merkmale: livingSpace, yearConstructed, noRooms, floor, geo_plz
+• Wichtigste Merkmale: livingSpace, serviceCharge, pricetrend, regio1, geo_plz
 
 Das Modell zeigt eine hohe Vorhersagegenauigkeit mit sehr guter räumlicher und zeitlicher Abdeckung.
 Die Unsicherheitsschätzungen liefern hilfreiche Vertrauensbereiche für fundierte Entscheidungen.
@@ -103,7 +102,7 @@ Statistiken der Zielvariable (Trainingsdaten):
 • Median: €{y_train.median():.2f}
 
 Räumliche Abdeckung:
-• Number of Federal States: 15
+• Number of Federal States: 16
 • Number of Unique Regions: {test_df['regio1'].nunique()}
 • Number of Postal Codes: {test_df['geo_plz'].nunique() if 'geo_plz' in test_df.columns else 'N/A'}
 
@@ -533,7 +532,7 @@ Modellbewertung und Unsicherheitsanalyse
 Erstellung aller Diagramme und Visualisierungen
 
 • generate_maps.py
-Erstellung interaktiver Karten mit Folium
+Erstellung interaktiver Karten mit Leaflet/HTML
 
 • generate_report.py
 Erstellung des Abschlussberichts
@@ -564,7 +563,7 @@ Interpretierbarkeit der wichtigsten Einflussfaktoren auf den Mietpreis.
 
 WICHTIGSTE ERGEBNISSE:
 
-✓ Das beste Modell (Gradient-Boosting-Regressor) erreicht einen durchschnittlichen Vorhersagefehler von lediglich €{best_test_mae:.0f}
+✓ Das beste Modell (Gradient-Boosting-Regressor) erreicht einen durchschnittlichen Vorhersagefehler von lediglich €{best_test_mae:.2f}
 
 ✓ Das Modell erklärt {best_test_r2*100:.1f}% der Varianz der Mietpreise
 

@@ -3,8 +3,6 @@ Vereinfachte interaktive Kartenerstellung
 Erstellt eigenständiges HTML mit Markern und Heatmaps
 """
 
-import pandas as pd
-import numpy as np
 import pickle
 import json
 
@@ -13,9 +11,6 @@ print("INTERAKTIVE KARTEN ERSTELLEN ")
 print("="*80)
 
 # Ergebnisse laden
-with open('pipeline_results.pkl', 'rb') as f:
-    results = pickle.load(f)
-
 with open('evaluation_results.pkl', 'rb') as f:
     eval_results = pickle.load(f)
 
@@ -37,7 +32,8 @@ region_coords = {
     'Saarland': [49.2557, 6.9983],
     'Sachsen': [51.0834, 13.5325],
     'Sachsen_Anhalt': [51.6921, 11.8797],
-    'Schleswig_Holstein': [54.5973, 9.8773]
+    'Schleswig_Holstein': [54.5973, 9.8773],
+    'Thüringen': [50.9840, 11.0290]
 }
 
 # Aggregate data by region
@@ -227,9 +223,9 @@ html_content = '''<!DOCTYPE html>
     <div id="map"></div>
     
     <div class="info-box">
-        <h3>🗺️ Mietpreiskarte</h3>
+        <h3> Regionale Mietpreisübersicht</h3>
         <p style="margin-bottom: 10px; color: #666;">
-            Durchschnittliche Mietpreise nach deutscher Region. Klicken Sie auf die Kreise für Details.
+         Diese Karte zeigt die durchschnittlichen Nettokaltmieten der analysierten Regionen in Deutschland. Klicken Sie auf einen Kreis, um weitere Informationen zur jeweiligen Region anzuzeigen.
         </p>
         
         <div class="color-legend">
@@ -252,7 +248,7 @@ html_content = '''<!DOCTYPE html>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background: #c0392b;"></div>
-                <span>Very Teuer (€1050+)</span>
+                <span>Sehr hochpreisig (ab €1050)</span>
             </div>
         </div>
         
@@ -265,7 +261,7 @@ html_content = '''<!DOCTYPE html>
             • Hinein-/Herauszoomen zum Erkunden<br><br>
             
             <strong>Statistiken:</strong><br>
-            • Durchschnittliche Miete: €{{AVG_RENT}}/month<br>
+            • Durchschnittliche Nettokaltmiete: €{{AVG_RENT}}
             • Spanne: €{{MIN_RENT}} - €{{MAX_RENT}}<br>
             • Regionen: {{NUM_REGIONS}}
         </div>
@@ -300,7 +296,7 @@ html_content = '''<!DOCTYPE html>
                 <div class="popup-title">${marker.title}</div>
                 <div class="popup-content">
                     <div class="popup-row">
-                        <span class="popup-label">Durchschnittliche Miete:</span>
+                        <span class="popup-label">Durchschnittliche Nettokaltmiete::</span>
                         <span>€${marker.rent.toFixed(2)}/month</span>
                     </div>
                     <div class="popup-row">
@@ -531,14 +527,14 @@ accuracy_html = '''<!DOCTYPE html>
         
         <div style="font-size: 12px;">
             <strong>So verwenden Sie die Karte:</strong><br>
-            • Circle size = error magnitude<br>
+            • Kreisgröße = Höhe des Vorhersagefehlers<br>
             • Klicken Sie auf Kreise für Details<br>
             • Hinein-/Herauszoomen zum Erkunden<br><br>
             
             <strong>Statistiken:</strong><br>
-            • Mean error: €{{MEAN_ERROR}}<br>
-            • Best accuracy: Green<br>
-            • Regions analyzed: {{NUM_REGIONS_ACC}}
+            • Durchschnittlicher Fehler: €{{MEAN_ERROR}}<br>
+            • Höchste Genauigkeit: Grün markierte Regionen<br>
+            • Analysierte Regionen: {{NUM_REGIONS_ACC}}
         </div>
     </div>
     
@@ -572,11 +568,11 @@ accuracy_html = '''<!DOCTYPE html>
                 <div class="popup-title">${marker.title}</div>
                 <div class="popup-content">
                     <div class="popup-row">
-                        <span class="popup-label">Actual Avg:</span>
+                        <span class="popup-label">Tatsächlicher Durchschnitt:</span>
                         <span>€${marker.actual.toFixed(2)}</span>
                     </div>
                     <div class="popup-row">
-                        <span class="popup-label">Predicted:</span>
+                        <span class="popup-label">Vorhergesagter Durchschnitt:</span>
                         <span>€${marker.predicted.toFixed(2)}</span>
                     </div>
                     <div class="popup-row">
