@@ -27,7 +27,7 @@ np.random.seed(42)
 tf.random.set_seed(42)
 
 print("=" * 80)
-print("MIETPREISVORHERSAGE – STARTE PIPELINE")
+print("MIETPREISVORHERSAGE")
 print("=" * 80)
 
 # ============================================================================
@@ -138,7 +138,10 @@ print(f"Endgültige Datensatzgröße: {df.shape}")
 print("\n[SCHRITT 3] Teile Daten auf (zeitliche Strategie)...")
 
 # Zeitliche Aufteilung für realistische Vorhersageszenarien
-train_df = df[df['year'] == 2019].copy()
+#train_df = df[df['year'] == 2019].copy()
+#val_df = df[df['year'] == 2020].copy()
+
+train_df = df[df['year'].isin([2018, 2019])].copy()
 val_df = df[df['year'] == 2020].copy()
 
 if len(val_df) < 100:
@@ -289,7 +292,7 @@ print("Neuronales Netz erfolgreich trainiert ✓")
 # ============================================================================
 # SCHRITT 7: MODELLE UND METADATEN SPEICHERN
 # ============================================================================
-print("\n[SCHRITT 7] Speichere Modelle und Metadaten...")
+print("\n[SCHRITT 7] Speichere Modelle und Metadaten in den pkl Dateien...")
 
 # Modelle speichern
 with open('gb_model.pkl', 'wb') as f:
@@ -375,7 +378,7 @@ with open('pipeline_results.pkl', 'wb') as f:
 print("Ergebnisse gespeichert ✓")
 
 print("\n" + "=" * 80)
-print("✅ PIPELINE ERFOLGREICH ABGESCHLOSSEN!")
+print(" PIPELINE ERFOLGREICH ABGESCHLOSSEN!")
 print("=" * 80)
 
 print("\nNächste Schritte:")

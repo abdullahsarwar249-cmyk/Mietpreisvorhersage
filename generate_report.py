@@ -1,5 +1,5 @@
 """
-Comprehensive Evaluation Report Generation
+Abschlussbericht zur Mietpreisvorhersage in Deutschland
 """
 
 import pandas as pd
@@ -12,7 +12,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 print("="*80)
-print("GENERATING UMFASSENDER BEWERTUNGSBERICHT")
+print("Bericht wird erstellt... Bitte warten.")
 print("="*80)
 
 # Alle Ergebnisse laden
@@ -43,7 +43,7 @@ feature_importance = pd.DataFrame(eval_results['feature_importance'])
 report = []
 
 report.append("="*100)
-report.append("RENTAL PRICE PREDICTION - UMFASSENDER BEWERTUNGSBERICHT")
+report.append("Mietpreisvorhersage in Deutschland – Abschlussbericht")
 report.append("="*100)
 report.append(f"\nBericht erstellt: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 report.append(f"Dataset: immo_data.csv (German Real Estate Market)")
@@ -84,35 +84,50 @@ report.append("="*100)
 
 report.append(f"""
 Ursprünglicher Datensatz:
-• Total Rows: {metadata['n_train'] + metadata['n_val'] + metadata['n_test']}
-• Features: {metadata['n_features']}
-• Target Variable: baseRent (monthly rental price in €)
-• Date Range: 2019-2020 (temporal split strategy)
+
+• Anzahl Datensätze: {metadata['n_train'] + metadata['n_val'] + metadata['n_test']}
+• Anzahl Merkmale: {metadata['n_features']}
+• Zielvariable: baseRent (monatliche Nettokaltmiete in €)
+• Zeitraum: 2018–2020
 
 Aufteilung in Trainings-, Validierungs- und Testdaten:
-• Training Set: {metadata['n_train']} samples (2019 data)
-• Validation Set: {metadata['n_val']} samples (early 2020)
-• Test Set: {metadata['n_test']} samples (late 2020)
+
+• Trainingsdaten: {metadata['n_train']} Datensätze (2018–2019)
+• Validierungsdaten: {metadata['n_val']} Datensätze (2020)
+• Testdaten: {metadata['n_test']} Datensätze (2020)
 
 Statistiken der Zielvariable (Trainingsdaten):
-• Mean: €{metadata['target_mean_train']:.2f}
-• Std Dev: €{metadata['target_std_train']:.2f}
-• Min: €{y_train.min():.2f}
-• Max: €{y_train.max():.2f}
+
+• Mittelwert: €{metadata['target_mean_train']:.2f}
+• Standardabweichung: €{metadata['target_std_train']:.2f}
+• Minimum: €{y_train.min():.2f}
+• Maximum: €{y_train.max():.2f}
 • Median: €{y_train.median():.2f}
 
 Räumliche Abdeckung:
-• Number of Federal States: 16
-• Number of Unique Regions: {test_df['regio1'].nunique()}
-• Number of Postal Codes: {test_df['geo_plz'].nunique() if 'geo_plz' in test_df.columns else 'N/A'}
+
+• Anzahl Bundesländer: {test_df['regio1'].nunique()}
+• Anzahl Postleitzahlenbereiche: {test_df['geo_plz'].nunique() if 'geo_plz' in test_df.columns else 'N/A'}
 
 Verwendete Merkmale:
-• Building Characteristics: livingSpace, noRooms, floor, yearConstructed, condition
-• Amenities: balcony, garden, cellar, lift, hasKitchen
-• Infrastructure: serviceCharge, noParkSpaces
-• Location: regio1, regio2, geo_plz
-• Temporal: year, month, quarter, season
-• Market Indicators: pricetrend, picturecount
+
+• Objektmerkmale:
+  livingSpace, noRooms, floor, yearConstructed, condition
+
+• Ausstattungsmerkmale:
+  balcony, garden, cellar, lift, hasKitchen
+
+• Infrastrukturmerkmale:
+  serviceCharge, noParkSpaces
+
+• Räumliche Merkmale:
+  regio1, regio2, geo_plz
+
+• Zeitliche Merkmale:
+  year, month, quarter, season
+
+• Marktmerkmale:
+  pricetrend, picturecount
 """)
 
 # ============================================================================
@@ -403,7 +418,7 @@ EINSCHRÄNKUNGEN:
    durch Imputationsverfahren ergänzt werden.
 
 2. Zeitliche Abdeckung:
-   Die Daten stammen hauptsächlich aus den Jahren 2019 und 2020 und bilden
+   Die Daten stammen hauptsächlich aus den Jahren 2018, 2019 und 2020 und bilden
    langfristige Marktentwicklungen nur eingeschränkt ab.
 
 3. Räumliche Genauigkeit:
@@ -420,29 +435,6 @@ EINSCHRÄNKUNGEN:
 6. Merkmalsauswahl:
    Zusätzliche fachspezifische Merkmale könnten die Vorhersageleistung weiter verbessern.
 
-EMPFEHLUNGEN FÜR DEN PRAKTISCHEN EINSATZ:
-
-1. Regelmäßiges Nachtrainieren des Modells mit aktuellen Daten
-
-2. Kontinuierliche Überwachung der Vorhersagegenauigkeit im Zeitverlauf
-
-3. Entwicklung regionalspezifischer Modelle für lokale Märkte
-
-4. Integration wirtschaftlicher Kennzahlen
-   (z. B. Inflation, Zinsen oder Beschäftigungsentwicklung)
-
-5. Vergleich und Bewertung alternativer Modellansätze
-
-6. Kombination von Gradient-Boosting-Regressor und neuronalem Netz
-   durch Ensemble-Verfahren
-
-7. Regelmäßige Überprüfung der Merkmalswichtigkeit
-
-8. Automatische Erkennung ungewöhnlicher Vorhersagen
-
-9. Überwachung der Kalibrierung von Vorhersageintervallen
-
-10. Erweiterung der Datengrundlage für eine bessere regionale Abdeckung
 
 MÖGLICHE ANWENDUNGSGEBIETE:
 
@@ -575,33 +567,6 @@ WICHTIGSTE ERGEBNISSE:
 
 ✓ Die Software wurde modular aufgebaut und ist leicht nachvollziehbar sowie erweiterbar
 
-PRAKTISCHER NUTZEN:
-
-Das entwickelte System eignet sich insbesondere für:
-
-• Schätzung realistischer Mietpreise
-
-• Marktvergleiche und Benchmarking
-
-• Risikoabschätzungen mithilfe von Vorhersageintervallen
-
-• Analyse regionaler und zeitlicher Marktunterschiede
-
-• Unterstützung datenbasierter Entscheidungen im Immobilienbereich
-
-MÖGLICHE WEITERENTWICKLUNGEN:
-
-1. Bereitstellung des Modells als Webanwendung
-
-2. Automatisiertes Nachtrainieren mit aktuellen Marktdaten
-
-3. Kontinuierliche Überwachung der Modellqualität
-
-4. Integration zusätzlicher Datenquellen und Marktindikatoren
-
-5. Erweiterung auf weitere Regionen oder internationale Märkte
-
-6. Entwicklung spezialisierter Modelle für einzelne Regionen
 
 Bericht erstellt: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 """)
@@ -640,10 +605,7 @@ report_json = {
     'dataset': metadata
 }
 
-with open('report_summary.json', 'w') as f:
-    json.dump(report_json, f, indent=2)
 
-print("✓ Berichtszusammenfassung gespeichert unter: report_summary.json")
 
 print("\n" + "="*80)
 print("BERICHTSERSTELLUNG ERFOLGREICH ABGESCHLOSSEN")

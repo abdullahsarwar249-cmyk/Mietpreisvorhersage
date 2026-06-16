@@ -2,7 +2,7 @@
 RENTAL PRICE PREDICTION - UMFASSENDER BEWERTUNGSBERICHT
 ====================================================================================================
 
-Bericht erstellt: 2026-06-14 22:52:54
+Bericht erstellt: 2026-06-16 19:10:32
 Dataset: immo_data.csv (German Real Estate Market)
 
 ====================================================================================================
@@ -13,10 +13,10 @@ Dieses Projekt entwickelt eine Pipeline des Maschinellen Lernens zur Vorhersage 
 Dabei werden räumliche Faktoren (Regionen, Postleitzahlen) sowie zeitliche Entwicklungen berücksichtigt.
 
 WESENTLICHE ERKENNTNISSE:
-• Test-MAE: €90.22 (durchschnittlicher Vorhersagefehler)
-• Test-RMSE: €144.79 (gewichtet größere Fehler stärker)
-• Test-R²: 0.8716 (erklärt 87.16% der Varianz)
-• Vorhersageintervalle: 90%-Konfidenzniveau mit 86.9% tatsächlicher Abdeckung
+• Test-MAE: €89.74 (durchschnittlicher Vorhersagefehler)
+• Test-RMSE: €143.92 (gewichtet größere Fehler stärker)
+• Test-R²: 0.8732 (erklärt 87.32% der Varianz)
+• Vorhersageintervalle: 90%-Konfidenzniveau mit 87.0% tatsächlicher Abdeckung
 • Wichtigste Merkmale: livingSpace, serviceCharge, pricetrend, regio1, geo_plz
 
 Das Modell zeigt eine hohe Vorhersagegenauigkeit mit sehr guter räumlicher und zeitlicher Abdeckung.
@@ -28,35 +28,50 @@ Die Unsicherheitsschätzungen liefern hilfreiche Vertrauensbereiche für fundier
 ====================================================================================================
 
 Ursprünglicher Datensatz:
-• Total Rows: 41021
-• Features: 25
-• Target Variable: baseRent (monthly rental price in €)
-• Date Range: 2019-2020 (temporal split strategy)
+
+• Anzahl Datensätze: 49000
+• Anzahl Merkmale: 25
+• Zielvariable: baseRent (monatliche Nettokaltmiete in €)
+• Zeitraum: 2018–2020
 
 Aufteilung in Trainings-, Validierungs- und Testdaten:
-• Training Set: 26485 samples (2019 data)
-• Validation Set: 7268 samples (early 2020)
-• Test Set: 7268 samples (late 2020)
+
+• Trainingsdaten: 34464 Datensätze (2018–2019)
+• Validierungsdaten: 7268 Datensätze (2020)
+• Testdaten: 7268 Datensätze (2020)
 
 Statistiken der Zielvariable (Trainingsdaten):
-• Mean: €605.39
-• Std Dev: €388.17
-• Min: €170.00
-• Max: €2480.00
+
+• Mittelwert: €606.68
+• Standardabweichung: €390.55
+• Minimum: €170.00
+• Maximum: €2480.00
 • Median: €470.00
 
 Räumliche Abdeckung:
-• Number of Federal States: 16
-• Number of Unique Regions: 16
-• Number of Postal Codes: 2662
+
+• Anzahl Bundesländer: 16
+• Anzahl Postleitzahlenbereiche: 2662
 
 Verwendete Merkmale:
-• Building Characteristics: livingSpace, noRooms, floor, yearConstructed, condition
-• Amenities: balcony, garden, cellar, lift, hasKitchen
-• Infrastructure: serviceCharge, noParkSpaces
-• Location: regio1, regio2, geo_plz
-• Temporal: year, month, quarter, season
-• Market Indicators: pricetrend, picturecount
+
+• Objektmerkmale:
+  livingSpace, noRooms, floor, yearConstructed, condition
+
+• Ausstattungsmerkmale:
+  balcony, garden, cellar, lift, hasKitchen
+
+• Infrastrukturmerkmale:
+  serviceCharge, noParkSpaces
+
+• Räumliche Merkmale:
+  regio1, regio2, geo_plz
+
+• Zeitliche Merkmale:
+  year, month, quarter, season
+
+• Marktmerkmale:
+  pricetrend, picturecount
 
 
 ====================================================================================================
@@ -68,31 +83,31 @@ Detaillierte Kennzahlen nach Modell und Datensatzaufteilung:
 
 Ridge-Regression:
 ------------------------------------------------------------------------------------------
-  Train        | MAE: €  141.19 | RMSE: €  206.20 | R²:   0.7178 | MAPE:    0.26%
-  Validation   | MAE: €  142.61 | RMSE: €  216.91 | R²:   0.6980 | MAPE:    0.25%
-  Test         | MAE: €  145.04 | RMSE: €  218.59 | R²:   0.7074 | MAPE:    0.24%
+  Train        | MAE: €  141.38 | RMSE: €  206.11 | R²:   0.7215 | MAPE:    0.26%
+  Validation   | MAE: €  142.60 | RMSE: €  216.44 | R²:   0.6993 | MAPE:    0.25%
+  Test         | MAE: €  145.04 | RMSE: €  217.93 | R²:   0.7092 | MAPE:    0.24%
 
 Gradient-Boosting-Regressor:
 ------------------------------------------------------------------------------------------
-  Train        | MAE: €   64.57 | RMSE: €   94.35 | R²:   0.9409 | MAPE:    0.12%
-  Validation   | MAE: €   89.87 | RMSE: €  141.14 | R²:   0.8721 | MAPE:    0.14%
-  Test         | MAE: €   90.22 | RMSE: €  144.79 | R²:   0.8716 | MAPE:    0.14%
+  Train        | MAE: €   68.07 | RMSE: €  100.53 | R²:   0.9337 | MAPE:    0.12%
+  Validation   | MAE: €   90.32 | RMSE: €  142.77 | R²:   0.8692 | MAPE:    0.14%
+  Test         | MAE: €   89.74 | RMSE: €  143.92 | R²:   0.8732 | MAPE:    0.14%
 
 Neuronales Netz:
 ------------------------------------------------------------------------------------------
-  Train        | MAE: €  108.37 | RMSE: €  169.46 | R²:   0.8094 | MAPE:    0.17%
-  Validation   | MAE: €  130.53 | RMSE: €  205.53 | R²:   0.7289 | MAPE:    0.19%
-  Test         | MAE: €  133.38 | RMSE: €  212.02 | R²:   0.7248 | MAPE:    0.19%
+  Train        | MAE: €  107.02 | RMSE: €  168.46 | R²:   0.8139 | MAPE:    0.17%
+  Validation   | MAE: €  125.64 | RMSE: €  194.99 | R²:   0.7560 | MAPE:    0.21%
+  Test         | MAE: €  126.94 | RMSE: €  201.36 | R²:   0.7517 | MAPE:    0.20%
 
 INTERPRETATION:
 • MAE (Mean Absolute Error): Durchschnittlicher absoluter Vorhersagefehler in €
   - Je kleiner der Wert, desto besser. Der Gradient-Boosting-Regressor erreicht einen typischen Fehler von ±€90
 
 • RMSE (Root Mean Squared Error): Bestraft größere Fehler stärker als der MAE
-  - Der Gradient-Boosting-Regressor erzielt einen RMSE von €145, was auf einzelne größere Abweichungen hindeutet
+  - Der Gradient-Boosting-Regressor erzielt einen RMSE von €144, was auf einzelne größere Abweichungen hindeutet
 
 • R²-Wert: Anteil der durch das Modell erklärten Varianz (Skala von 0 bis 1)
-  - Gradient-Boosting-Regressor R²: 0.8716 (sehr hohe Vorhersagekraft)
+  - Gradient-Boosting-Regressor R²: 0.8732 (sehr hohe Vorhersagekraft)
 
 • MAPE (Mean Absolute Percentage Error): Durchschnittlicher prozentualer Vorhersagefehler
   - Gradient-Boosting-Regressor: 0.14% relativer Fehler
@@ -109,22 +124,22 @@ Niedrigster MAE und RMSE auf dem Testdatensatz, hoher R²-Wert sowie stabile Erg
 
 90%-Vorhersageintervalle (Gradient-Boosting-Regressor):
 
-• Tatsächliche Abdeckung: 86.9%
+• Tatsächliche Abdeckung: 87.0%
 ✓ Zielwert: 90 % – Die Vorhersageintervalle des Modells sind gut kalibriert.
 
-• Mittlere Intervallbreite: €372.55
+• Mittlere Intervallbreite: €370.16
 
 * Liefert aussagekräftige Vertrauensbereiche, ohne die Unsicherheit übermäßig groß abzuschätzen.
 
-• Standardabweichung der Residuen: €113.24
+• Standardabweichung der Residuen: €112.51
 
 90%-Vorhersageintervalle (Neuronales Netz):
 
-• Tatsächliche Abdeckung: 86.7%
+• Tatsächliche Abdeckung: 87.4%
 
-• Mittlere Intervallbreite: €542.22
+• Mittlere Intervallbreite: €514.25
 
-• Standardabweichung der Residuen: €164.81
+• Standardabweichung der Residuen: €156.31
 
 INTERPRETATION:
 
@@ -152,16 +167,16 @@ Obere Grenze: €913
 
 Top 10 wichtigste Merkmale (Gradient-Boosting-Regressor):
 
-   1. livingSpace               | Wichtigkeit:  49.65%
-   2. serviceCharge             | Wichtigkeit:   9.85%
-   3. pricetrend                | Wichtigkeit:   9.63%
-   4. regio1                    | Wichtigkeit:   9.10%
-   5. geo_plz                   | Wichtigkeit:   7.36%
-   6. yearConstructed           | Wichtigkeit:   4.80%
-   7. regio2                    | Wichtigkeit:   2.47%
-   8. condition                 | Wichtigkeit:   1.73%
-   9. hasKitchen                | Wichtigkeit:   1.45%
-  10. picturecount              | Wichtigkeit:   1.33%
+   1. livingSpace               | Wichtigkeit:  49.99%
+   2. serviceCharge             | Wichtigkeit:  10.65%
+   3. regio1                    | Wichtigkeit:   9.90%
+   4. pricetrend                | Wichtigkeit:   8.91%
+   5. geo_plz                   | Wichtigkeit:   7.00%
+   6. yearConstructed           | Wichtigkeit:   4.66%
+   7. regio2                    | Wichtigkeit:   2.14%
+   8. condition                 | Wichtigkeit:   1.64%
+   9. hasKitchen                | Wichtigkeit:   1.38%
+  10. picturecount              | Wichtigkeit:   1.32%
 
 INTERPRETATION:
 
@@ -261,16 +276,16 @@ im Immobilienmarkt berücksichtigt werden.
 
 Residuenstatistiken des Gradient-Boosting-Regressors (Testdatensatz):
 
-• Mittelwert: €19.09
+• Mittelwert: €21.94
 (sollte möglichst nahe bei 0 liegen)
 
-• Standardabweichung: €143.52
+• Standardabweichung: €142.23
 
-• Minimum: €-1056.87
+• Minimum: €-1139.41
 
-• Maximum: €1319.01
+• Maximum: €1354.36
 
-• Median: €5.24
+• Median: €8.09
 
 DIAGNOSE:
 
@@ -311,7 +326,7 @@ EINSCHRÄNKUNGEN:
    durch Imputationsverfahren ergänzt werden.
 
 2. Zeitliche Abdeckung:
-   Die Daten stammen hauptsächlich aus den Jahren 2019 und 2020 und bilden
+   Die Daten stammen hauptsächlich aus den Jahren 2018, 2019 und 2020 und bilden
    langfristige Marktentwicklungen nur eingeschränkt ab.
 
 3. Räumliche Genauigkeit:
@@ -328,29 +343,6 @@ EINSCHRÄNKUNGEN:
 6. Merkmalsauswahl:
    Zusätzliche fachspezifische Merkmale könnten die Vorhersageleistung weiter verbessern.
 
-EMPFEHLUNGEN FÜR DEN PRAKTISCHEN EINSATZ:
-
-1. Regelmäßiges Nachtrainieren des Modells mit aktuellen Daten
-
-2. Kontinuierliche Überwachung der Vorhersagegenauigkeit im Zeitverlauf
-
-3. Entwicklung regionalspezifischer Modelle für lokale Märkte
-
-4. Integration wirtschaftlicher Kennzahlen
-   (z. B. Inflation, Zinsen oder Beschäftigungsentwicklung)
-
-5. Vergleich und Bewertung alternativer Modellansätze
-
-6. Kombination von Gradient-Boosting-Regressor und neuronalem Netz
-   durch Ensemble-Verfahren
-
-7. Regelmäßige Überprüfung der Merkmalswichtigkeit
-
-8. Automatische Erkennung ungewöhnlicher Vorhersagen
-
-9. Überwachung der Kalibrierung von Vorhersageintervallen
-
-10. Erweiterung der Datengrundlage für eine bessere regionale Abdeckung
 
 MÖGLICHE ANWENDUNGSGEBIETE:
 
@@ -456,9 +448,9 @@ Interpretierbarkeit der wichtigsten Einflussfaktoren auf den Mietpreis.
 
 WICHTIGSTE ERGEBNISSE:
 
-✓ Das beste Modell (Gradient-Boosting-Regressor) erreicht einen durchschnittlichen Vorhersagefehler von lediglich €90.22
+✓ Das beste Modell (Gradient-Boosting-Regressor) erreicht einen durchschnittlichen Vorhersagefehler von lediglich €89.74
 
-✓ Das Modell erklärt 87.2% der Varianz der Mietpreise
+✓ Das Modell erklärt 87.3% der Varianz der Mietpreise
 
 ✓ Die 90%-Vorhersageintervalle sind gut kalibriert und ermöglichen eine realistische Einschätzung der Unsicherheit
 
@@ -468,35 +460,8 @@ WICHTIGSTE ERGEBNISSE:
 
 ✓ Die Software wurde modular aufgebaut und ist leicht nachvollziehbar sowie erweiterbar
 
-PRAKTISCHER NUTZEN:
 
-Das entwickelte System eignet sich insbesondere für:
-
-• Schätzung realistischer Mietpreise
-
-• Marktvergleiche und Benchmarking
-
-• Risikoabschätzungen mithilfe von Vorhersageintervallen
-
-• Analyse regionaler und zeitlicher Marktunterschiede
-
-• Unterstützung datenbasierter Entscheidungen im Immobilienbereich
-
-MÖGLICHE WEITERENTWICKLUNGEN:
-
-1. Bereitstellung des Modells als Webanwendung
-
-2. Automatisiertes Nachtrainieren mit aktuellen Marktdaten
-
-3. Kontinuierliche Überwachung der Modellqualität
-
-4. Integration zusätzlicher Datenquellen und Marktindikatoren
-
-5. Erweiterung auf weitere Regionen oder internationale Märkte
-
-6. Entwicklung spezialisierter Modelle für einzelne Regionen
-
-Bericht erstellt: 2026-06-14 22:52:54
+Bericht erstellt: 2026-06-16 19:10:32
 
 
 ====================================================================================================

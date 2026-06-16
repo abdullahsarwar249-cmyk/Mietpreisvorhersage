@@ -494,32 +494,33 @@ accuracy_html = '''<!DOCTYPE html>
     <div id="map"></div>
     
     <div class="info-box">
-        <h3>🎯 Genauigkeitskarte</h3>
+        <h3>🎯 Vorhersagegenauigkeit nach Region</h3>
         <p style="margin-bottom: 10px; color: #666;">
-            Modellvorhersagefehler nach Region. Klicken Sie auf Kreise für Details.
+            Diese Karte zeigt die durchschnittlichen Vorhersagefehler des Modells je Region.
+        Klicken Sie auf einen Kreis, um detaillierte Informationen zur jeweiligen Region anzuzeigen.
         </p>
         
         <div class="color-legend">
-            <strong>Accuracy Levels:</strong>
+            <strong>Genauigkeitsstufen:</strong>
             <div class="legend-item">
                 <div class="legend-color" style="background: #2ecc71;"></div>
-                <span>Very Accurate (&lt;€5)</span>
+                <span>Sehr hohe Genauigkeit (&lt;€5)</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background: #f1c40f;"></div>
-                <span>Accurate (&lt;€15)</span>
+                <span>Hohe Genauigkeit (&lt;€15)</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background: #e67e22;"></div>
-                <span>Mittel (&lt;€30)</span>
+                <span>Mittelere Genauigkeit (&lt;€30)</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background: #e74c3c;"></div>
-                <span>Inaccurate (&lt;€50)</span>
+                <span>Geringe Genauigkeit (&lt;€50)</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background: #c0392b;"></div>
-                <span>Poor (&gt;€50)</span>
+                <span>Niedrige Genauigkeit (&gt;€50)</span>
             </div>
         </div>
         
@@ -616,4 +617,4 @@ print("\n🌐 Karten anzeigen:")
 print("  1. HTML-Datei per Doppelklick im Browser öffnen")
 print("  2. Oder Rechtsklick → Öffnen mit → Webbrowser")
 print("  3. Alternativ die VS-Code-Erweiterung 'Live Server' verwenden")
-print("     (empfohlen bei Darstellungsproblemen)")
+print("     (empfohlen bei Darstellungsproblemen) falls die Heatmaps nicht korrekt angezeigt werden.")

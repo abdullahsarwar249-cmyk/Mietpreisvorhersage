@@ -9,7 +9,7 @@ echo "MIETPREISVORHERSAGE – KOMPLETTE ML-PIPELINE"
 echo "Deutsche Mietpreisschätzung mit räumlicher und zeitlicher Analyse"
 echo "================================================================================"
 echo ""
-echo "Dieses Skript führt alle Pipeline-Schritte automatisch nacheinander aus."
+echo "Dieses Skript führt alle Pipeline-Schritte automatisch nacheinander aus sodass man die nicht einzeln triggern muss."
 echo ""
 
 # Prüfen, ob Python 3 verfügbar ist
@@ -18,7 +18,7 @@ if ! command -v python3 &> /dev/null; then
     exit 1
 fi
 
-echo "✓ Python gefunden: $(python3 --version)"
+echo "✓ Python wurde gefunden: $(python3 --version)"
 echo ""
 
 # Schritt 1: Hauptpipeline
@@ -89,7 +89,7 @@ echo ""
 echo "Erzeugte Ausgabedateien:"
 echo ""
 
-echo "📊 Visualisierungen (PNG-Dateien, 300 DPI):"
+echo "Visualisierungen in png Format:"
 echo "  - 01_data_exploration.png"
 echo "  - 02_model_performance.png"
 echo "  - 03_uncertainty_analysis.png"
@@ -99,23 +99,23 @@ echo "  - 06_temporal_analysis.png"
 echo "  - 07_residual_analysis.png"
 echo ""
 
-echo "🗺️ Interaktive Karten (HTML-Dateien, im Browser öffnen):"
+echo "Interaktive Karten (HTML-Dateien, im Browser öffnen):"
 echo "  - interactive_rental_map.html"
 echo "  - prediction_accuracy_map.html"
 echo ""
 
-echo "📄 Berichte:"
+echo "Berichte:"
 echo "  - EVALUATION_REPORT.txt (ausführlicher Analysebericht)"
 echo "  - report_summary.json (kompakte JSON-Zusammenfassung)"
 echo ""
 
-echo "🤖 Trainierte Modelle:"
+echo "Trainierte Modelle:"
 echo "  - gb_model.pkl (Gradient-Boosting-Modell)"
 echo "  - nn_model.h5 (Neuronales Netzwerk)"
 echo "  - ridge_model.pkl (Ridge-Regression als Basismodell)"
 echo ""
 
-echo "📁 Daten und Metadaten:"
+echo "Daten und Metadaten:"
 echo "  - pipeline_results.pkl (Vorhersagen und Zwischenergebnisse)"
 echo "  - evaluation_results.pkl (detaillierte Leistungskennzahlen)"
 echo "  - metadata.json (Informationen zum Datensatz)"
@@ -123,7 +123,7 @@ echo ""
 
 echo "================================================================================"
 echo "Nächste Schritte:"
-echo "  1. Öffnen Sie die Visualisierungen in einem Bildbetrachter."
+echo "  1. Öffnen Sie die Visualisierungen"
 echo "  2. Öffnen Sie die HTML-Dateien in einem Webbrowser, um die interaktiven Karten zu erkunden."
 echo "  3. Lesen Sie den Bericht EVALUATION_REPORT.txt für detaillierte Erkenntnisse."
 echo "  4. Nutzen Sie die README.md für die vollständige Dokumentation."

@@ -151,7 +151,7 @@ models = ['Ridge', 'Gradient-Boosting-Regressor', 'Neuronales Netz']
 predictions = [y_test_pred_ridge, y_test_pred_xgb, y_test_pred_nn]
 colors = ['#3498db', '#e74c3c', '#2ecc71']
 
-# 2.1-2.3 Vorhersagen vs. Tatsächlich for each model
+# 2.1-2.3 Vorhersagen vs. Tatsächlich für alle Modelle
 for idx, (model, pred, color) in enumerate(zip(models, predictions, colors)):
     ax = fig.add_subplot(gs[0, idx])
     ax.scatter(y_test, pred, alpha=0.5, s=20, color=color, edgecolors='black', linewidth=0.5)
@@ -213,11 +213,11 @@ ax5.grid(True, alpha=0.3, axis='y')
 
 # 2.6 Neuronales Netz Training History
 ax6 = fig.add_subplot(gs[1, 2])
-ax6.plot(history.history['loss'], label='Training Loss', color='#3498db', linewidth=2)
-ax6.plot(history.history['val_loss'], label='Validation Loss', color='#e74c3c', linewidth=2)
+ax6.plot(history.history['loss'], label='Trainingsfehler', color='#3498db', linewidth=2)
+ax6.plot(history.history['val_loss'], label='Validierungsfehler', color='#e74c3c', linewidth=2)
 ax6.set_xlabel('Epoch')
-ax6.set_ylabel('Loss (MSE)')
-ax6.set_title('Neuronales Netz Training History')
+ax6.set_ylabel('Fehler (MSE)')
+ax6.set_title('Neuronales Netz Training Historie')
 ax6.legend()
 ax6.grid(True, alpha=0.3)
 
@@ -396,46 +396,7 @@ plt.savefig('06_temporal_analysis.png', dpi=300, bbox_inches='tight')
 print("   ✓ Gespeichert: 06_temporal_analysis.png")
 plt.close()
 
-# ============================================================================
-# 7. RESIDUAL ANALYSIS
-# ============================================================================
-print("\n[7] Erstelle Visualisierungen zur Residuenanalyse...")
 
-fig = plt.figure(figsize=(16, 6))
-gs = GridSpec(1, 3, figure=fig)
-
-residuals_xgb = y_test.values - y_test_pred_xgb
-
-# 7.1 Residuen vs Predicted
-ax1 = fig.add_subplot(gs[0, 0])
-ax1.scatter(y_test_pred_xgb, residuals_xgb, alpha=0.5, s=20, color='#e74c3c', edgecolors='black', linewidth=0.5)
-ax1.axhline(y=0, color='black', linestyle='--', linewidth=2)
-ax1.set_xlabel('Predicted Rent (€)')
-ax1.set_ylabel('Residuen (€)')
-ax1.set_title('Residuen vs Predicted Values (Gradient-Boosting-Regressor)')
-ax1.grid(True, alpha=0.3)
-
-# 7.2 Residuen distribution
-ax2 = fig.add_subplot(gs[0, 1])
-ax2.hist(residuals_xgb, bins=50, color='#e74c3c', alpha=0.7, edgecolor='black')
-ax2.axvline(residuals_xgb.mean(), color='black', linestyle='--', linewidth=2, label=f'Mean: €{residuals_xgb.mean():.0f}')
-ax2.set_xlabel('Residuen (€)')
-ax2.set_ylabel('Frequency')
-ax2.set_title('Distribution of Residuen (Gradient-Boosting-Regressor)')
-ax2.legend()
-ax2.grid(True, alpha=0.3, axis='y')
-
-# 7.3 Q-Q Plot
-from scipy import stats
-ax3 = fig.add_subplot(gs[0, 2])
-stats.probplot(residuals_xgb, dist="norm", plot=ax3)
-ax3.set_title('Q-Q Plot (Gradient-Boosting-Regressor Residuen)')
-ax3.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('07_residual_analysis.png', dpi=300, bbox_inches='tight')
-print("   ✓ Gespeichert: 07_residual_analysis.png")
-plt.close()
 
 print("\n" + "="*80)
 print("ALLE VISUALISIERUNGEN ABGESCHLOSSEN!")
