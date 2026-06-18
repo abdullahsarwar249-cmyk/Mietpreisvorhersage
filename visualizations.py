@@ -340,61 +340,7 @@ plt.savefig('05_spatial_analysis.png', dpi=300, bbox_inches='tight')
 print("   ✓ Gespeichert: 05_spatial_analysis.png")
 plt.close()
 
-# ============================================================================
-# 6. ZEITLICHE ANALYSE
-# ============================================================================
-print("\n[6] Erstelle Visualisierungen zur zeitlichen Analyse...")
 
-fig = plt.figure(figsize=(16, 8))
-gs = GridSpec(2, 2, figure=fig)
-
-if 'year' in test_df.columns and 'month' in test_df.columns:
-    # 6.1 Average rent by month
-    ax1 = fig.add_subplot(gs[0, 0])
-    month_avg = test_df.groupby('month')['baseRent'].agg(['mean', 'std'])
-    ax1.plot(month_avg.index, month_avg['mean'], marker='o', linewidth=3, color='#3498db', markersize=8)
-    ax1.fill_between(month_avg.index, 
-                    month_avg['mean'] - month_avg['std'],
-                    month_avg['mean'] + month_avg['std'],
-                    alpha=0.3, color='#3498db')
-    ax1.set_xlabel('Month')
-    ax1.set_ylabel('Average Base Rent (€)')
-    ax1.set_title('Saisonale Preisentwicklung (Monatsdurchschnitt)')
-    ax1.set_xticks(range(1, 13))
-    ax1.grid(True, alpha=0.3)
-    
-    # 6.2 Average rent by quarter
-    ax2 = fig.add_subplot(gs[0, 1])
-    quarter_avg = test_df.groupby('quarter')['baseRent'].mean()
-    colors_quarter = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12']
-    ax2.bar(quarter_avg.index, quarter_avg.values, color=colors_quarter, edgecolor='black', width=0.6)
-    ax2.set_xlabel('Quarter')
-    ax2.set_ylabel('Average Base Rent (€)')
-    ax2.set_title('Durchschnittliche Miete nach Quartal')
-    ax2.set_xticks([1, 2, 3, 4])
-    ax2.grid(True, alpha=0.3, axis='y')
-    
-    # 6.3 Rent trend by year and major regions
-    ax3 = fig.add_subplot(gs[1, :])
-    top_regions_temporal = test_df.groupby('regio1')['baseRent'].count().nlargest(5).index.tolist()
-    for region in top_regions_temporal:
-        region_temporal = test_df[test_df['regio1'] == region].groupby('year')['baseRent'].mean()
-        ax3.plot(region_temporal.index, region_temporal.values, marker='o', label=region, linewidth=2, markersize=8)
-    
-    ax3.set_xlabel('Year')
-    ax3.set_ylabel('Average Base Rent (€)')
-    ax3.set_title('Preisentwicklung nach Jahr (Top 5 Regionen)')
-    ax3.legend(loc='best')
-    ax3.grid(True, alpha=0.3)
-else:
-    ax_temp = fig.add_subplot(gs[:, :])
-    ax_temp.text(0.5, 0.5, 'Insufficient temporal data', ha='center', va='center', fontsize=16)
-    ax_temp.axis('off')
-
-plt.tight_layout()
-plt.savefig('06_temporal_analysis.png', dpi=300, bbox_inches='tight')
-print("   ✓ Gespeichert: 06_temporal_analysis.png")
-plt.close()
 
 
 
@@ -407,8 +353,6 @@ print("  - 02_model_performance.png")
 print("  - 03_uncertainty_analysis.png")
 print("  - 04_feature_importance.png")
 print("  - 05_spatial_analysis.png")
-print("  - 06_temporal_analysis.png")
-print("  - 07_residual_analysis.png")
 print("\nNächste Schritte:")
 print("  1. Ausführen: python3 generate_maps.py")
 print("  2. Ausführen: python3 generate_report.py")

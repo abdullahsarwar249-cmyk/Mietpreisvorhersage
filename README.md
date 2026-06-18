@@ -73,10 +73,9 @@ Nach der Datenbereinigung wurden insgesamt 41.021 Datensätze verwendet.
 
 | Datensatz   | Anzahl |
 | ----------- | -----: |
-| Training    | 26.485 |
+| Training    | 34.464 |
 | Validierung |  7.268 |
 | Test        |  7.268 |
-
 ---
 
 # Zielvariable
@@ -219,7 +218,7 @@ Zur Vermeidung von Overfitting wurden Dropout-Schichten und L2-Regularisierung e
 
 Für die Bewertung der Modelle wurde ein zeitlicher Split verwendet.
 
-* Trainingsdaten: 2019
+* Trainingsdaten: 201-2019
 * Validierungsdaten: 2020
 * Testdaten: 2020
 
@@ -243,9 +242,6 @@ Berücksichtigt größere Fehler stärker als der MAE.
 
 Beschreibt den Anteil der erklärten Varianz.
 
-## MAPE (Mean Absolute Percentage Error)
-
-Mittlere prozentuale Abweichung zwischen Vorhersage und tatsächlichem Wert.
 
 ---
 
@@ -255,9 +251,9 @@ Mittlere prozentuale Abweichung zwischen Vorhersage und tatsächlichem Wert.
 
 | Modell                      |      MAE |     RMSE |     R² |
 | --------------------------- | -------: | -------: | -----: |
-| Ridge-Regression            | 145,04 € | 218,59 € | 0,7074 |
-| Gradient-Boosting-Regressor |  90,22 € | 144,79 € | 0,8716 |
-| Neuronales Netz             | 135,74 € | 220,16 € | 0,7032 |
+| Ridge-Regression            | 145,04 € | 217,93 € | 0,7092 |
+| Gradient-Boosting-Regressor |  89,74 € | 143,92 € | 0,8732 |
+| Neuronales Netz             | 127,23 € | 203,13 € | 0,7474 |
 
 ---
 
@@ -267,11 +263,11 @@ Der Gradient-Boosting-Regressor erzielte die beste Leistung auf dem Testdatensat
 
 Testergebnisse:
 
-* MAE: 90,22 €
-* RMSE: 144,79 €
-* R²: 0,8716
+* MAE: 89,74 €
+* RMSE: 143,92 €
+* R²: 0,8732
 
-Das Modell erklärt damit rund 87,2 % der Varianz der Mietpreise.
+Das Modell erklärt damit rund 87,3 % der Varianz der Mietpreise.
 
 ---
 
@@ -283,9 +279,9 @@ Hierzu wurden 90%-Vorhersageintervalle auf Basis der Modellresiduen berechnet.
 
 Ergebnisse:
 
-* Coverage: 86,9 %
-* Durchschnittliche Intervallbreite: 372,55 €
-* Standardabweichung der Residuen: 113,24 €
+* Coverage: 87,0 %
+* Durchschnittliche Intervallbreite: 370,16 €
+* Standardabweichung der Residuen: 112,51 €
 
 Die Analyse zeigt, dass die Vorhersageintervalle die tatsächlichen Mietpreise in einem Großteil der Fälle zuverlässig einschließen.
 
@@ -378,7 +374,7 @@ Das Projekt erzeugt unter anderem:
 * 04_feature_importance.png
 * 05_spatial_analysis.png
 * 06_temporal_analysis.png
-* 07_residual_analysis.png
+
 
 ## Interaktive Karten
 
@@ -431,7 +427,7 @@ bash run_pipeline.sh
 
 Trotz der guten Vorhersageleistung bestehen einige Einschränkungen:
 
-* Datensatz beschränkt sich auf die Jahre 2019–2020
+* Datensatz beschränkt sich auf die Jahre 2018–2020
 * Teilweise fehlende Werte erfordern Imputation
 * Keine Berücksichtigung makroökonomischer Einflussgrößen
 * Keine langfristige Vorhersage zukünftiger Mietmarktentwicklungen
@@ -444,4 +440,4 @@ Im Rahmen dieser Projektarbeit wurde ein vollständiges Maschinenlernen-System z
 
 Durch den Vergleich verschiedener Modellklassen, die Integration räumlicher und zeitlicher Merkmale sowie die Durchführung einer Unsicherheitsanalyse konnte eine umfassende Untersuchung des Problems durchgeführt werden.
 
-Das beste Modell, ein Gradient-Boosting-Regressor, erreicht einen MAE von 90,68 € und erklärt rund 87 % der Varianz der Mietpreise. Die Ergebnisse zeigen, dass datengetriebene Verfahren eine zuverlässige Unterstützung bei der Analyse und Bewertung von Mietpreisen liefern können.
+Das beste Modell, ein Gradient-Boosting-Regressor, erreicht einen MAE von 89,74 € und erklärt rund 87,3 % der Varianz der Mietpreise. Die Ergebnisse zeigen, dass datengetriebene Verfahren eine zuverlässige Unterstützung bei der Analyse und Bewertung von Mietpreisen liefern können.

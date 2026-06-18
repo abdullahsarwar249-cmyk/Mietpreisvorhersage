@@ -589,37 +589,20 @@ with open('EVALUATION_REPORT.txt', 'w', encoding='utf-8') as f:
 
 print("\n✓ Bericht gespeichert unter: EVALUATION_REPORT.txt")
 
-report_json = {
-    'generated_at': datetime.now().isoformat(),
-    'best_model': best_model,
-    'test_metrics': {
-        'mae': float(best_test_mae),
-        'rmse': float(best_test_rmse),
-        'r2': float(best_test_r2)
-    },
-    'prediction_intervals': {
-        'coverage': float(xgb_intervals['coverage']),
-        'interval_width': float(xgb_intervals['interval_width']),
-        'std_residuals': float(xgb_intervals['std_residuals'])
-    },
-    'dataset': metadata
-}
-
 
 
 print("\n" + "="*80)
 print("BERICHTSERSTELLUNG ERFOLGREICH ABGESCHLOSSEN")
 print("="*80)
 
-print("\nAlle Abgabedateien sind bereit:")
+print("\nAlle Dateien sind bereit:")
 
 print("  ✓ main_pipeline.py - Komplette Machine-Learning-Pipeline")
 print("  ✓ evaluate_models.py - Modellbewertung")
 print("  ✓ visualizations.py - Erstellung der Diagramme")
 print("  ✓ generate_maps.py - Interaktive Karten")
 print("  ✓ generate_report.py - Berichtserstellung")
-print("  ✓ 7 Visualisierungsdateien (PNG)")
+print("  ✓ 5 Visualisierungsdateien (PNG)")
 print("  ✓ 2 Interaktive Karten (HTML)")
 print("  ✓ Bewertungsbericht (TXT)")
-print("  ✓ Berichtszusammenfassung (JSON)")
 

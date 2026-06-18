@@ -11,12 +11,19 @@ print("INTERAKTIVE KARTEN ERSTELLEN ")
 print("="*80)
 
 # Ergebnisse laden
+with open('pipeline_results.pkl', 'rb') as f:
+    results = pickle.load(f)
+
 with open('evaluation_results.pkl', 'rb') as f:
     eval_results = pickle.load(f)
 
-test_df = eval_results['test_data']
+# Vollständig bereinigter Datensatz für die regionale Mietpreiskarte
+map_df = results['df']
 
-# Regional coordinates (German cities)
+# Testdaten mit Vorhersagen für die Genauigkeitskarte
+accuracy_df = eval_results['test_data']
+
+# Regionale Koordinaten (Mittelpunkt jeder Region für Markerplatzierung)
 region_coords = {
     'Baden_Württemberg': [48.7758, 9.1829],
     'Bayern': [48.7758, 11.4328],
@@ -36,11 +43,10 @@ region_coords = {
     'Thüringen': [50.9840, 11.0290]
 }
 
-# Aggregate data by region
+# Aggregate data by region for the interactive rental map
 print("[1] Bereite regionale Daten vor...")
-regional_stats = test_df.groupby('regio1').agg({
+regional_stats = map_df.groupby('regio1').agg({
     'baseRent': ['mean', 'std', 'min', 'max', 'count'],
-    'prediction_xgb': 'mean',
     'livingSpace': 'mean',
     'noRooms': 'mean'
 }).round(2)
@@ -51,7 +57,6 @@ regional_stats = regional_stats.reset_index()
 # Rename aggregated columns for easier access
 regional_stats.rename(columns={
     'baseRent_mean': 'baseRent_mean',
-    'prediction_xgb_mean': 'prediction_xgb',
     'livingSpace_mean': 'livingSpace_mean',
     'noRooms_mean': 'noRooms_mean'
 }, inplace=True)
@@ -347,9 +352,29 @@ print("   ✓ Gespeichert: interactive_rental_map.html")
 # ============================================================================
 print("\n[3] Erstelle Genauigkeitskarte als HTML...")
 
-# Calculate errors
-regional_stats['prediction_error'] = abs(
-    regional_stats['baseRent_mean'] - regional_stats['prediction_xgb']
+# Prepare regional statistics for the prediction accuracy map from test data
+accuracy_regional_stats = accuracy_df.groupby('regio1').agg({
+    'baseRent': ['mean', 'std', 'min', 'max', 'count'],
+    'prediction_xgb': 'mean',
+    'livingSpace': 'mean',
+    'noRooms': 'mean'
+}).round(2)
+
+accuracy_regional_stats.columns = ['_'.join(col).strip() for col in accuracy_regional_stats.columns.values]
+accuracy_regional_stats = accuracy_regional_stats.reset_index()
+
+accuracy_regional_stats.rename(columns={
+    'baseRent_mean': 'baseRent_mean',
+    'prediction_xgb_mean': 'prediction_xgb',
+    'livingSpace_mean': 'livingSpace_mean',
+    'noRooms_mean': 'noRooms_mean'
+}, inplace=True)
+
+accuracy_regional_stats['region_name'] = accuracy_regional_stats['regio1'].map(region_name_map)
+
+# Calculate errors for prediction accuracy map
+accuracy_regional_stats['prediction_error'] = abs(
+    accuracy_regional_stats['baseRent_mean'] - accuracy_regional_stats['prediction_xgb']
 )
 
 def get_error_color(error):
@@ -367,7 +392,7 @@ def get_error_color(error):
 
 # Markerdaten erstellen for accuracy
 accuracy_markers = []
-for idx, row in regional_stats.iterrows():
+for idx, row in accuracy_regional_stats.iterrows():
     region_name = row['region_name']
     if region_name in region_coords:
         lat, lon = region_coords[region_name]
@@ -596,8 +621,8 @@ accuracy_html = '''<!DOCTYPE html>
 # Render accuracy template using .replace() instead of .format()
 accuracy_output = accuracy_html
 accuracy_output = accuracy_output.replace('{{ACCURACY_JSON}}', json.dumps(accuracy_markers))
-accuracy_output = accuracy_output.replace('{{MEAN_ERROR}}', f'{regional_stats["prediction_error"].mean():.2f}')
-accuracy_output = accuracy_output.replace('{{NUM_REGIONS_ACC}}', str(len(regional_stats)))
+accuracy_output = accuracy_output.replace('{{MEAN_ERROR}}', f'{accuracy_regional_stats["prediction_error"].mean():.2f}')
+accuracy_output = accuracy_output.replace('{{NUM_REGIONS_ACC}}', str(len(accuracy_regional_stats)))
 
 # Genauigkeitskarte speichern
 with open('prediction_accuracy_map.html', 'w', encoding='utf-8') as f:

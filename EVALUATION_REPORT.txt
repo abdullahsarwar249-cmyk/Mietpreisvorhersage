@@ -1,8 +1,8 @@
 ====================================================================================================
-RENTAL PRICE PREDICTION - UMFASSENDER BEWERTUNGSBERICHT
+Mietpreisvorhersage in Deutschland – Abschlussbericht
 ====================================================================================================
 
-Bericht erstellt: 2026-06-16 19:10:32
+Bericht erstellt: 2026-06-18 21:08:05
 Dataset: immo_data.csv (German Real Estate Market)
 
 ====================================================================================================
@@ -95,9 +95,9 @@ Gradient-Boosting-Regressor:
 
 Neuronales Netz:
 ------------------------------------------------------------------------------------------
-  Train        | MAE: €  107.02 | RMSE: €  168.46 | R²:   0.8139 | MAPE:    0.17%
-  Validation   | MAE: €  125.64 | RMSE: €  194.99 | R²:   0.7560 | MAPE:    0.21%
-  Test         | MAE: €  126.94 | RMSE: €  201.36 | R²:   0.7517 | MAPE:    0.20%
+  Train        | MAE: €  107.24 | RMSE: €  170.37 | R²:   0.8097 | MAPE:    0.17%
+  Validation   | MAE: €  124.20 | RMSE: €  187.93 | R²:   0.7733 | MAPE:    0.21%
+  Test         | MAE: €  126.12 | RMSE: €  194.51 | R²:   0.7683 | MAPE:    0.21%
 
 INTERPRETATION:
 • MAE (Mean Absolute Error): Durchschnittlicher absoluter Vorhersagefehler in €
@@ -135,11 +135,11 @@ Niedrigster MAE und RMSE auf dem Testdatensatz, hoher R²-Wert sowie stabile Erg
 
 90%-Vorhersageintervalle (Neuronales Netz):
 
-• Tatsächliche Abdeckung: 87.4%
+• Tatsächliche Abdeckung: 86.8%
 
-• Mittlere Intervallbreite: €514.25
+• Mittlere Intervallbreite: €487.15
 
-• Standardabweichung der Residuen: €156.31
+• Standardabweichung der Residuen: €148.07
 
 INTERPRETATION:
 
@@ -461,7 +461,7 @@ WICHTIGSTE ERGEBNISSE:
 ✓ Die Software wurde modular aufgebaut und ist leicht nachvollziehbar sowie erweiterbar
 
 
-Bericht erstellt: 2026-06-16 19:10:32
+Bericht erstellt: 2026-06-18 21:08:05
 
 
 ====================================================================================================

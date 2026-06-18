@@ -6,7 +6,7 @@
 
 echo "================================================================================"
 echo "MIETPREISVORHERSAGE – KOMPLETTE ML-PIPELINE"
-echo "Deutsche Mietpreisschätzung mit räumlicher und zeitlicher Analyse"
+echo "Deutsche Mietpreisschätzung"
 echo "================================================================================"
 echo ""
 echo "Dieses Skript führt alle Pipeline-Schritte automatisch nacheinander aus sodass man die nicht einzeln triggern muss."
@@ -95,8 +95,6 @@ echo "  - 02_model_performance.png"
 echo "  - 03_uncertainty_analysis.png"
 echo "  - 04_feature_importance.png"
 echo "  - 05_spatial_analysis.png"
-echo "  - 06_temporal_analysis.png"
-echo "  - 07_residual_analysis.png"
 echo ""
 
 echo "Interaktive Karten (HTML-Dateien, im Browser öffnen):"
@@ -106,7 +104,6 @@ echo ""
 
 echo "Berichte:"
 echo "  - EVALUATION_REPORT.txt (ausführlicher Analysebericht)"
-echo "  - report_summary.json (kompakte JSON-Zusammenfassung)"
 echo ""
 
 echo "Trainierte Modelle:"

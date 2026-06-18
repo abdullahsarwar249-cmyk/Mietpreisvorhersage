@@ -135,7 +135,7 @@ print(f"Endgültige Datensatzgröße: {df.shape}")
 # ============================================================================
 # SCHRITT 3: DATENAUFTEILUNG (ZEITLICHE STRATEGIE)
 # ============================================================================
-print("\n[SCHRITT 3] Teile Daten auf (zeitliche Strategie)...")
+print("\n[SCHRITT 3] Teile Daten auf ...")
 
 # Zeitliche Aufteilung für realistische Vorhersageszenarien
 #train_df = df[df['year'] == 2019].copy()
