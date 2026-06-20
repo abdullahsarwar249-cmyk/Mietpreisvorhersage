@@ -12,20 +12,28 @@ echo ""
 echo "Dieses Skript führt alle Pipeline-Schritte automatisch nacheinander aus sodass man die nicht einzeln triggern muss."
 echo ""
 
-# Prüfen, ob Python 3 verfügbar ist
-if ! command -v python3 &> /dev/null; then
+# Immer System-Python verwenden (wie in der bisherigen funktionierenden Umgebung)
+SYSTEM_PYTHON="/usr/bin/python3"
+
+# Fallback für Systeme, bei denen /usr/bin/python3 nicht existiert
+if [ ! -x "$SYSTEM_PYTHON" ]; then
+    SYSTEM_PYTHON="$(command -v python3)"
+fi
+
+if [ -z "$SYSTEM_PYTHON" ] || [ ! -x "$SYSTEM_PYTHON" ]; then
     echo "❌ Fehler: Python 3 ist nicht installiert oder befindet sich nicht im PATH."
     exit 1
 fi
 
-echo "✓ Python wurde gefunden: $(python3 --version)"
+echo "✓ Python wurde gefunden: $($SYSTEM_PYTHON --version)"
+echo "✓ Verwendeter Interpreter: $SYSTEM_PYTHON"
 echo ""
 
 # Schritt 1: Hauptpipeline
 echo "================================================================================"
 echo "SCHRITT 1: MODELLE TRAINIEREN"
 echo "================================================================================"
-python3 main_pipeline.py
+"$SYSTEM_PYTHON" main_pipeline.py
 if [ $? -ne 0 ]; then
     echo "❌ Fehler: Das Training der Modelle ist fehlgeschlagen!"
     exit 1
@@ -37,7 +45,7 @@ echo ""
 echo "================================================================================"
 echo "SCHRITT 2: MODELLE BEWERTEN"
 echo "================================================================================"
-python3 evaluate_models.py
+"$SYSTEM_PYTHON" evaluate_models.py
 if [ $? -ne 0 ]; then
     echo "❌ Fehler: Die Modellbewertung ist fehlgeschlagen!"
     exit 1
@@ -49,7 +57,7 @@ echo ""
 echo "================================================================================"
 echo "SCHRITT 3: VISUALISIERUNGEN ERSTELLEN"
 echo "================================================================================"
-python3 visualizations.py
+"$SYSTEM_PYTHON" visualizations.py
 if [ $? -ne 0 ]; then
     echo "❌ Fehler: Die Erstellung der Visualisierungen ist fehlgeschlagen!"
     exit 1
@@ -61,7 +69,7 @@ echo ""
 echo "================================================================================"
 echo "SCHRITT 4: INTERAKTIVE KARTEN ERSTELLEN"
 echo "================================================================================"
-python3 generate_maps.py
+"$SYSTEM_PYTHON" generate_maps.py
 if [ $? -ne 0 ]; then
     echo "❌ Fehler: Die Kartenerstellung ist fehlgeschlagen!"
     exit 1
@@ -73,7 +81,7 @@ echo ""
 echo "================================================================================"
 echo "SCHRITT 5: ABSCHLUSSBERICHT ERSTELLEN"
 echo "================================================================================"
-python3 generate_report.py
+"$SYSTEM_PYTHON" generate_report.py
 if [ $? -ne 0 ]; then
     echo "❌ Fehler: Die Berichtserstellung ist fehlgeschlagen!"
     exit 1
