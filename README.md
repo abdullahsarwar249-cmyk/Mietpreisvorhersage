@@ -68,12 +68,32 @@ Mietpreisvorhersage/
 
 ---
 
-## Installation
-Abhängigkeiten installieren:
+# Repository herunterladen
+
+Das Repository kann mit Git geklont werden:
+
+```bash
+git clone <REPOSITORY_URL>
+cd Mietpreisvorhersage
+```
+
+Alternativ kann das Repository auch direkt über GitHub als ZIP-Datei heruntergeladen werden:
+
+1. GitHub-Repository öffnen
+2. Auf **Code** klicken
+3. **Download ZIP** auswählen
+4. ZIP-Datei entpacken
+
+---
+
+# Installation
+
+Alle benötigten Bibliotheken installieren:
 
 ```bash
 pip install -r requirements.txt
 ```
+
 
 ---
 
