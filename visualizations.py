@@ -62,13 +62,13 @@ ax2.set_ylabel('Rent (€)')
 ax2.set_title('Box Plot of Base Rent')
 ax2.grid(True, alpha=0.3)
 
-# 1.3 Living Space vs Rent
+# 1.3 Wohnfläche vs Miete
 ax3 = fig.add_subplot(gs[0, 2])
 if 'livingSpace' in test_df.columns:
     ax3.scatter(test_df['livingSpace'], test_df['baseRent'], alpha=0.5, s=20)
-    ax3.set_xlabel('Living Space (m²)')
-    ax3.set_ylabel('Base Rent (€)')
-    ax3.set_title('Living Space vs Rent (Test Data)')
+    ax3.set_xlabel('Wohnfläche (m²)')
+    ax3.set_ylabel('Miete (€)')
+    ax3.set_title('Wohnfläche vs. Miete')
     ax3.grid(True, alpha=0.3)
 
 # 1.4 Merkmalskorrelationen (top features)
@@ -77,7 +77,7 @@ if 'livingSpace' in results['X_train'].columns:
     sample_features = results['X_train'].iloc[:500, :15]
     corr_with_target = pd.concat([sample_features, y_train.iloc[:500]], axis=1).corr().iloc[:-1, -1].sort_values(ascending=False)
     corr_with_target.head(10).plot(kind='barh', ax=ax4, color='coral')
-    ax4.set_xlabel('Correlation with Base Rent')
+    ax4.set_xlabel('Korrelation mit der Miete')
     ax4.set_title('Top 10 Merkmalskorrelationen')
 
 # 1.5 Rooms vs Rent
@@ -86,9 +86,9 @@ if 'noRooms' in test_df.columns:
     room_stats = test_df.groupby('noRooms')['baseRent'].agg(['mean', 'count'])
     room_stats = room_stats[room_stats['count'] > 5].head(8)
     ax5.bar(room_stats.index.astype(str), room_stats['mean'], color='lightgreen', edgecolor='black')
-    ax5.set_xlabel('Number of Rooms')
-    ax5.set_ylabel('Average Rent (€)')
-    ax5.set_title('Average Rent by Room Count')
+    ax5.set_xlabel('Anzahl der Zimmer')
+    ax5.set_ylabel('Durchschnittliche Miete (€)')
+    ax5.set_title('Durchschnittliche Miete nach Zimmeranzahl')
     ax5.grid(True, alpha=0.3, axis='y')
 
 # 1.6 Floor vs Rent
@@ -99,9 +99,9 @@ if 'floor' in test_df.columns:
     ax6.plot(floor_stats.index, floor_stats['mean'], marker='o', color='purple', linewidth=2)
     ax6.fill_between(floor_stats.index, floor_stats['mean'] - floor_stats['mean'].std(), 
                      floor_stats['mean'] + floor_stats['mean'].std(), alpha=0.2, color='purple')
-    ax6.set_xlabel('Floor Level')
-    ax6.set_ylabel('Average Rent (€)')
-    ax6.set_title('Average Rent by Floor Level')
+    ax6.set_xlabel('Etage')
+    ax6.set_ylabel('Durchschnittliche Miete (€)')
+    ax6.set_title('Durchschnittliche Miete nach Etage')
     ax6.grid(True, alpha=0.3)
 
 # 1.7 Year Constructed
@@ -109,9 +109,9 @@ ax7 = fig.add_subplot(gs[2, 0])
 if 'yearConstructed' in test_df.columns:
     year_stats = test_df[test_df['yearConstructed'] > 1900].groupby(pd.cut(test_df['yearConstructed'], bins=15))['baseRent'].mean()
     ax7.bar(range(len(year_stats)), year_stats.values, color='teal', edgecolor='black')
-    ax7.set_xlabel('Construction Period')
-    ax7.set_ylabel('Average Rent (€)')
-    ax7.set_title('Rent by Construction Period')
+    ax7.set_xlabel('Baujahr')
+    ax7.set_ylabel('Durchschnittliche Miete (€)')
+    ax7.set_title('Durchschnittliche Miete nach Baujahr')
     ax7.set_xticklabels([f'{i}' for i in range(len(year_stats))], rotation=45)
 
 # 1.8 Top regions by count
@@ -120,17 +120,17 @@ top_regions = test_df['regio1'].value_counts().head(10)
 ax8.barh(range(len(top_regions)), top_regions.values, color='orange', edgecolor='black')
 ax8.set_yticks(range(len(top_regions)))
 ax8.set_yticklabels(top_regions.index, fontsize=9)
-ax8.set_xlabel('Number of Listings')
-ax8.set_title('Top 10 Regions by Listing Count')
+ax8.set_xlabel('Anzahl der Einträge')
+ax8.set_title('Top 10 Regionen nach Anzahl der Einträge')
 ax8.grid(True, alpha=0.3, axis='x')
 
-# 1.9 Average rent by region
+# 1.9 Durchschnittliche Miete nach Region
 ax9 = fig.add_subplot(gs[2, 2])
 avg_rent_regions = test_df.groupby('regio1')['baseRent'].mean().sort_values(ascending=False).head(10)
 ax9.barh(range(len(avg_rent_regions)), avg_rent_regions.values, color='salmon', edgecolor='black')
 ax9.set_yticks(range(len(avg_rent_regions)))
 ax9.set_yticklabels(avg_rent_regions.index, fontsize=9)
-ax9.set_xlabel('Average Rent (€)')
+ax9.set_xlabel('Durchschnittliche Miete (€)')
 ax9.set_title('Top 10 teuerste Regionen')
 ax9.grid(True, alpha=0.3, axis='x')
 
@@ -161,8 +161,8 @@ for idx, (model, pred, color) in enumerate(zip(models, predictions, colors)):
     max_val = max(y_test.max(), pred.max())
     ax.plot([min_val, max_val], [min_val, max_val], 'k--', alpha=0.3, linewidth=2)
     
-    ax.set_xlabel('Actual Rent (€)')
-    ax.set_ylabel('Predicted Rent (€)')
+    ax.set_xlabel('Tatsächliche Miete (€)')
+    ax.set_ylabel('Vorhergesagte Miete (€)')
     ax.set_title(f'{model}: Vorhersagen vs. Tatsächlich')
     ax.grid(True, alpha=0.3)
     
@@ -172,7 +172,7 @@ for idx, (model, pred, color) in enumerate(zip(models, predictions, colors)):
     ax.text(0.05, 0.95, f'R² = {r2:.4f}', transform=ax.transAxes, 
             verticalalignment='top', bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.8))
 
-# 2.4 Residuen comparison
+# 2.4 Residuenvergleich
 ax4 = fig.add_subplot(gs[1, 0])
 residuals_ridge = y_test - y_test_pred_ridge
 residuals_xgb = y_test - y_test_pred_xgb
@@ -186,7 +186,7 @@ ax4.set_title('Residuenverteilung nach Modell')
 ax4.axhline(y=0, color='red', linestyle='--', alpha=0.5)
 ax4.grid(True, alpha=0.3, axis='y')
 
-# 2.5 MAE Comparison
+# 2.5 MAE Vergleich
 ax5 = fig.add_subplot(gs[1, 1])
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 mae_vals = [
@@ -211,7 +211,7 @@ ax5.set_xticklabels(models)
 ax5.legend()
 ax5.grid(True, alpha=0.3, axis='y')
 
-# 2.6 Neuronales Netz Training History
+# 2.6 Neuronales Netz Trainingshistorie
 ax6 = fig.add_subplot(gs[1, 2])
 ax6.plot(history.history['loss'], label='Trainingsfehler', color='#3498db', linewidth=2)
 ax6.plot(history.history['val_loss'], label='Validierungsfehler', color='#e74c3c', linewidth=2)
@@ -227,41 +227,41 @@ print("   ✓ Gespeichert: 02_model_performance.png")
 plt.close()
 
 # ============================================================================
-# 3. PREDICTION INTERVALS & UNCERTAINTY
+# 3. VORHERSAGEINTERVALLE & UNSICHERHEIT
 # ============================================================================
 print("\n[3] Erstelle Visualisierungen zur Unsicherheitsanalyse...")
 
 fig = plt.figure(figsize=(16, 6))
 gs = GridSpec(1, 2, figure=fig)
 
-# 3.1 Gradient-Boosting-Regressor prediction intervals
+# 3.1 Gradient-Boosting-Regressor Vorhersageintervalle
 ax1 = fig.add_subplot(gs[0, 0])
 sorted_idx = np.argsort(y_test.values)
-x_axis = np.arange(len(sorted_idx))[:500]  # First 500 for clarity
+x_axis = np.arange(len(sorted_idx))[:500]  # Erste 500 zur besseren Übersicht
 
-ax1.scatter(x_axis, y_test.values[sorted_idx[:500]], alpha=0.6, s=20, color='black', label='Actual', zorder=3)
-ax1.plot(x_axis, y_test_pred_xgb[sorted_idx[:500]], color='#e74c3c', linewidth=2, label='Gradient-Boosting-Regressor Prediction', zorder=2)
+ax1.scatter(x_axis, y_test.values[sorted_idx[:500]], alpha=0.6, s=20, color='black', label='tatsächliche Mieten', zorder=3)
+ax1.plot(x_axis, y_test_pred_xgb[sorted_idx[:500]], color='#e74c3c', linewidth=2, label='Gradient-Boosting-Regressor Vorhersage', zorder=2)
 ax1.fill_between(x_axis, 
                 xgb_intervals['lower'][sorted_idx[:500]],
                 xgb_intervals['upper'][sorted_idx[:500]],
-                alpha=0.3, color='#e74c3c', label='90% Prediction Interval', zorder=1)
-ax1.set_xlabel('Sample Index (sorted by actual rent)')
-ax1.set_ylabel('Rent (€)')
-ax1.set_title(f"Gradient-Boosting-Regressor: Predictions with 90% Intervals\n(Coverage: {xgb_intervals['coverage']:.1%})")
+                alpha=0.3, color='#e74c3c', label='90% Vorhersageintervall', zorder=1)
+ax1.set_xlabel('Sample Index (sortiert nach tatsächlicher Miete)')
+ax1.set_ylabel('Miete (€)')
+ax1.set_title(f"Gradient-Boosting-Regressor: Vorhersagen mit 90% Intervallen\n(Abdeckung: {xgb_intervals['coverage']:.1%})")
 ax1.legend()
 ax1.grid(True, alpha=0.3)
 
-# 3.2 NN prediction intervals
+# 3.2 NN Vorhersageintervalle
 ax2 = fig.add_subplot(gs[0, 1])
-ax2.scatter(x_axis, y_test.values[sorted_idx[:500]], alpha=0.6, s=20, color='black', label='Actual', zorder=3)
-ax2.plot(x_axis, y_test_pred_nn[sorted_idx[:500]], color='#2ecc71', linewidth=2, label='NN Prediction', zorder=2)
+ax2.scatter(x_axis, y_test.values[sorted_idx[:500]], alpha=0.6, s=20, color='black', label='tatsächliche Mieten', zorder=3)
+ax2.plot(x_axis, y_test_pred_nn[sorted_idx[:500]], color='#2ecc71', linewidth=2, label='Neuronales Netz Vorhersage', zorder=2)
 ax2.fill_between(x_axis,
                 nn_intervals['lower'][sorted_idx[:500]],
                 nn_intervals['upper'][sorted_idx[:500]],
-                alpha=0.3, color='#2ecc71', label='90% Prediction Interval', zorder=1)
-ax2.set_xlabel('Sample Index (sorted by actual rent)')
-ax2.set_ylabel('Rent (€)')
-ax2.set_title(f"Neuronales Netz: Predictions with 90% Intervals\n(Coverage: {nn_intervals['coverage']:.1%})")
+                alpha=0.3, color='#2ecc71', label='90% Vorhersageintervall', zorder=1)
+ax2.set_xlabel('Sample Index (sortiert nach tatsächlicher Miete)')
+ax2.set_ylabel('Miete (€)')
+ax2.set_title(f"Neuronales Netz: Vorhersagen mit 90% Intervallen\n(Abdeckung: {nn_intervals['coverage']:.1%})")
 ax2.legend()
 ax2.grid(True, alpha=0.3)
 
@@ -282,7 +282,7 @@ colors_grad = plt.cm.viridis(np.linspace(0.3, 0.9, len(top_features)))
 axes.barh(range(len(top_features)), top_features['importance'].values, color=colors_grad, edgecolor='black')
 axes.set_yticks(range(len(top_features)))
 axes.set_yticklabels(top_features['feature'].values)
-axes.set_xlabel('Importance Score')
+axes.set_xlabel('Wichtigkeit')
 axes.set_title('Gradient-Boosting-Regressor: Top 20 Merkmalswichtigkeit')
 axes.grid(True, alpha=0.3, axis='x')
 
@@ -299,38 +299,38 @@ print("\n[5] Erstelle Visualisierungen zur räumlichen Analyse...")
 fig = plt.figure(figsize=(16, 10))
 gs = GridSpec(2, 2, figure=fig)
 
-# 5.1 Average rent by region
+# 5.1 Durschnittliche Mietpreise nach Region
 ax1 = fig.add_subplot(gs[0, :])
 region_avg = test_df.groupby('regio1')['baseRent'].agg(['mean', 'count']).sort_values('mean', ascending=False)
-region_avg = region_avg[region_avg['count'] > 3]  # Filter out regions with few samples
+region_avg = region_avg[region_avg['count'] > 3]  # Filtere Regionen mit wenigen Einträgen
 colors_spatial = plt.cm.RdYlGn_r(np.linspace(0.2, 0.8, len(region_avg)))
 bars = ax1.barh(range(len(region_avg)), region_avg['mean'].values, color=colors_spatial, edgecolor='black')
 ax1.set_yticks(range(len(region_avg)))
 ax1.set_yticklabels(region_avg.index, fontsize=9)
-ax1.set_xlabel('Average Base Rent (€)')
+ax1.set_xlabel('Durchschnittliche Miete (€)')
 ax1.set_title('Durchschnittliche Mietpreise nach Region')
 ax1.grid(True, alpha=0.3, axis='x')
 
-# 5.2 Price distribution by top regions
+# 5.2 Preisspannen in den Top-Regionen
 ax2 = fig.add_subplot(gs[1, 0])
 top_5_regions = test_df.groupby('regio1')['baseRent'].mean().nlargest(5).index.tolist()
 region_data = [test_df[test_df['regio1'] == r]['baseRent'].values for r in top_5_regions]
 bp = ax2.boxplot(region_data, labels=top_5_regions, patch_artist=True)
 for patch, color in zip(bp['boxes'], plt.cm.Set3(range(len(top_5_regions)))):
     patch.set_facecolor(color)
-ax2.set_ylabel('Base Rent (€)')
-ax2.set_title('Price Distribution in Top 5 Most Teuer Regions')
+ax2.set_ylabel('Miete (€)')
+ax2.set_title('Preisspannen in den 5 teuersten Regionen')
 ax2.tick_params(axis='x', rotation=45)
 ax2.grid(True, alpha=0.3, axis='y')
 
-# 5.3 Cheapest regions
+# 5.3 Günstigste Regionen
 ax3 = fig.add_subplot(gs[1, 1])
 bottom_5_regions = test_df.groupby('regio1')['baseRent'].mean().nsmallest(5).index.tolist()
 region_data_cheap = [test_df[test_df['regio1'] == r]['baseRent'].values for r in bottom_5_regions]
 bp2 = ax3.boxplot(region_data_cheap, labels=bottom_5_regions, patch_artist=True)
 for patch, color in zip(bp2['boxes'], plt.cm.Set2(range(len(bottom_5_regions)))):
     patch.set_facecolor(color)
-ax3.set_ylabel('Base Rent (€)')
+ax3.set_ylabel('Miete (€)')
 ax3.set_title('Preisspannen in den 5 günstigsten Regionen')
 ax3.tick_params(axis='x', rotation=45)
 ax3.grid(True, alpha=0.3, axis='y')
