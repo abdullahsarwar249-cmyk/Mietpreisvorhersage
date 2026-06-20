@@ -36,7 +36,7 @@ print("=" * 80)
 print("\n[SCHRITT 1] Lade und analysiere Daten...")
 
 # Daten laden (50.000 Zeilen für schnellere Verarbeitung)
-df = pd.read_csv('immo_data.csv', nrows=100000)
+df = pd.read_csv('immo_data.csv', nrows=50000)
 
 print(f"Datensatzgröße: {df.shape}")
 print(

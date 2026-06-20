@@ -2,7 +2,7 @@
 Mietpreisvorhersage in Deutschland – Abschlussbericht
 ====================================================================================================
 
-Bericht erstellt: 2026-06-21 00:03:13
+Bericht erstellt: 2026-06-21 00:21:15
 Dataset: immo_data.csv (German Real Estate Market)
 
 ====================================================================================================
@@ -13,10 +13,10 @@ Dieses Projekt entwickelt eine Pipeline des Maschinellen Lernens zur Vorhersage 
 Dabei werden räumliche Faktoren (Regionen, Postleitzahlen) sowie zeitliche Entwicklungen berücksichtigt.
 
 WESENTLICHE ERKENNTNISSE:
-• Test-MAE: €86.31 (durchschnittlicher Vorhersagefehler)
-• Test-RMSE: €138.21 (gewichtet größere Fehler stärker)
-• Test-R²: 0.8791 (erklärt 87.91% der Varianz)
-• Vorhersageintervalle: 90%-Konfidenzniveau mit 87.2% tatsächlicher Abdeckung
+• Test-MAE: €89.74 (durchschnittlicher Vorhersagefehler)
+• Test-RMSE: €143.92 (gewichtet größere Fehler stärker)
+• Test-R²: 0.8732 (erklärt 87.32% der Varianz)
+• Vorhersageintervalle: 90%-Konfidenzniveau mit 87.0% tatsächlicher Abdeckung
 • Wichtigste Merkmale: livingSpace, serviceCharge, pricetrend, regio1, geo_plz
 
 Das Modell zeigt eine hohe Vorhersagegenauigkeit mit sehr guter räumlicher und zeitlicher Abdeckung.
@@ -29,29 +29,29 @@ Die Unsicherheitsschätzungen liefern hilfreiche Vertrauensbereiche für fundier
 
 Ursprünglicher Datensatz:
 
-• Anzahl Datensätze: 98013
+• Anzahl Datensätze: 49000
 • Anzahl Merkmale: 25
 • Zielvariable: baseRent (monatliche Nettokaltmiete in €)
 • Zeitraum: 2018–2020
 
 Aufteilung in Trainings-, Validierungs- und Testdaten:
 
-• Trainingsdaten: 68972 Datensätze (2018–2019)
-• Validierungsdaten: 14520 Datensätze (2020)
-• Testdaten: 14521 Datensätze (2020)
+• Trainingsdaten: 34464 Datensätze (2018–2019)
+• Validierungsdaten: 7268 Datensätze (2020)
+• Testdaten: 7268 Datensätze (2020)
 
 Statistiken der Zielvariable (Trainingsdaten):
 
-• Mittelwert: €610.26
-• Standardabweichung: €391.90
-• Minimum: €169.57
-• Maximum: €2490.00
-• Median: €475.00
+• Mittelwert: €606.68
+• Standardabweichung: €390.55
+• Minimum: €170.00
+• Maximum: €2480.00
+• Median: €470.00
 
 Räumliche Abdeckung:
 
 • Anzahl Bundesländer: 16
-• Anzahl Postleitzahlenbereiche: 3620
+• Anzahl Postleitzahlenbereiche: 2662
 
 Verwendete Merkmale:
 
@@ -83,31 +83,31 @@ Detaillierte Kennzahlen nach Modell und Datensatzaufteilung:
 
 Ridge-Regression:
 ------------------------------------------------------------------------------------------
-  Train        | MAE: €  164.62 | RMSE: €  257.78 | R²:   0.5673 | MAPE:    0.30%
-  Validation   | MAE: €  165.81 | RMSE: €  246.27 | R²:   0.6201 | MAPE:    0.29%
-  Test         | MAE: €  166.18 | RMSE: €  245.09 | R²:   0.6199 | MAPE:    0.29%
+  Train        | MAE: €  141.38 | RMSE: €  206.11 | R²:   0.7215 | MAPE:    0.26%
+  Validation   | MAE: €  142.60 | RMSE: €  216.44 | R²:   0.6993 | MAPE:    0.25%
+  Test         | MAE: €  145.04 | RMSE: €  217.93 | R²:   0.7092 | MAPE:    0.24%
 
 Gradient-Boosting-Regressor:
 ------------------------------------------------------------------------------------------
-  Train        | MAE: €   72.65 | RMSE: €  108.34 | R²:   0.9236 | MAPE:    0.12%
-  Validation   | MAE: €   89.23 | RMSE: €  141.66 | R²:   0.8743 | MAPE:    0.14%
-  Test         | MAE: €   86.31 | RMSE: €  138.21 | R²:   0.8791 | MAPE:    0.14%
+  Train        | MAE: €   68.07 | RMSE: €  100.53 | R²:   0.9337 | MAPE:    0.12%
+  Validation   | MAE: €   90.32 | RMSE: €  142.77 | R²:   0.8692 | MAPE:    0.14%
+  Test         | MAE: €   89.74 | RMSE: €  143.92 | R²:   0.8732 | MAPE:    0.14%
 
 Neuronales Netz:
 ------------------------------------------------------------------------------------------
-  Train        | MAE: €  103.83 | RMSE: €  161.48 | R²:   0.8302 | MAPE:    0.17%
-  Validation   | MAE: €  126.05 | RMSE: €  202.97 | R²:   0.7420 | MAPE:    0.19%
-  Test         | MAE: €  124.28 | RMSE: €  200.14 | R²:   0.7465 | MAPE:    0.19%
+  Train        | MAE: €  105.90 | RMSE: €  167.25 | R²:   0.8166 | MAPE:    0.17%
+  Validation   | MAE: €  120.45 | RMSE: €  189.78 | R²:   0.7688 | MAPE:    0.19%
+  Test         | MAE: €  121.48 | RMSE: €  194.75 | R²:   0.7678 | MAPE:    0.19%
 
 INTERPRETATION:
 • MAE (Mean Absolute Error): Durchschnittlicher absoluter Vorhersagefehler in €
-  - Je kleiner der Wert, desto besser. Der Gradient-Boosting-Regressor erreicht einen typischen Fehler von ±€86
+  - Je kleiner der Wert, desto besser. Der Gradient-Boosting-Regressor erreicht einen typischen Fehler von ±€90
 
 • RMSE (Root Mean Squared Error): Bestraft größere Fehler stärker als der MAE
-  - Der Gradient-Boosting-Regressor erzielt einen RMSE von €138, was auf einzelne größere Abweichungen hindeutet
+  - Der Gradient-Boosting-Regressor erzielt einen RMSE von €144, was auf einzelne größere Abweichungen hindeutet
 
 • R²-Wert: Anteil der durch das Modell erklärten Varianz (Skala von 0 bis 1)
-  - Gradient-Boosting-Regressor R²: 0.8791 (sehr hohe Vorhersagekraft)
+  - Gradient-Boosting-Regressor R²: 0.8732 (sehr hohe Vorhersagekraft)
 
 • MAPE (Mean Absolute Percentage Error): Durchschnittlicher prozentualer Vorhersagefehler
   - Gradient-Boosting-Regressor: 0.14% relativer Fehler
@@ -124,22 +124,22 @@ Niedrigster MAE und RMSE auf dem Testdatensatz, hoher R²-Wert sowie stabile Erg
 
 90%-Vorhersageintervalle (Gradient-Boosting-Regressor):
 
-• Tatsächliche Abdeckung: 87.2%
+• Tatsächliche Abdeckung: 87.0%
 ✓ Zielwert: 90 % – Die Vorhersageintervalle des Modells sind gut kalibriert.
 
-• Mittlere Intervallbreite: €355.15
+• Mittlere Intervallbreite: €370.16
 
 * Liefert aussagekräftige Vertrauensbereiche, ohne die Unsicherheit übermäßig groß abzuschätzen.
 
-• Standardabweichung der Residuen: €107.95
+• Standardabweichung der Residuen: €112.51
 
 90%-Vorhersageintervalle (Neuronales Netz):
 
-• Tatsächliche Abdeckung: 87.3%
+• Tatsächliche Abdeckung: 87.5%
 
-• Mittlere Intervallbreite: €516.15
+• Mittlere Intervallbreite: €500.79
 
-• Standardabweichung der Residuen: €156.88
+• Standardabweichung der Residuen: €152.21
 
 INTERPRETATION:
 
@@ -157,8 +157,8 @@ Beispiel:
 Für eine vorhergesagte Miete von 800 € ergibt sich ungefähr folgendes
 90%-Vorhersageintervall:
 
-Untere Grenze: €692
-Obere Grenze: €908
+Untere Grenze: €687
+Obere Grenze: €913
 
 
 ====================================================================================================
@@ -167,16 +167,16 @@ Obere Grenze: €908
 
 Top 10 wichtigste Merkmale (Gradient-Boosting-Regressor):
 
-   1. livingSpace               | Wichtigkeit:  50.40%
-   2. serviceCharge             | Wichtigkeit:  10.86%
-   3. regio1                    | Wichtigkeit:  10.15%
-   4. pricetrend                | Wichtigkeit:   8.35%
-   5. geo_plz                   | Wichtigkeit:   7.02%
-   6. yearConstructed           | Wichtigkeit:   4.42%
-   7. regio2                    | Wichtigkeit:   2.30%
-   8. condition                 | Wichtigkeit:   1.67%
-   9. hasKitchen                | Wichtigkeit:   1.39%
-  10. picturecount              | Wichtigkeit:   1.14%
+   1. livingSpace               | Wichtigkeit:  49.99%
+   2. serviceCharge             | Wichtigkeit:  10.65%
+   3. regio1                    | Wichtigkeit:   9.90%
+   4. pricetrend                | Wichtigkeit:   8.91%
+   5. geo_plz                   | Wichtigkeit:   7.00%
+   6. yearConstructed           | Wichtigkeit:   4.66%
+   7. regio2                    | Wichtigkeit:   2.14%
+   8. condition                 | Wichtigkeit:   1.64%
+   9. hasKitchen                | Wichtigkeit:   1.38%
+  10. picturecount              | Wichtigkeit:   1.32%
 
 INTERPRETATION:
 
@@ -197,37 +197,37 @@ Diese Ergebnisse stimmen mit den bekannten Zusammenhängen des deutschen Immobil
 
 Top 10 teuerste Regionen (nach durchschnittlicher Miete):
 
-   1.                              5 | Durchschnitt: € 1097.97 | Std.-Abw.: € 451.36 | n= 211
-   2.                              2 | Durchschnitt: € 1053.99 | Std.-Abw.: € 524.05 | n= 466
-   3.                              0 | Durchschnitt: €  934.21 | Std.-Abw.: € 421.69 | n= 948
-   4.                              1 | Durchschnitt: €  920.17 | Std.-Abw.: € 468.09 | n=1116
-   5.                              6 | Durchschnitt: €  890.52 | Std.-Abw.: € 433.06 | n= 909
-   6.                             10 | Durchschnitt: €  684.69 | Std.-Abw.: € 355.22 | n= 474
-   7.                             14 | Durchschnitt: €  651.93 | Std.-Abw.: € 317.86 | n= 325
-   8.                              4 | Durchschnitt: €  609.47 | Std.-Abw.: € 307.20 | n= 153
-   9.                              8 | Durchschnitt: €  605.39 | Std.-Abw.: € 310.88 | n= 860
-  10.                              9 | Durchschnitt: €  592.79 | Std.-Abw.: € 331.23 | n=3155
+   1.                              5 | Durchschnitt: € 1207.84 | Std.-Abw.: € 449.10 | n=  89
+   2.                              2 | Durchschnitt: € 1061.00 | Std.-Abw.: € 539.11 | n= 244
+   3.                              0 | Durchschnitt: €  928.05 | Std.-Abw.: € 437.02 | n= 503
+   4.                              1 | Durchschnitt: €  926.79 | Std.-Abw.: € 454.60 | n= 583
+   5.                              6 | Durchschnitt: €  923.34 | Std.-Abw.: € 438.53 | n= 469
+   6.                             10 | Durchschnitt: €  676.13 | Std.-Abw.: € 355.70 | n= 200
+   7.                             14 | Durchschnitt: €  623.16 | Std.-Abw.: € 265.00 | n= 158
+   8.                              8 | Durchschnitt: €  616.96 | Std.-Abw.: € 332.23 | n= 451
+   9.                              9 | Durchschnitt: €  597.87 | Std.-Abw.: € 330.96 | n=1563
+  10.                             11 | Durchschnitt: €  547.91 | Std.-Abw.: € 226.37 | n=  26
 
 Top 10 günstigste Regionen (nach durchschnittlicher Miete):
 
-   1.                             13 | Durchschnitt: €  368.49 | Std.-Abw.: € 177.06 | n=1172
-   2.                             15 | Durchschnitt: €  387.15 | Std.-Abw.: € 198.38 | n= 511
-   3.                             12 | Durchschnitt: €  427.59 | Std.-Abw.: € 266.74 | n=3390
-   4.                              7 | Durchschnitt: €  432.49 | Std.-Abw.: € 254.37 | n= 384
-   5.                              3 | Durchschnitt: €  484.42 | Std.-Abw.: € 278.60 | n= 378
-   6.                             11 | Durchschnitt: €  563.71 | Std.-Abw.: € 247.19 | n=  69
-   7.                              9 | Durchschnitt: €  592.79 | Std.-Abw.: € 331.23 | n=3155
-   8.                              8 | Durchschnitt: €  605.39 | Std.-Abw.: € 310.88 | n= 860
-   9.                              4 | Durchschnitt: €  609.47 | Std.-Abw.: € 307.20 | n= 153
-  10.                             14 | Durchschnitt: €  651.93 | Std.-Abw.: € 317.86 | n= 325
+   1.                             13 | Durchschnitt: €  375.98 | Std.-Abw.: € 185.32 | n= 600
+   2.                             15 | Durchschnitt: €  380.53 | Std.-Abw.: € 192.98 | n= 265
+   3.                             12 | Durchschnitt: €  432.55 | Std.-Abw.: € 265.27 | n=1695
+   4.                              7 | Durchschnitt: €  455.09 | Std.-Abw.: € 334.70 | n= 180
+   5.                              3 | Durchschnitt: €  525.76 | Std.-Abw.: € 321.37 | n= 173
+   6.                              4 | Durchschnitt: €  547.63 | Std.-Abw.: € 246.60 | n=  69
+   7.                             11 | Durchschnitt: €  547.91 | Std.-Abw.: € 226.37 | n=  26
+   8.                              9 | Durchschnitt: €  597.87 | Std.-Abw.: € 330.96 | n=1563
+   9.                              8 | Durchschnitt: €  616.96 | Std.-Abw.: € 332.23 | n= 451
+  10.                             14 | Durchschnitt: €  623.16 | Std.-Abw.: € 265.00 | n= 158
 
 ERKENNTNISSE DER RÄUMLICHEN ANALYSE:
 
 • Mietpreisspanne zwischen den Regionen:
-€368 bis €1098
+€376 bis €1208
 
 • Preisunterschied zwischen den Regionen:
-€729 (198% Unterschied)
+€832 (221% Unterschied)
 
 • Das Modell kann regionale Preisunterschiede erfolgreich erfassen und in die Vorhersage integrieren.
 
@@ -244,11 +244,11 @@ Für Marktanalysen und strategische Entscheidungen sollte eine regionale Segment
 
 Durchschnittliche Miete nach Jahr:
 
-  2020: €615.16
+  2020: €624.31
 
 Durchschnittliche Miete nach Monat (Saisonalität):
 
-  Feb: €615.16
+  Feb: €624.31
 
 ERKENNTNISSE DER ZEITLICHEN ANALYSE:
 
@@ -256,10 +256,10 @@ ERKENNTNISSE DER ZEITLICHEN ANALYSE:
 €0.00 (0.0% des Durchschnittswertes)
 
 • Monat mit den höchsten Mietpreisen:
-Feb (€615.16)
+Feb (€624.31)
 
 • Monat mit den niedrigsten Mietpreisen:
-Feb (€615.16)
+Feb (€624.31)
 
 Die Analyse zeigt, dass sich Mietpreise im Jahresverlauf verändern und saisonale Effekte vorhanden sind.
 Zeitliche Merkmale tragen daher zur Verbesserung der Vorhersagegenauigkeit bei.
@@ -276,16 +276,16 @@ im Immobilienmarkt berücksichtigt werden.
 
 Residuenstatistiken des Gradient-Boosting-Regressors (Testdatensatz):
 
-• Mittelwert: €22.54
+• Mittelwert: €21.94
 (sollte möglichst nahe bei 0 liegen)
 
-• Standardabweichung: €136.36
+• Standardabweichung: €142.23
 
-• Minimum: €-1001.07
+• Minimum: €-1139.41
 
-• Maximum: €1695.66
+• Maximum: €1354.36
 
-• Median: €7.16
+• Median: €8.09
 
 DIAGNOSE:
 
@@ -448,9 +448,9 @@ Interpretierbarkeit der wichtigsten Einflussfaktoren auf den Mietpreis.
 
 WICHTIGSTE ERGEBNISSE:
 
-✓ Das beste Modell (Gradient-Boosting-Regressor) erreicht einen durchschnittlichen Vorhersagefehler von lediglich €86.31
+✓ Das beste Modell (Gradient-Boosting-Regressor) erreicht einen durchschnittlichen Vorhersagefehler von lediglich €89.74
 
-✓ Das Modell erklärt 87.9% der Varianz der Mietpreise
+✓ Das Modell erklärt 87.3% der Varianz der Mietpreise
 
 ✓ Die 90%-Vorhersageintervalle sind gut kalibriert und ermöglichen eine realistische Einschätzung der Unsicherheit
 
@@ -461,7 +461,7 @@ WICHTIGSTE ERGEBNISSE:
 ✓ Die Software wurde modular aufgebaut und ist leicht nachvollziehbar sowie erweiterbar
 
 
-Bericht erstellt: 2026-06-21 00:03:13
+Bericht erstellt: 2026-06-21 00:21:15
 
 
 ====================================================================================================
