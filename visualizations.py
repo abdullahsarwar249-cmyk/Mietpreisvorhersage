@@ -46,20 +46,21 @@ print("\n[1] Erstelle Visualisierungen zur Datenerkundung...")
 fig = plt.figure(figsize=(16, 12))
 gs = GridSpec(3, 3, figure=fig)
 
-# 1.1 Distribution of baseRent
+# 1.1 Verteilung der Miete
+
 ax1 = fig.add_subplot(gs[0, 0])
 ax1.hist(y_train, bins=50, alpha=0.7, color='skyblue', edgecolor='black')
-ax1.set_xlabel('Base Rent (€)')
-ax1.set_ylabel('Frequency')
-ax1.set_title('Distribution of Base Rent (Training Data)')
-ax1.axvline(y_train.mean(), color='red', linestyle='--', label=f'Mean: €{y_train.mean():.0f}')
+ax1.set_xlabel('Miete (€)')
+ax1.set_ylabel('Häufigkeit')
+ax1.set_title('Verteilung der Miete (Trainingsdaten)')
+ax1.axvline(y_train.mean(), color='red', linestyle='--', label=f'Mittelwert: €{y_train.mean():.0f}')
 ax1.legend()
 
 # 1.2 Boxplot
 ax2 = fig.add_subplot(gs[0, 1])
-ax2.boxplot([y_train], labels=['Base Rent'])
-ax2.set_ylabel('Rent (€)')
-ax2.set_title('Box Plot of Base Rent')
+ax2.boxplot([y_train], labels=['Miete'])
+ax2.set_ylabel('Miete (€)')
+ax2.set_title('Boxplot der Miete')
 ax2.grid(True, alpha=0.3)
 
 # 1.3 Wohnfläche vs Miete
@@ -80,7 +81,7 @@ if 'livingSpace' in results['X_train'].columns:
     ax4.set_xlabel('Korrelation mit der Miete')
     ax4.set_title('Top 10 Merkmalskorrelationen')
 
-# 1.5 Rooms vs Rent
+# 1.5 Zimmer vs Miete
 ax5 = fig.add_subplot(gs[1, 1])
 if 'noRooms' in test_df.columns:
     room_stats = test_df.groupby('noRooms')['baseRent'].agg(['mean', 'count'])
@@ -91,7 +92,7 @@ if 'noRooms' in test_df.columns:
     ax5.set_title('Durchschnittliche Miete nach Zimmeranzahl')
     ax5.grid(True, alpha=0.3, axis='y')
 
-# 1.6 Floor vs Rent
+# 1.6 Etage vs Miete
 ax6 = fig.add_subplot(gs[1, 2])
 if 'floor' in test_df.columns:
     floor_stats = test_df.groupby('floor')['baseRent'].agg(['mean', 'count'])
@@ -104,7 +105,7 @@ if 'floor' in test_df.columns:
     ax6.set_title('Durchschnittliche Miete nach Etage')
     ax6.grid(True, alpha=0.3)
 
-# 1.7 Year Constructed
+# 1.7 Baujahr
 ax7 = fig.add_subplot(gs[2, 0])
 if 'yearConstructed' in test_df.columns:
     year_stats = test_df[test_df['yearConstructed'] > 1900].groupby(pd.cut(test_df['yearConstructed'], bins=15))['baseRent'].mean()
@@ -114,7 +115,7 @@ if 'yearConstructed' in test_df.columns:
     ax7.set_title('Durchschnittliche Miete nach Baujahr')
     ax7.set_xticklabels([f'{i}' for i in range(len(year_stats))], rotation=45)
 
-# 1.8 Top regions by count
+# 1.8 Top Regionen nach Anzahl der Einträge
 ax8 = fig.add_subplot(gs[2, 1])
 top_regions = test_df['regio1'].value_counts().head(10)
 ax8.barh(range(len(top_regions)), top_regions.values, color='orange', edgecolor='black')
@@ -211,7 +212,7 @@ ax5.set_xticklabels(models)
 ax5.legend()
 ax5.grid(True, alpha=0.3, axis='y')
 
-# 2.6 Neuronales Netz Trainingshistorie
+# 2.6 Neuronales Netz 
 ax6 = fig.add_subplot(gs[1, 2])
 ax6.plot(history.history['loss'], label='Trainingsfehler', color='#3498db', linewidth=2)
 ax6.plot(history.history['val_loss'], label='Validierungsfehler', color='#e74c3c', linewidth=2)

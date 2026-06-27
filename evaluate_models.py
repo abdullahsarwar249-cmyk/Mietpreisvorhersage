@@ -41,7 +41,7 @@ gb_model = results['gb_model']
 test_df = results['test_df']
 
 # ============================================================================
-# CALCULATE METRICS
+# METRIKEN BERECHNEN
 # ============================================================================
 def calculate_metrics(y_true, y_pred):
     mae = mean_absolute_error(y_true, y_pred)
@@ -81,21 +81,21 @@ for split, metrics in nn_metrics.items():
     print(f"{split:12} | MAE: {metrics['MAE']:8.2f} | RMSE: {metrics['RMSE']:8.2f} | R²: {metrics['R²']:6.4f} | MAPE: {metrics['MAPE']:7.4f}%")
 
 # ============================================================================
-# UNSICHERHEITSANALYSE - PREDICTION INTERVALS
+# UNSICHERHEITSANALYSE - VORHERSAGEINTERVALLE
 # ============================================================================
-print("\n[4] UNSICHERHEITSANALYSE - PREDICTION INTERVALS")
+print("\n[4] UNSICHERHEITSANALYSE - VORHERSAGEINTERVALLE")
 print("-" * 80)
 
 def calculate_prediction_intervals(y_true, y_pred, confidence=0.9):
-    """Calculate prediction intervals based on residuals"""
+    """Berechnet Vorhersageintervalle basierend auf Residuen"""
     residuals = np.abs(y_true - y_pred)
     std_residuals = np.std(residuals)
-    z_score = 1.645  # 90% confidence interval
+    z_score = 1.645  # 90% Konfidenzintervall
     
     lower = y_pred - z_score * std_residuals
     upper = y_pred + z_score * std_residuals
     
-    # Check coverage
+    # Überprüfen der Abdeckung
     coverage = np.mean((y_true >= lower) & (y_true <= upper))
     interval_width = np.mean(upper - lower)
     
@@ -133,7 +133,7 @@ for idx, row in feature_importance.iterrows():
 # ============================================================================
 # RÄUMLICHE ANALYSE
 # ============================================================================
-print("\n[6] RÄUMLICHE ANALYSE - AVERAGE RENT BY REGION")
+print("\n[6] RÄUMLICHE ANALYSE - Durchschnittsmieten nach Regionen")
 print("-" * 80)
 
 # Reconstruct original regions from test set
@@ -164,18 +164,18 @@ for region, rent in regio_min.items():
 # ============================================================================
 # ZEITLICHE ANALYSE
 # ============================================================================
-print("\n[7] ZEITLICHE ANALYSE - PRICE TRENDS")
+print("\n[7] ZEITLICHE ANALYSE - PREISENTWICKLUNG")
 print("-" * 80)
 
 if 'year' in test_data.columns and 'month' in test_data.columns:
     temporal_stats = test_data.groupby(['year', 'month']).agg({
         'baseRent': ['mean', 'count']
     }).round(2)
-    print("\nAverage rent by year-month:")
+    print("\nDurchschnittsmiete nach Jahr-Monat:")
     print(temporal_stats)
 
 # ============================================================================
-# SAVE EVALUATION RESULTS
+# EVALUATION ERGEBNISSE SPEICHERN
 # ============================================================================
 eval_results = {
     'ridge_metrics': ridge_metrics,
@@ -191,10 +191,10 @@ with open('evaluation_results.pkl', 'wb') as f:
     pickle.dump(eval_results, f)
 
 print("\n" + "="*80)
-print("EVALUATION COMPLETED!")
+print("EVALUATION ABGESCHLOSSEN!")
 print("="*80)
-print("\nResults saved to: evaluation_results.pkl")
+print("\nErgebnisse abgepseichert in : evaluation_results.pkl")
 print("\nNächste Schritte:")
 print("  1. Ausführen: python3 visualizations.py")
 print("  2. Ausführen: python3 generate_maps.py")
-print("  3. Run: python3 generate_report.py")
+print("  3. Ausführen: python3 generate_report.py")

@@ -2,7 +2,7 @@
 Mietpreisvorhersage in Deutschland – Abschlussbericht
 ====================================================================================================
 
-Bericht erstellt: 2026-06-21 07:53:55
+Bericht erstellt: 2026-06-27 07:50:07
 Dataset: immo_data.csv (German Real Estate Market)
 
 ====================================================================================================
@@ -95,9 +95,9 @@ Gradient-Boosting-Regressor:
 
 Neuronales Netz:
 ------------------------------------------------------------------------------------------
-  Train        | MAE: €  105.23 | RMSE: €  164.70 | R²:   0.8222 | MAPE:    0.17%
-  Validation   | MAE: €  121.95 | RMSE: €  185.18 | R²:   0.7799 | MAPE:    0.21%
-  Test         | MAE: €  123.76 | RMSE: €  191.09 | R²:   0.7764 | MAPE:    0.20%
+  Train        | MAE: €  106.84 | RMSE: €  168.95 | R²:   0.8129 | MAPE:    0.17%
+  Validation   | MAE: €  122.09 | RMSE: €  187.91 | R²:   0.7734 | MAPE:    0.20%
+  Test         | MAE: €  123.10 | RMSE: €  193.79 | R²:   0.7700 | MAPE:    0.20%
 
 INTERPRETATION:
 • MAE (Mean Absolute Error): Durchschnittlicher absoluter Vorhersagefehler in €
@@ -135,11 +135,11 @@ Niedrigster MAE und RMSE auf dem Testdatensatz, hoher R²-Wert sowie stabile Erg
 
 90%-Vorhersageintervalle (Neuronales Netz):
 
-• Tatsächliche Abdeckung: 86.4%
+• Tatsächliche Abdeckung: 87.2%
 
-• Mittlere Intervallbreite: €479.01
+• Mittlere Intervallbreite: €492.43
 
-• Standardabweichung der Residuen: €145.59
+• Standardabweichung der Residuen: €149.67
 
 INTERPRETATION:
 
@@ -461,7 +461,7 @@ WICHTIGSTE ERGEBNISSE:
 ✓ Die Software wurde modular aufgebaut und ist leicht nachvollziehbar sowie erweiterbar
 
 
-Bericht erstellt: 2026-06-21 07:53:55
+Bericht erstellt: 2026-06-27 07:50:07
 
 
 ====================================================================================================

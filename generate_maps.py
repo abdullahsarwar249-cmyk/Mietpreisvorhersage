@@ -23,7 +23,8 @@ map_df = results['df']
 # Testdaten mit Vorhersagen für die Genauigkeitskarte
 accuracy_df = eval_results['test_data']
 
-# Regionale Koordinaten (Mittelpunkt jeder Region für Markerplatzierung)
+# Regionale Koordinaten (Mittelpunkt jeder Region für Markerplatzierung) (online gefunden: Google Maps, )
+# Anmerkung: Diese Koordinaten sind Näherungswerte und können je nach Quelle variieren.
 region_coords = {
     'Baden_Württemberg': [48.7758, 9.1829],
     'Bayern': [48.7758, 11.4328],
@@ -43,7 +44,7 @@ region_coords = {
     'Thüringen': [50.9840, 11.0290]
 }
 
-# Aggregate data by region for the interactive rental map
+# Daten aggregieren, um die durchschnittliche Miete pro Region zu berechnen
 print("[1] Bereite regionale Daten vor...")
 regional_stats = map_df.groupby('regio1').agg({
     'baseRent': ['mean', 'std', 'min', 'max', 'count'],
@@ -54,14 +55,14 @@ regional_stats = map_df.groupby('regio1').agg({
 regional_stats.columns = ['_'.join(col).strip() for col in regional_stats.columns.values]
 regional_stats = regional_stats.reset_index()
 
-# Rename aggregated columns for easier access
+# Spalten umbenennen für einfacheren Zugriff
 regional_stats.rename(columns={
     'baseRent_mean': 'baseRent_mean',
     'livingSpace_mean': 'livingSpace_mean',
     'noRooms_mean': 'noRooms_mean'
 }, inplace=True)
 
-# Map numeric regio1 IDs to region names
+# numerische Regionennamen in lesbare Namen umwandeln
 region_name_map = {
     0: 'Baden_Württemberg',
     1: 'Bayern',
@@ -352,7 +353,7 @@ print("   ✓ Gespeichert: interactive_rental_map.html")
 # ============================================================================
 print("\n[3] Erstelle Genauigkeitskarte als HTML...")
 
-# Prepare regional statistics for the prediction accuracy map from test data
+# Bereite regionale Statistiken für die Genauigkeitskarte aus den Testdaten vor
 accuracy_regional_stats = accuracy_df.groupby('regio1').agg({
     'baseRent': ['mean', 'std', 'min', 'max', 'count'],
     'prediction_xgb': 'mean',
@@ -372,7 +373,7 @@ accuracy_regional_stats.rename(columns={
 
 accuracy_regional_stats['region_name'] = accuracy_regional_stats['regio1'].map(region_name_map)
 
-# Calculate errors for prediction accuracy map
+# Berechne Fehler für die Genauigkeitskarte
 accuracy_regional_stats['prediction_error'] = abs(
     accuracy_regional_stats['baseRent_mean'] - accuracy_regional_stats['prediction_xgb']
 )
