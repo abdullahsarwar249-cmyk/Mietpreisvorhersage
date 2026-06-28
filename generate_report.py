@@ -300,60 +300,16 @@ EMPFEHLUNG:
 
 Für Marktanalysen und strategische Entscheidungen sollte eine regionale Segmentierung berücksichtigt werden, da sich die Mietpreise zwischen den Regionen deutlich unterscheiden.
 """)
-# ============================================================================
 
-# 7. ZEITLICHE ANALYSE
 
 # ============================================================================
 
-report.append("\n" + "="*100)
-report.append("7. ZEITLICHE ANALYSE – MIETPREISTRENDS")
-report.append("="*100)
-
-if 'year' in test_df.columns and 'month' in test_df.columns:
-    temporal_stats = test_df.groupby('year')['baseRent'].mean()
-    monthly_stats = test_df.groupby('month')['baseRent'].mean()
-
-    report.append("\nDurchschnittliche Miete nach Jahr:\n")
-    for year, rent in temporal_stats.items():
-        report.append(f"  {int(year)}: €{rent:.2f}")
-
-    report.append("\nDurchschnittliche Miete nach Monat (Saisonalität):\n")
-    months = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez']
-    for month_num, rent in monthly_stats.items():
-        report.append(f"  {months[int(month_num)-1]}: €{rent:.2f}")
-
-    seasonal_range = monthly_stats.max() - monthly_stats.min()
-
-    report.append(f"""
-ERKENNTNISSE DER ZEITLICHEN ANALYSE:
-
-• Saisonale Schwankung:
-€{seasonal_range:.2f} ({seasonal_range/monthly_stats.mean()*100:.1f}% des Durchschnittswertes)
-
-• Monat mit den höchsten Mietpreisen:
-{months[int(monthly_stats.idxmax()-1)]} (€{monthly_stats.max():.2f})
-
-• Monat mit den niedrigsten Mietpreisen:
-{months[int(monthly_stats.idxmin()-1)]} (€{monthly_stats.min():.2f})
-
-Die Analyse zeigt, dass sich Mietpreise im Jahresverlauf verändern und saisonale Effekte vorhanden sind.
-Zeitliche Merkmale tragen daher zur Verbesserung der Vorhersagegenauigkeit bei.
-
-EMPFEHLUNG:
-
-Saisonale Schwankungen sollten bei Preisanalysen und strategischen Entscheidungen
-im Immobilienmarkt berücksichtigt werden.
-""")
-
-# ============================================================================
-
-# 8. MODELLDIAGNOSTIK
+# 7. MODELLDIAGNOSTIK
 
 # ============================================================================
 
 report.append("\n" + "="*100)
-report.append("8. MODELLDIAGNOSTIK UND RESIDUENANALYSE")
+report.append("7. MODELLDIAGNOSTIK UND RESIDUENANALYSE")
 report.append("="*100)
 
 residuals = y_test.values - results['y_test_pred_xgb']
@@ -402,12 +358,12 @@ MÖGLICHE VERBESSERUNGEN:
 
 # ============================================================================
 
-# 9. EINSCHRÄNKUNGEN & EMPFEHLUNGEN
+# 8. EINSCHRÄNKUNGEN & EMPFEHLUNGEN
 
 # ============================================================================
 
 report.append("\n" + "="*100)
-report.append("9. EINSCHRÄNKUNGEN UND EMPFEHLUNGEN")
+report.append("8. EINSCHRÄNKUNGEN UND EMPFEHLUNGEN")
 report.append("="*100)
 
 report.append("""
@@ -436,33 +392,18 @@ EINSCHRÄNKUNGEN:
    Zusätzliche fachspezifische Merkmale könnten die Vorhersageleistung weiter verbessern.
 
 
-MÖGLICHE ANWENDUNGSGEBIETE:
 
-• Vermieter:
-Wettbewerbsfähige Mietpreisgestaltung und Marktvergleich
-
-• Mieter:
-Budgetplanung und Standortvergleich
-
-• Immobilienplattformen:
-Bewertung von Inseraten und Erkennung auffälliger Angebote
-
-• Behörden und Regulierungsstellen:
-Marktanalysen und politische Entscheidungsgrundlagen
-
-• Investoren:
-Marktbeobachtung und Investitionsentscheidungen
 """)
 
 
 # ============================================================================
 
-# 10. TECHNISCHE SPEZIFIKATIONEN
+# 9. TECHNISCHE SPEZIFIKATIONEN
 
 # ============================================================================
 
 report.append("\n" + "="*100)
-report.append("10. TECHNISCHE SPEZIFIKATIONEN")
+report.append("9. TECHNISCHE SPEZIFIKATIONEN")
 report.append("="*100)
 
 report.append(f"""
@@ -501,49 +442,16 @@ IMPLEMENTIERTE MODELLE:
    * ReLU-Aktivierungsfunktionen
    * 100 Epochen, Batch-Größe = 32
 
-BEWERTUNGSMETHODIK:
-
-• Zeitbasierte Aufteilung in Trainings-, Validierungs- und Testdaten
-
-• Verwendung mehrerer Bewertungsmetriken:
-MAE, RMSE, R² und MAPE
-
-• Validierung der Modelle auf separaten Validierungsdaten
-
-• Analyse und Kalibrierung von Vorhersageintervallen
-
-ERZEUGTE DATEIEN:
-
-• main_pipeline.py
-Datenvorbereitung, Merkmalsgenerierung und Modelltraining
-
-• evaluate_models.py
-Modellbewertung und Unsicherheitsanalyse
-
-• visualizations.py
-Erstellung aller Diagramme und Visualisierungen
-
-• generate_maps.py
-Erstellung interaktiver Karten mit Leaflet/HTML
-
-• generate_report.py
-Erstellung des Abschlussberichts
-
-• 7 hochauflösende Visualisierungen (PNG)
-
-• 2 interaktive Karten (HTML)
-
-• Gespeicherte Modelle und Metadaten
 """)
 
 # ============================================================================
 
-# 11. FAZIT
+# 10. FAZIT
 
 # ============================================================================
 
 report.append("\n" + "="*100)
-report.append("11. FAZIT")
+report.append("10. FAZIT")
 report.append("="*100)
 
 report.append(f"""
@@ -552,20 +460,6 @@ Vorhersage von Mietpreisen in Deutschland entwickelt und bewertet.
 
 Die Ergebnisse zeigen eine hohe Vorhersagegenauigkeit sowie eine gute
 Interpretierbarkeit der wichtigsten Einflussfaktoren auf den Mietpreis.
-
-WICHTIGSTE ERGEBNISSE:
-
-✓ Das beste Modell (Gradient-Boosting-Regressor) erreicht einen durchschnittlichen Vorhersagefehler von lediglich €{best_test_mae:.2f}
-
-✓ Das Modell erklärt {best_test_r2*100:.1f}% der Varianz der Mietpreise
-
-✓ Die 90%-Vorhersageintervalle sind gut kalibriert und ermöglichen eine realistische Einschätzung der Unsicherheit
-
-✓ Räumliche und zeitliche Einflussfaktoren wurden erfolgreich in die Modellierung integriert
-
-✓ Das Projekt umfasst zusätzlich umfangreiche Visualisierungen und interaktive Karten zur Analyse der Ergebnisse
-
-✓ Die Software wurde modular aufgebaut und ist leicht nachvollziehbar sowie erweiterbar
 
 
 Bericht erstellt: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
@@ -597,12 +491,5 @@ print("="*80)
 
 print("\nAlle Dateien sind bereit:")
 
-print("  ✓ main_pipeline.py - Komplette Machine-Learning-Pipeline")
-print("  ✓ evaluate_models.py - Modellbewertung")
-print("  ✓ visualizations.py - Erstellung der Diagramme")
-print("  ✓ generate_maps.py - Interaktive Karten")
-print("  ✓ generate_report.py - Berichtserstellung")
-print("  ✓ 5 Visualisierungsdateien (PNG)")
-print("  ✓ 2 Interaktive Karten (HTML)")
-print("  ✓ Bewertungsbericht (TXT)")
+
 

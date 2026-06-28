@@ -2,7 +2,7 @@
 Mietpreisvorhersage in Deutschland – Abschlussbericht
 ====================================================================================================
 
-Bericht erstellt: 2026-06-27 07:50:07
+Bericht erstellt: 2026-06-28 23:18:01
 Dataset: immo_data.csv (German Real Estate Market)
 
 ====================================================================================================
@@ -95,9 +95,9 @@ Gradient-Boosting-Regressor:
 
 Neuronales Netz:
 ------------------------------------------------------------------------------------------
-  Train        | MAE: €  106.84 | RMSE: €  168.95 | R²:   0.8129 | MAPE:    0.17%
-  Validation   | MAE: €  122.09 | RMSE: €  187.91 | R²:   0.7734 | MAPE:    0.20%
-  Test         | MAE: €  123.10 | RMSE: €  193.79 | R²:   0.7700 | MAPE:    0.20%
+  Train        | MAE: €  104.97 | RMSE: €  163.78 | R²:   0.8241 | MAPE:    0.17%
+  Validation   | MAE: €  123.35 | RMSE: €  181.67 | R²:   0.7882 | MAPE:    0.22%
+  Test         | MAE: €  125.31 | RMSE: €  186.92 | R²:   0.7861 | MAPE:    0.22%
 
 INTERPRETATION:
 • MAE (Mean Absolute Error): Durchschnittlicher absoluter Vorhersagefehler in €
@@ -135,11 +135,11 @@ Niedrigster MAE und RMSE auf dem Testdatensatz, hoher R²-Wert sowie stabile Erg
 
 90%-Vorhersageintervalle (Neuronales Netz):
 
-• Tatsächliche Abdeckung: 87.2%
+• Tatsächliche Abdeckung: 86.0%
 
-• Mittlere Intervallbreite: €492.43
+• Mittlere Intervallbreite: €456.33
 
-• Standardabweichung der Residuen: €149.67
+• Standardabweichung der Residuen: €138.70
 
 INTERPRETATION:
 
@@ -239,39 +239,7 @@ Für Marktanalysen und strategische Entscheidungen sollte eine regionale Segment
 
 
 ====================================================================================================
-7. ZEITLICHE ANALYSE – MIETPREISTRENDS
-====================================================================================================
-
-Durchschnittliche Miete nach Jahr:
-
-  2020: €624.31
-
-Durchschnittliche Miete nach Monat (Saisonalität):
-
-  Feb: €624.31
-
-ERKENNTNISSE DER ZEITLICHEN ANALYSE:
-
-• Saisonale Schwankung:
-€0.00 (0.0% des Durchschnittswertes)
-
-• Monat mit den höchsten Mietpreisen:
-Feb (€624.31)
-
-• Monat mit den niedrigsten Mietpreisen:
-Feb (€624.31)
-
-Die Analyse zeigt, dass sich Mietpreise im Jahresverlauf verändern und saisonale Effekte vorhanden sind.
-Zeitliche Merkmale tragen daher zur Verbesserung der Vorhersagegenauigkeit bei.
-
-EMPFEHLUNG:
-
-Saisonale Schwankungen sollten bei Preisanalysen und strategischen Entscheidungen
-im Immobilienmarkt berücksichtigt werden.
-
-
-====================================================================================================
-8. MODELLDIAGNOSTIK UND RESIDUENANALYSE
+7. MODELLDIAGNOSTIK UND RESIDUENANALYSE
 ====================================================================================================
 
 Residuenstatistiken des Gradient-Boosting-Regressors (Testdatensatz):
@@ -316,7 +284,7 @@ MÖGLICHE VERBESSERUNGEN:
 
 
 ====================================================================================================
-9. EINSCHRÄNKUNGEN UND EMPFEHLUNGEN
+8. EINSCHRÄNKUNGEN UND EMPFEHLUNGEN
 ====================================================================================================
 
 EINSCHRÄNKUNGEN:
@@ -344,26 +312,11 @@ EINSCHRÄNKUNGEN:
    Zusätzliche fachspezifische Merkmale könnten die Vorhersageleistung weiter verbessern.
 
 
-MÖGLICHE ANWENDUNGSGEBIETE:
 
-• Vermieter:
-Wettbewerbsfähige Mietpreisgestaltung und Marktvergleich
-
-• Mieter:
-Budgetplanung und Standortvergleich
-
-• Immobilienplattformen:
-Bewertung von Inseraten und Erkennung auffälliger Angebote
-
-• Behörden und Regulierungsstellen:
-Marktanalysen und politische Entscheidungsgrundlagen
-
-• Investoren:
-Marktbeobachtung und Investitionsentscheidungen
 
 
 ====================================================================================================
-10. TECHNISCHE SPEZIFIKATIONEN
+9. TECHNISCHE SPEZIFIKATIONEN
 ====================================================================================================
 
 DATENVORBEREITUNG:
@@ -401,43 +354,10 @@ IMPLEMENTIERTE MODELLE:
    * ReLU-Aktivierungsfunktionen
    * 100 Epochen, Batch-Größe = 32
 
-BEWERTUNGSMETHODIK:
-
-• Zeitbasierte Aufteilung in Trainings-, Validierungs- und Testdaten
-
-• Verwendung mehrerer Bewertungsmetriken:
-MAE, RMSE, R² und MAPE
-
-• Validierung der Modelle auf separaten Validierungsdaten
-
-• Analyse und Kalibrierung von Vorhersageintervallen
-
-ERZEUGTE DATEIEN:
-
-• main_pipeline.py
-Datenvorbereitung, Merkmalsgenerierung und Modelltraining
-
-• evaluate_models.py
-Modellbewertung und Unsicherheitsanalyse
-
-• visualizations.py
-Erstellung aller Diagramme und Visualisierungen
-
-• generate_maps.py
-Erstellung interaktiver Karten mit Leaflet/HTML
-
-• generate_report.py
-Erstellung des Abschlussberichts
-
-• 7 hochauflösende Visualisierungen (PNG)
-
-• 2 interaktive Karten (HTML)
-
-• Gespeicherte Modelle und Metadaten
 
 
 ====================================================================================================
-11. FAZIT
+10. FAZIT
 ====================================================================================================
 
 Im Rahmen dieses Projekts wurde erfolgreich ein Mehrmodell-System zur
@@ -446,22 +366,8 @@ Vorhersage von Mietpreisen in Deutschland entwickelt und bewertet.
 Die Ergebnisse zeigen eine hohe Vorhersagegenauigkeit sowie eine gute
 Interpretierbarkeit der wichtigsten Einflussfaktoren auf den Mietpreis.
 
-WICHTIGSTE ERGEBNISSE:
 
-✓ Das beste Modell (Gradient-Boosting-Regressor) erreicht einen durchschnittlichen Vorhersagefehler von lediglich €89.74
-
-✓ Das Modell erklärt 87.3% der Varianz der Mietpreise
-
-✓ Die 90%-Vorhersageintervalle sind gut kalibriert und ermöglichen eine realistische Einschätzung der Unsicherheit
-
-✓ Räumliche und zeitliche Einflussfaktoren wurden erfolgreich in die Modellierung integriert
-
-✓ Das Projekt umfasst zusätzlich umfangreiche Visualisierungen und interaktive Karten zur Analyse der Ergebnisse
-
-✓ Die Software wurde modular aufgebaut und ist leicht nachvollziehbar sowie erweiterbar
-
-
-Bericht erstellt: 2026-06-27 07:50:07
+Bericht erstellt: 2026-06-28 23:18:01
 
 
 ====================================================================================================
