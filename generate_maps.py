@@ -79,7 +79,7 @@ region_name_map = {
     12: 'Sachsen',
     13: 'Sachsen_Anhalt',
     14: 'Schleswig_Holstein',
-    15: 'Thüringen'  # If 15th region
+    15: 'Thüringen'  
 }
 
 regional_stats['region_name'] = regional_stats['regio1'].map(region_name_map)
@@ -98,15 +98,15 @@ def get_color(rent):
     """Farbe basierend auf Mietwert zurückgeben"""
     normalized = (rent - min_rent) / (max_rent - min_rent)
     if normalized < 0.2:
-        return '#2ecc71'  # Green
+        return '#2ecc71'  
     elif normalized < 0.4:
-        return '#f1c40f'  # Yellow
+        return '#f1c40f'  
     elif normalized < 0.6:
-        return '#e67e22'  # Orange
+        return '#e67e22'  
     elif normalized < 0.8:
-        return '#e74c3c'  # Red
+        return '#e74c3c'  
     else:
-        return '#c0392b'  # Dark Red
+        return '#c0392b'  
 
 # Markerdaten erstellen
 markers_data = []
