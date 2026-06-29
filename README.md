@@ -73,7 +73,7 @@ Mietpreisvorhersage/
 Das Repository kann mit Git geklont werden:
 
 ```bash
-git clone <REPOSITORY_URL>
+git clone <https://github.com/abdullahsarwar249-cmyk/Mietpreisvorhersage.git>
 cd Mietpreisvorhersage
 ```
 
