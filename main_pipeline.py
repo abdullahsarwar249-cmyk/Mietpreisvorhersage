@@ -310,8 +310,7 @@ with open('scaler.pkl', 'wb') as f:
 with open('label_encoders.pkl', 'wb') as f:
     pickle.dump(label_encoders, f)
 
-with open('imputer.pkl', 'wb') as f:
-    pickle.dump(imputer, f)
+
 
 # Metadaten speichern
 metadata = {

@@ -2,7 +2,7 @@
 Mietpreisvorhersage in Deutschland – Abschlussbericht
 ====================================================================================================
 
-Bericht erstellt: 2026-06-28 23:18:01
+Bericht erstellt: 2026-06-29 18:12:58
 Dataset: immo_data.csv (German Real Estate Market)
 
 ====================================================================================================
@@ -95,9 +95,9 @@ Gradient-Boosting-Regressor:
 
 Neuronales Netz:
 ------------------------------------------------------------------------------------------
-  Train        | MAE: €  104.97 | RMSE: €  163.78 | R²:   0.8241 | MAPE:    0.17%
-  Validation   | MAE: €  123.35 | RMSE: €  181.67 | R²:   0.7882 | MAPE:    0.22%
-  Test         | MAE: €  125.31 | RMSE: €  186.92 | R²:   0.7861 | MAPE:    0.22%
+  Train        | MAE: €  105.84 | RMSE: €  166.28 | R²:   0.8187 | MAPE:    0.17%
+  Validation   | MAE: €  130.32 | RMSE: €  208.02 | R²:   0.7223 | MAPE:    0.20%
+  Test         | MAE: €  131.82 | RMSE: €  213.69 | R²:   0.7204 | MAPE:    0.19%
 
 INTERPRETATION:
 • MAE (Mean Absolute Error): Durchschnittlicher absoluter Vorhersagefehler in €
@@ -135,11 +135,11 @@ Niedrigster MAE und RMSE auf dem Testdatensatz, hoher R²-Wert sowie stabile Erg
 
 90%-Vorhersageintervalle (Neuronales Netz):
 
-• Tatsächliche Abdeckung: 86.0%
+• Tatsächliche Abdeckung: 87.4%
 
-• Mittlere Intervallbreite: €456.33
+• Mittlere Intervallbreite: €553.32
 
-• Standardabweichung der Residuen: €138.70
+• Standardabweichung der Residuen: €168.18
 
 INTERPRETATION:
 
@@ -367,7 +367,7 @@ Die Ergebnisse zeigen eine hohe Vorhersagegenauigkeit sowie eine gute
 Interpretierbarkeit der wichtigsten Einflussfaktoren auf den Mietpreis.
 
 
-Bericht erstellt: 2026-06-28 23:18:01
+Bericht erstellt: 2026-06-29 18:12:58
 
 
 ====================================================================================================
